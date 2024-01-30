@@ -1,0 +1,896 @@
+<div class="bg-transparent">
+  <div class="w-full p-6 bg-white rounded-md shadow text-font-header dark:text-font-header-dark dark:bg-content-dark">
+    <p class="text-2xl">FTR-OJ1 : บันทึกการอบรม On-the-job training</p>
+    <form action="" [formGroup]="searchForm" (ngSubmit)="getSearch()">
+      <div
+        class="text-[#566a7f] rounded-md mt-5 mb-3 shadow p-6 pb-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526]">
+        <div class="grid grid-cols-9 mb-6 gap-y-2">
+          <!-- Row 1 -->
+          <div class="h-12 p-2 rounded-lg">
+            <label for="" class="self-center flex-initial w-28">ชื่อ-นามสกุล</label>
+          </div>
+          <div class="h-20 col-start-2 col-end-4 rounded-lg">
+            <input type="text" formControlName="empName"
+              class="grow appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+          </div>
+          <div class="h-12 p-2 rounded-lg">
+            <label for="" class="self-center flex-initial w-28">ตำแหน่งงาน</label>
+          </div>
+          <div class="h-20 col-start-5 col-end-7 rounded-lg">
+            <input type="text" formControlName="empRole"
+              class="grow appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+          </div>
+          <div class="h-12 p-2 rounded-lg">
+            <label for="" class="self-center flex-initial w-28">ฝ่าย/แผนก</label>
+          </div>
+          <div class="h-20 col-start-8 col-end-10 rounded-lg">
+            <select id="department" name="department" formControlName="dept"
+              class="mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+              <option value="AF">AF</option>
+              <option value="CE">CE</option>
+              <option value="CS">CS</option>
+              <option value="DT">DT</option>
+              <option value="FSI">FSI</option>
+              <option value="HQ">HQ</option>
+              <option value="MSP">MS</option>
+              <option value="NS">NS</option>
+              <option value="OOS">OSS</option>
+              <option value="PBS">PBS</option>
+              <option value="PM">PM</option>
+              <option value="SD1">SD1</option>
+              <option value="SD2">SD2</option>
+              <option value="SE">SE</option>
+              <option value="SM">SM</option>
+              <option value="SQA">SQA</option>
+
+              <option value="HQ,AF">HQ,AF</option>
+              <option value="MK">MK</option>
+              <option value="APS">APS</option>
+              <option value="APS(BOI)">APS(BOI)</option>
+              <option value="OSS">OSS</option>
+              <option value="OSS(BOI)">OSS(BOI)</option>
+              <option value="TOP">TOP</option>
+              <option value="TOP(BOI)">TOP(BOI)</option>
+              <option value="SD(BOI)">SD(BOI)</option>
+            </select>
+          </div>
+          <!-- <div class="h-12 p-2 rounded-lg">
+                        <label for="">วันเวลาฝึกอบรม</label>
+                        <div
+                            class="relative appearance-none mx-3 rounded-md border bg-white border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:border-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear">
+                            <mat-date-range-input class="" [rangePicker]="picker">
+                                <input matStartDate formControlName="startDate" placeholder="วันที่เริ่ม" />
+                                <input matEndDate formControlName="endDate" placeholder="วันสุดท้าย" />
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle class="absolute right-0 top-0.5 dark:text-white" matIconSuffix
+                                [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+                        </div>
+                    </div> -->
+          <div class="h-12 p-2 rounded-lg">
+            <label for="" class="self-center flex-initial w-28">วันที่เริ่มอบรม</label>
+          </div>
+          <div class="h-20 col-start-2 col-end-4 rounded-lg">
+            <input type="date" formControlName="startDate"
+              class="grow appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"
+              id="startDateInput" />
+          </div>
+          <div class="h-12 p-2 rounded-lg">
+            <label for="" class="self-center flex-initial w-28">วันที่สิ้นสุด</label>
+          </div>
+          <div class="h-20 col-start-5 col-end-7 rounded-lg">
+            <input type="date" formControlName="endDate"
+              class="grow appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"
+              [min]="this.searchForm.get('startDate').value" id="endDateInput" />
+          </div>
+          <div class="h-12 p-2 rounded-lg">
+            <label for="" class="self-center flex-initial w-28">หัวข้อในการอบรม/สัมมนา</label>
+          </div>
+          <div class="h-20 col-start-8 col-end-10 rounded-lg">
+            <input type="text" formControlName="topic"
+              class="grow appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <button type="submit" [disabled]="isSearchDisabled()" class="flex items-center justify-center text-white p-2  rounded shadow-md
+                    {{
+              isSearchDisabled()
+                ? 'cursor-not-allowed bg-gray-400 border-2 border-gray-400'
+                : 'cursor-pointer bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]'
+            }}">
+            <i class="mr-2 text-2xl bx bx-search"></i>ค้นหาข้อมูล
+          </button>
+        </div>
+
+        <!-- <div class="flex justify-center">
+          <div>
+            <button
+              type="submit"
+              [disabled]="!sectionOne.valid || !sectionTwo.valid"
+              (click)="save()"
+              class="flex items-center justify-center text-white p-2  rounded shadow-md {{
+                !sectionOne.valid || !sectionTwo.valid
+                  ? 'cursor-not-allowed bg-gray-400'
+                  : 'cursor-pointer bg-green-700 hover:bg-green-600'
+              }}"
+            >
+              <i class="mr-2 text-2xl bx bx-mail-send"></i>บันทึกข้อมูล
+            </button>
+          </div>
+        </div> -->
+
+      </div>
+    </form>
+
+    <!-- <p
+      class="text-end text-sm text-font-header dark:text-[#e4e6eb]"
+      *ngIf="empName || empRole || dept"
+    >
+      <span
+        class="my-3 p-2 underline text-xl font-medium rounded-md select-none text-font-header dark:text-[#e4e6eb]"
+      >
+        ผลการค้นหา
+      </span>
+      ชื่อ-สกุล : {{ empName }}, ตำแหน่งงาน : {{ empRole }}, ฝ่าย/แผนก :
+      {{ dept }}
+    </p> -->
+
+    <div class="w-full overflow-x-auto shadow rounded-b-md">
+      <table class="text-sm border-b-2 dark:border-[#3a3b3c]">
+        <colgroup>
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+        </colgroup>
+        <thead class="text-sm border-b-2 dark:border-[#3a3b3c]">
+          <tr class="h-12 text-center uppercase">
+            <th scope="col">บริษัท</th>
+            <th scope="col">วันที่อบรม</th>
+            <th scope="col">รหัส</th>
+            <th scope="col">ชื่อผู้ที่เข้าการอบรม</th>
+            <th scope="col">ตำแหน่ง</th>
+            <th scope="col">แผนก</th>
+            <th scope="col">เรื่อง</th>
+            <!-- <th scope="col">ผู้ให้การอบรม</th> -->
+            <th scope="col">ระยะเวลา (วัน)</th>
+            <th scope="col">ประเมินผลการอบรม</th>
+            <th scope="col">หมายเหตุ</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of parentResult"
+            class="odd:bg-white dark:odd:bg-[#3a3b3c] dark:even:bg-black even:bg-slate-100 text-center h-20 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">
+            <td>PCCTH</td>
+            <td>
+              {{ user.startDate | date : "dd/MM/yyyy" }} -
+              {{ user.endDate | date : "dd/MM/yyyy" }}
+            </td>
+            <td class="overflow-auto max-w-[10rem] m-2 whitespace-pre-line">{{ user.empCode }}</td>
+            <td class="overflow-auto max-w-[10rem] m-2 whitespace-pre-line">{{ user.empName }}</td>
+            <td class="overflow-auto max-w-[10rem] m-2 whitespace-pre-line">{{ user.empRole }}</td>
+            <td class="overflow-auto max-w-[10rem] m-2 whitespace-pre-line">{{ user.dept }}</td>
+            <td class="overflow-auto max-w-[10rem] m-2 whitespace-pre-line">{{ user.topic }}</td>
+            <!-- <td class="overflow-auto max-w-[10rem] m-2 whitespace-pre-line">{{ user.evaluatorName }}</td> -->
+            <td class="overflow-auto max-w-[10rem] m-2 whitespace-pre-line">{{ user.day }}</td>
+            <td>
+              {{ user.result === 'pass' ? 'ผ่าน' : (user.result === 'fail' ? 'ไม่ผ่าน' : 'ไม่ประเมินผล') }}
+            </td>
+            <td class="overflow-auto max-w-[10rem] m-2 whitespace-pre-line">
+              <!-- pass='-' -->
+              <ng-container *ngIf="user.result === 'pass'; else causeText">-</ng-container>
+              <ng-template #causeText>
+                <ng-container *ngIf="user.cause !== ''; else dashText">
+                  {{ user.cause }}
+                </ng-container>
+                <ng-template #dashText>-</ng-template>
+              </ng-template>
+            </td>
+            <td>
+              <button type="submit" (click)="createEditForm(user.of1_id)"
+                class="flex items-center justify-center py-2 w-36 border-2 border-gray-400 mr-1 hover:bg-[#FFAB00] hover:text-white hover:border-[#FFAB00]"
+                [ngClass]="{ 'text-[#FFAB00]': user.result == 'noResult', 'text-green-500 hover:border-green-700 hover:bg-green-700': user.result != 'noResult' }">
+                <i [ngClass]="{ 'bx bx-edit': user.result == 'noResult', 'fa-solid fa-circle-check': user.result != 'noResult' }"
+                  class="mt-1 mb-1 mr-2"></i>
+                <span class="mr-1">{{ user.result == 'noResult' ? 'ยังไม่ประเมินผล' : 'ประเมินผลเรียบร้อย' }}</span>
+              </button>
+
+            </td>
+            <td>
+              <button type="submit" (click)="deleteById(user.of1_id)"
+                class="flex items-center justify-center w-24 py-2 mr-1 text-red-700 border-2 border-gray-400 rounded hover:bg-red-700 hover:text-white hover:border-red-700">
+                <i class="fa-solid fa-print mr-2"></i> Print
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="showModal"
+    class="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none modal-container focus:outline-none">
+    <div class="relative w-auto max-w-6xl mx-auto my-6">
+      <!--content-->
+      <div
+        class="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none modal-content focus:outline-none">
+        <!--header-->
+        <div class="flex items-start justify-between p-5 border-b border-solid rounded-t border-slate-200">
+          <h3 class="text-3xl font-semibold">
+            FTR-OF1 : แบบฟอร์มการส่งพนักงานเข้ารับการฝึกอบรม
+          </h3>
+          <button
+            class="float-right p-1 ml-auto text-3xl font-semibold leading-none text-black bg-transparent border-0 outline-none opacity-5 focus:outline-none"
+            (click)="toggleModal()">
+            <span class="block w-6 h-6 text-2xl text-black bg-transparent outline-none opacity-5 focus:outline-none">
+              ×
+            </span>
+          </button>
+        </div>
+        <!--body-->
+        <div class="relative flex-auto p-6">
+          <!-- ส่วน 1 -->
+          <div class="text-[#566a7f] rounded-md shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526]">
+            <p class="pb-3 text-xl">ส่วนที่ 1 : การส่งพนักงานเข้ารับการฝึกอบรม</p>
+            <form [formGroup]="sectionOne">
+              <div class="flex flex-col items-center justify-start">
+                <div class="flex items-center self-start justify-start pt-2 text-sm justify-items-start">
+                  <label for="" class="mr-2">บริษัท</label>
+                  <div class="flex items-center justify-start">
+                    <div class="flex items-stretch">
+                      <!-- รอเพิ่มชื่อตัวแปร formControlName="ชื่อตัวแปรบริษัท" -->
+                      <input #pccSelected (change)="changeCompany('pcc')" type="radio"
+                        class="w-4 h-4 self-center peer accent-[#696cff]" name="dept" id="pcc" value="pcc" checked />
+                      <label for="pcc" class="ml-2 mr-2 peer-checked:text-[#696cff]">PCCTH</label>
+                    </div>
+                    <div class="flex items-stretch">
+                      <input #wsSelected (change)="changeCompany('ws')" type="radio"
+                        class="w-4 h-4 self-center peer accent-[#696cff]" name="dept" id="ws" value="ws" />
+                      <label for="ws" class="ml-2 mr-2 peer-checked:text-[#696cff]">WiseSoft</label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="grid self-center justify-center my-6 space-x-2 text-sm sm:grid-cols-1 md:grid-cols-3 justify-items-center xl:flex xl:p-0">
+                  <div class="flex items-center justify-center">
+                    <label for="" class="">ฝ่าย/แผนก</label>
+                    <div class="relative inline-flex flex-col">
+                      <!-- รอแก้ function selectCompany(this.sectionOne.get(ชื่อตัวแปรบริษัท)?.value) -->
+                      <select (change)="updateDeptCode()" required formControlName="dept"
+                        class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        <option value="" disabled>เลือกแผนก</option>
+                        <option *ngFor="let dept of dept1" [ngValue]="dept.name">{{ dept.name }}</option>
+                      </select>
+                      <p *ngIf="sectionOne.get('dept')?.invalid"
+                        class="absolute font-light text-red-700 -right-2 -top-2 dark:text-red-500">
+                        *
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <label for="">รหัสฝ่าย/แผนก</label>
+                    <div class="relative inline-flex flex-col">
+                      <input readonly type="text" formControlName="deptCode" [(ngModel)]="deptCode" required value=""
+                        [minlength]="4" [maxlength]="4"
+                        class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#d8adad]" />
+                      <p *ngIf="sectionOne.get('deptCode')?.invalid"
+                        class="absolute font-light text-red-700 -right-2 -top-2 dark:text-red-500">
+                        *
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-center">
+                    <label for="" class="flex-initial text-end">เดือน/วัน/ปี</label>
+                    <div class="relative inline-flex flex-col">
+                      <input type="date" formControlName="date" required readonly
+                        class="peer appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                    </div>
+                    <p
+                      class="absolute invisible px-1 font-light text-red-700 -bottom-5 peer-invalid:visible dark:text-red-500">
+                      *โปรดระบุ วันที่
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <fieldset>
+                <div class="flex items-center justify-center">
+                  <div class="grid self-end grid-cols-2 text-sm gap-y-2 justify-items-end">
+                    <div class="inline-flex items-center">
+                      <label for="">หัวข้อในการอบรม/สัมมนา</label>
+                      <div class="relative">
+                        <input type="text" formControlName="topic" required
+                          class="peer grow appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                        <span
+                          class="absolute invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                      </div>
+                    </div>
+                    <div class="inline-flex items-center">
+                      <label for="">วัตถุประสงค์ในการอบรม/สัมมนา</label>
+                      <div class="relative">
+                        <input type="text" required formControlName="objt"
+                          class="peer grow appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                        <span
+                          class="absolute invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                      </div>
+                    </div>
+                    <div class="inline-flex">
+                      <label class="my-1" for="">วันเวลาฝึกอบรม</label>
+                      <!-- <input
+                          type="text"
+                          formControlName="trainDate"
+                          value="09/02/65 - 11/02/65"
+                          class="appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"
+                        /> -->
+                      <!-- <div
+                                                class="relative appearance-none mx-3 rounded-md border bg-white border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:border-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear">
+                                                <mat-date-range-input class="" [rangePicker]="picker">
+                                                    <input matStartDate formControlName="startDate"
+                                                        placeholder="วันที่เริ่ม" />
+                                                    <input matEndDate formControlName="endDate"
+                                                        placeholder="วันสุดท้าย" />
+                                                </mat-date-range-input>
+                                                <mat-datepicker-toggle class="absolute right-0 top-0.5 dark:text-white"
+                                                    matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-date-range-picker #picker></mat-date-range-picker>
+                                            </div> -->
+                      <div class="inline-flex flex-col">
+                        <span class="py-1 mx-2">เริ่มวันที่</span>
+                        <input type="date" formControlName="startDate" required
+                          class="appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                        <span class="py-1 mx-2">ถึงวันที่</span>
+                        <input type="date" formControlName="endDate" [min]="this.sectionOne.get('startDate')?.value"
+                          required
+                          class="appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                      </div>
+                    </div>
+                    <div class="inline-flex items-center">
+                      <label for="">ค่าใช้จ่าย</label>
+                      <div class="relative">
+                        <input type="text" required formControlName="fee" (keypress)="onInputKeyPressFee($event)"
+                          (blur)="onBlurFee($event)"
+                          class="peer appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                        <span
+                          class="absolute invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                      </div>
+                    </div>
+                    <div class="inline-flex items-center">
+                      <label for="">สถาบันที่จัด</label>
+                      <div class="relative">
+                        <input type="text" formControlName="company" required
+                          value="บริษัท โปรเฟสชั่นนัล คอมพิวเตอร์ จำกัด"
+                          class="peer appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                        <span
+                          class="absolute invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                      </div>
+                    </div>
+
+                    <div class="inline-flex items-center">
+                      <label for="">สถานที่ฝึกอบรม</label>
+                      <div class="relative">
+                        <input type="text" formControlName="location" required
+                          class="peer appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                        <span
+                          class="absolute invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                      </div>
+                    </div>
+
+                    <div class="col-span-2">
+                      <div
+                        class="grid mb-2 text-sm gap-x-10 sm:grid-cols-1 md:grid-cols-2 justify-items-center xl:flex xl:p-0">
+                        <div class="flex items-stretch">
+                          <input #onBudegetRadio class="w-4 h-4 peer accent-[#696cff] self-start" (click)="onBudeget()"
+                            id="onBudget" type="radio" value="อยู่ในงบประมาณ" name="budget" formControlName="budget" />
+                          <label for="onBudget" class="ml-2 peer-checked:text-[#696cff]">อยู่ในงบประมาณ</label>
+                        </div>
+                        <div class="flex items-stretch">
+                          <input #etcRadio id="etc" type="radio" name="budget"
+                            class="w-4 h-4 peer self-start accent-[#696cff]" />
+                          <label for="etc" class="ml-2 peer-checked:text-[#696cff]">อื่นๆ (กรุณาระบุรายละเอียด)</label>
+                          <div class="relative">
+                            <textarea #etcDetails (click)="etcSelect()" (change)="etcSelect()" formControlName="budget"
+                              rows="3"
+                              class="resize-none appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"></textarea>
+                            <span *ngIf="sectionOne.get('budget')?.invalid"
+                              class="absolute text-red-700 -right-2 -top-2 dark:text-red-500">*</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="text-base underline">
+                  รายละเอียดเกี่ยวกับผู้เข้ารับการอบรม
+                </p>
+                <div class="flex items-center justify-center">
+                  <div
+                    class="grid my-6 space-x-2 text-sm sm:grid-cols-1 md:grid-cols-3 justify-items-center xl:flex xl:p-0">
+                    <div class="inline-flex items-center">
+                      <label for="">รหัสพนักงาน</label>
+                      <div class="relative">
+                        <input type="text" formControlName="empCode" (keypress)="onInputKeyPressempCode($event)"
+                          [minlength]="6" [maxlength]="6" required
+                          class="peer appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                        <span
+                          class="absolute invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-center">
+                      <label for="" class="flex-initial text-end">ชื่อ-สกุลผู้เข้ารับการอบรม/สัมมนา</label>
+                      <div class="relative">
+                        <input type="text" required formControlName="empName"
+                          class="peer appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                        <span
+                          class="absolute invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center justify-center">
+                      <label for="" class="flex-initial text-end">ตำแหน่งผู้เข้ารับการอบรม</label>
+                      <div class="relative">
+                        <input type="text" required formControlName="empRole"
+                          class="peer appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                        <span
+                          class="absolute invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="text-base underline">แผนกบุคคล</p>
+
+                <div class="flex flex-col items-center justify-center">
+                  <div
+                    class="grid mb-2 space-x-10 text-sm sm:grid-cols-1 md:grid-cols-2 justify-items-end xl:flex xl:p-0">
+                    <div class="relative flex items-center space-x-2">
+                      <input #trainingRadio formControlName="action" id="training" type="radio" value="training"
+                        name="type-radio" class="w-4 h-4 self-center peer accent-[#696cff]" checked />
+                      <label for="training" class="ml-2 self-center peer-checked:text-[#696cff]">ฝึกอบรม/สัมมนา</label>
+                      <input #trainDate type="date"
+                        class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+
+                    </div>
+                    <!-- <div class="relative flex items-center space-x-2">
+                      <input
+                        #getResultRadio
+                        formControlName="action"
+                        id="getResult"
+                        type="radio"
+                        value="getResult"
+                        name="type-radio"
+                        class="w-4 h-4 self-center peer accent-[#696cff]"
+                      />
+                      <label
+                        for="getResult"
+                        class="ml-2 self-center text-start w-48 peer-checked:text-[#696cff]"
+                        >รับทราบประสิทธิผลการฝึกอบรม</label
+                      >
+                      <input
+                        #getResultDate
+                        (change)="onDateClick('getResult')"
+                        (click)="onDateClick('getResult')"
+                        type="date"
+                        class="appearance-none rounded-md border outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"
+                      />
+                      <span
+                        *ngIf="
+                          sectionOne.get('action').value == 'getResult' &&
+                          sectionOne.get('actionDate').invalid
+                        "
+                        class="absolute text-red-700 -right-2 -top-2 dark:text-red-500"
+                        >*</span
+                      >
+                    </div> -->
+                    <div class="relative flex items-center space-x-2">
+                      <input #getCertificateRadio formControlName="action" id="getCertificate" type="radio"
+                        value="getCertificate" name="type-radio" class="w-4 h-4 self-center peer accent-[#696cff]" />
+                      <label for="getCertificate" class="ml-2 self-center text-start peer-checked:text-[#696cff]">รับ
+                        Certificate</label>
+                      <input #getCerDate type="date"
+                        class="appearance-none rounded-md border outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+
+                    </div>
+                  </div>
+                  <!-- <div
+                    class="grid mb-3 space-x-4 text-sm sm:grid-cols-1 md:grid-cols-2 justify-items-end xl:flex xl:p-0"
+                  >
+                    <div class="relative flex items-center space-x-2">
+                      <input
+                        #testRadio
+                        id="test"
+                        formControlName="action"
+                        type="radio"
+                        value="test"
+                        name="type-radio"
+                        class="w-4 h-4 self-center peer accent-[#696cff]"
+                      />
+                      <label
+                        for="test"
+                        class="ml-2 self-center peer-checked:text-[#696cff]"
+                        >สอบ Certificate</label
+                      >
+                      <input
+                        #testDate
+                        (change)="onDateClick('test')"
+                        (click)="onDateClick('test')"
+                        type="date"
+                        class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"
+                      />
+                      <span
+                        *ngIf="
+                          sectionOne.get('action').value == 'test' &&
+                          sectionOne.get('actionDate').invalid
+                        "
+                        class="absolute text-red-700 -right-2 -top-2 dark:text-red-500"
+                        >*</span
+                      >
+                    </div>
+                    <div class="relative flex items-center space-x-2">
+                      <input
+                        #getCertificateRadio
+                        formControlName="action"
+                        id="getCertificate"
+                        type="radio"
+                        value="getCertificate"
+                        name="type-radio"
+                        class="w-4 h-4 self-center peer accent-[#696cff]"
+                      />
+                      <label
+                        for="getCertificate"
+                        class="ml-2 self-center text-start w-48 peer-checked:text-[#696cff]"
+                        >รับ Certificate</label
+                      >
+                      <input
+                        #getCertificateDate
+                        (click)="onDateClick('getCertificate')"
+                        (change)="onDateClick('getCertificate')"
+                        type="date"
+                        class="appearance-none rounded-md border outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"
+                      />
+                      <span
+                        *ngIf="
+                          sectionOne.get('action').value == 'getCertificate' &&
+                          sectionOne.get('actionDate').invalid
+                        "
+                        class="absolute text-red-700 -right-2 -top-2 dark:text-red-500"
+                        >*</span
+                      >
+                    </div>
+                  </div> -->
+                </div>
+
+                <div class="flex mt-3 text-sm justify-items-start">
+                  <div class="flex flex-row">
+                    <p class="mr-2 underline">หมายเหตุ</p>
+                    :
+                  </div>
+                  <p class="">
+                    1. กรุณาแนบรายละเอียดเกี่ยวกับหลักสูตรการฝึกอบรม/สัมมนา
+                    <br />2. กรุณาส่งแบบฟอร์มนี้ ก่อนเข้ารับการอบรมอย่างน้อย 5
+                    วันทำการ
+                  </p>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+
+          <!-- ส่วน 2 -->
+          <div
+            class="text-[#566a7f] rounded-md shadow my-6 p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526]">
+            <p class="text-xl">ส่วนที่ 2 : การติดตามประสิทธิผลการฝึกอบรม</p>
+            <form [formGroup]="sectionTwo">
+              <fieldset>
+                <div class="grid mt-6">
+                  <div
+                    class="grid w-full mb-2 text-sm md:grid-cols-2 sm:grid-cols-1 justify-items-stretch xl:flex xl:p-0">
+                    <div class="flex justify-center w-full">
+                      <label for="" class="self-center w-20 text-end">ชื่อผู้ประเมิน</label>
+
+                      <input type="text" required formControlName="evaluatorName"
+                        class="peer grow appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                      <span
+                        class="relative invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                    </div>
+                    <div class="flex justify-center w-full">
+                      <label for="" class="self-center w-20 text-end">ตำแหน่ง</label>
+                      <input type="text" required formControlName="evaluatorRole"
+                        class="peer grow appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                      <span
+                        class="relative invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                    </div>
+                  </div>
+                  <div
+                    class="grid w-full mb-5 text-sm md:grid-cols-2 sm:grid-cols-1 justify-items-stretch xl:flex xl:p-0">
+                    <div class="flex justify-center w-full">
+                      <label for="" class="self-center w-20 text-end">แผนก</label>
+                      <input type="text" required formControlName="evaluatorDept"
+                        class="peer grow appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                      <span
+                        class="relative invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                    </div>
+                    <div class="flex justify-center w-full">
+                      <label for="" class="self-center w-20 text-end">ฝ่าย</label>
+                      <input type="text" required formControlName="evaluatorSector"
+                        class="peer grow appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                      <span
+                        class="relative invisible text-red-700 -right-2 -top-2 peer-invalid:visible dark:text-red-500">*</span>
+                    </div>
+                  </div>
+                  <hr />
+
+                  <div class="mt-5">
+                    <div class="grid grid-cols-2 mb-3">
+                      <p class="self-center">
+                        1. การนำความรู้/ทักษะไปใช้ในการปฏิบัติงาน
+                      </p>
+                      <div class="inline-flex justify-end rounded-md shadow-sm radio-toolbar" role="group">
+                        <input type="radio" name="one" id="pass1" formControlName="resultOne" value="pass"
+                          class="hidden peer" checked (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="pass1"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 rounded-l-lg cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white dark:Label-dark-mode">
+                          ผ่าน
+                        </label>
+                        <input type="radio" name="one" id="fail1" value="fail" formControlName="resultOne"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="fail1"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border-t border-b border-gray-400 cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ผ่าน
+                        </label>
+                        <input type="radio" name="one" id="none1" value="none" formControlName="resultOne"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="none1"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 cursor-pointer grow rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ประเมินผล
+                        </label>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-2 mb-3">
+                      <p class="self-center">2. ความถูกต้องของการปฏิบัติงาน</p>
+                      <div class="inline-flex justify-end rounded-md shadow-sm radio-toolbar" role="group">
+                        <input type="radio" name="two" id="pass2" value="pass" formControlName="resultTwo"
+                          class="hidden" checked (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="pass2"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 rounded-l-lg cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ผ่าน
+                        </label>
+                        <input type="radio" name="two" id="fail2" value="fail" formControlName="resultTwo"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="fail2"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border-t border-b border-gray-400 cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ผ่าน
+                        </label>
+                        <input type="radio" name="two" id="none2" value="none" formControlName="resultTwo"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="none2"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 cursor-pointer grow rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ประเมินผล
+                        </label>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-2 mb-3">
+                      <p class="self-center">
+                        3.
+                        การเปลี่ยนแปลงพฤติกรรมการปฏิบัติงานหลังจากผ่านการฝึกอบรม
+                      </p>
+                      <div class="inline-flex justify-end rounded-md shadow-sm radio-toolbar" role="group">
+                        <input type="radio" name="three" id="pass3" value="pass" formControlName="resultThree"
+                          class="hidden" checked (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="pass3"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 rounded-l-lg cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ผ่าน
+                        </label>
+                        <input type="radio" name="three" id="fail3" value="fail" formControlName="resultThree"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="fail3"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border-t border-b border-gray-400 cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ผ่าน
+                        </label>
+                        <input type="radio" name="three" id="none3" value="none" formControlName="resultThree"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="none3"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 cursor-pointer grow rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ประเมินผล
+                        </label>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-2 mb-3">
+                      <p class="self-center">
+                        4. การพัฒนาคุณภาพงาน/การปฏิบัติงาน
+                      </p>
+                      <div class="inline-flex justify-end rounded-md shadow-sm radio-toolbar" role="group">
+                        <input type="radio" name="four" id="pass4" value="pass" formControlName="resultFour"
+                          class="hidden" checked (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="pass4"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 rounded-l-lg cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ผ่าน
+                        </label>
+                        <input type="radio" name="four" id="fail4" value="fail" formControlName="resultFour"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="fail4"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border-t border-b border-gray-400 cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ผ่าน
+                        </label>
+                        <input type="radio" name="four" id="none4" value="none" formControlName="resultFour"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="none4"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 cursor-pointer grow rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ประเมินผล
+                        </label>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-2 mb-3">
+                      <p class="self-center">
+                        5. พัฒนาการด้านการประสานงานกับหน่วยงานอื่นๆ
+                      </p>
+                      <div class="inline-flex justify-end rounded-md shadow-sm radio-toolbar" role="group">
+                        <input type="radio" name="five" id="pass5" value="pass" formControlName="resultFive"
+                          class="hidden" (change)="resultSelect(calculateResult())" checked />
+                        <label (click)="resultSelect(calculateResult())" for="pass5"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 rounded-l-lg cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ผ่าน
+                        </label>
+                        <input type="radio" name="five" id="fail5" value="fail" formControlName="resultFive"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="fail5"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border-t border-b border-gray-400 cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ผ่าน
+                        </label>
+                        <input type="radio" name="five" id="none5" value="none" formControlName="resultFive"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="none5"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 cursor-pointer grow rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ประเมินผล
+                        </label>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-2 mb-3">
+                      <p class="self-center">
+                        6.
+                        การนำความรู้/ทักษะที่ได้รับไปถ่ายทอดให้เพื่อนร่วมงาน/ผู้ใต้บังคับบัญชา
+                      </p>
+                      <div class="inline-flex justify-end rounded-md shadow-sm radio-toolbar" role="group">
+                        <input type="radio" name="six" id="pass6" value="pass" formControlName="resultSix"
+                          class="hidden" (change)="resultSelect(calculateResult())" checked />
+                        <label (click)="resultSelect(calculateResult())" for="pass6"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 rounded-l-lg cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ผ่าน
+                        </label>
+                        <input type="radio" name="six" id="fail6" value="fail" formControlName="resultSix"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="fail6"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border-t border-b border-gray-400 cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ผ่าน
+                        </label>
+                        <input type="radio" name="six" id="none6" value="none" formControlName="resultSix"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="none6"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 cursor-pointer grow rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ประเมินผล
+                        </label>
+                      </div>
+                    </div>
+                    <div class="grid grid-cols-2 mb-3">
+                      <p class="self-center">
+                        7.
+                        การพัฒนาความคิดสร้างสรรค์จากการนำความรู้/ทักษะที่ได้จากการฝึกอบรม
+                      </p>
+                      <div class="inline-flex justify-end rounded-md shadow-sm radio-toolbar" role="group">
+                        <input type="radio" name="seven" id="pass7" value="pass" formControlName="resultSeven"
+                          class="hidden" checked (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="pass7"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 rounded-l-lg cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ผ่าน
+                        </label>
+                        <input type="radio" name="seven" id="fail7" value="fail" formControlName="resultSeven"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="fail7"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border-t border-b border-gray-400 cursor-pointer grow hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ผ่าน
+                        </label>
+                        <input type="radio" name="seven" id="none7" value="none" formControlName="resultSeven"
+                          class="hidden" (change)="resultSelect(calculateResult())" />
+                        <label (click)="resultSelect(calculateResult())" for="none7"
+                          class="flex items-center justify-center px-4 py-2 text-sm font-medium bg-white border border-gray-400 cursor-pointer grow rounded-r-md hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                          ไม่ประเมินผล
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex">
+                    <label class="w-32">ข้อคิดเห็นเพิ่มเติม :</label>
+                    <textarea rows="4" formControlName="comment"
+                      class="grow resize-y appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"></textarea>
+                  </div>
+
+                  <div class="flex mt-3">
+                    <label class="">ผลสรุปโดยรวม :</label>
+                    <div class="ml-2">
+                      <div class="mb-2">
+                        <div class="flex ml-2">
+                          <input #passRadio id="pass" type="radio" value="pass" formControlName="result" name="result"
+                            class="w-4 h-4 self-center accent-[#696cff]" checked />
+                          <label for="pass" class="self-center ml-2">
+                            ผ่าน (ต้องมีผลการประเมิน ประสิทธิผลการฝึกอบรม
+                            ในระดับ “ผ่าน”
+                            มากกว่าครึ่งหนึ่งของหัวข้อที่ทำการประเมิน)</label>
+                        </div>
+                      </div>
+
+                      <div class="mb-2">
+                        <div class="flex ml-2">
+                          <input #failRadio (click)="notPassSelect('fail')" id="fail" type="radio" value="fail"
+                            formControlName="result" name="result" class="w-4 h-4 self-center accent-[#696cff]" />
+                          <label for="fail" class="self-center ml-2 w-36">
+                            ไม่ผ่าน เหตุผล</label>
+                          <input #fCause formControlName="cause" type="text"
+                            class="appearance-none mx-3 rounded-md border border-gray-400 outline-none py-1.5 px-2 grow xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                        </div>
+                      </div>
+                      <div class="mb-2">
+                        <div class="flex ml-2">
+                          <input #noResultRadio (click)="notPassSelect('noResult')" id="noResult" type="radio"
+                            value="noResult" formControlName="result" name="result"
+                            class="w-4 h-4 self-center accent-[#696cff]" />
+                          <label for="noResult" class="self-center ml-2 w-36">
+                            ไม่ประเมินผล เหตุผล</label>
+                          <input #nCause formControlName="cause" type="text"
+                            class="appearance-none mx-3 rounded-md border border-gray-400 outline-none py-1.5 px-2 grow xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="this.sectionTwo.get('result')?.value != 'pass'">
+                    <div class="flex">
+                      <label class="w-32">แผนการพัฒนาพนักงาน <br />(กรณีไม่ผ่าน) :</label>
+                      <textarea formControlName="plan" rows="4"
+                        class="grow resize-y appearance-none mx-3 rounded-md border border-gray-400 outline-none py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-44 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#f7d1d1]"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex mt-3 text-sm justify-items-start">
+                  <div class="flex flex-row">
+                    <p class="mr-2 underline">หมายเหตุ</p>
+                    :
+                  </div>
+                  <p class="">
+                    1. จัดส่งผลการติดตามประสิทธิผลการฝึกอบรมให้แผนกบุคคล
+                    ภายในสิ้นไตรมาส หลังจากที่ได้ประเมินผล <br />2.
+                    จัดส่งสำเนาใบรับรอง หรือใบประกาศนียบัตร (ถ้ามี)
+                    ส่งให้แผนกบุคคลด้วย
+                  </p>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+        <!--footer-->
+        <div class="flex items-center justify-end p-6 border-t border-solid rounded-b border-slate-200">
+          <button
+            class="px-6 py-2 mb-1 mr-1 text-md font-bold text-red-500 uppercase transition-all duration-150 ease-linear outline-none background-transparent focus:outline-none"
+            type="button" (click)="toggleModal()">
+            ยกเลิก
+          </button>
+          <button type="submit" [disabled]="!sectionOne.valid || !sectionTwo.valid" (click)="edit()" class="flex items-center justify-center text-white p-2  rounded shadow-md {{
+              !sectionOne.valid || !sectionTwo.valid
+                ? 'cursor-not-allowed bg-gray-400'
+                : 'cursor-pointer bg-green-700 hover:bg-green-600'
+            }}">
+            <i class="mr-2 text-2xl bx bx-mail-send"></i>บันทึกข้อมูล
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <button (click)="getFindAll()">getFindAll</button> -->
+</div>

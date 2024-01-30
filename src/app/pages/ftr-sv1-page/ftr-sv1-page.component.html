@@ -1,0 +1,278 @@
+<div class="bg-transparent">
+    <div
+        class="text-font-header rounded-md shadow p-6 pb-6 w-full bg-white dark:text-font-header-dark dark:bg-content-dark">
+        <p class="text-2xl ">FTR-SV1 : รายงานความต้องการฝึกอบรม (Training Need for Year)</p>
+        <br>
+        <form action="" [formGroup]="trainingForm">
+            <div
+                class="text-[#566a7f] rounded-md my-3 shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526]">
+                <div class="flex flex-row justify-center">
+                    <div class="grow">
+                        <label for="" class="self-center pr-4">Training Needs for Year</label>
+                        <input type="text" placeholder="YYYY" formControlName="year"
+                            (keypress)="onInputKeyPressYear($event)"
+                            [ngClass]="{ 'border-red-500 dark:border-red-500': trainingForm.get('year').hasError('required') && trainingForm.get('year').touched }"
+                            [minlength]="4" [maxlength]="4"
+                            class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-7/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        <!-- Display the error message if the 'year' field is touched and has 'required' error -->
+                        <div *ngIf="(trainingForm.get('year').hasError('required') && trainingForm.get('year').touched) || invalidYearInput"
+                            class="text-red-500 text-sm">
+                            <span class="text-red-500 text-sm pl-48 ">Year is required and must be numeric.</span>
+                        </div>
+                    </div>
+                    <!-- <div class="grow">
+                        <label for="year" class="self-center">Training Needs for Year</label>
+                        <select id="year" formControlName="year"
+                            [ngClass]="{ 'border-red-500 dark:border-red-500': trainingForm.get('year').hasError('required') && trainingForm.get('year').touched }"
+                            class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-7/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                            <option value="" disabled selected class="text-gray-600  dark:text-gray-600">YYYY</option>
+                            <option *ngFor="let year of getYearsRange()" [value]="year">{{ year }}</option>
+                        </select>
+                        <div *ngIf="(trainingForm.get('year').hasError('required') && trainingForm.get('year').touched) || invalidYearInput"
+                            class="text-red-500 text-sm">
+                            <span class="text-red-500 text-sm pl-48 ">Year is required and must be numeric.</span>
+                        </div>
+                    </div> -->
+                    <div class="grow">
+                        <label for="" class="self-center pr-4">ฝ่าย/แผนก</label>
+                        <input type="text" formControlName="department"
+                            [ngClass]="{ 'border-red-500 dark:border-red-500': trainingForm.get('department').hasError('required') && trainingForm.get('department').touched }"
+                            class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-8/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        <div
+                            *ngIf="trainingForm.get('department').hasError('required') && trainingForm.get('department').touched">
+                            <span class="text-red-500 text-sm pl-20 ">Department is required.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="text-[#566a7f] rounded-md mt-5 mb-3 shadow p-6 pb-6 w-full bg-gray-50 dark:text-[#e4e6eb] dark:bg-[#242526]">
+                <div class="grid grid-cols-9 gap-y-2">
+                    <!-- Row 1 -->
+                    <div class="rounded-lg h-12 p-2">
+                        <label for="" class="flex-initial self-center w-28">Position</label>
+                    </div>
+                    <div class="col-start-2 col-end-4 rounded-lg h-20">
+                        <input type="text" formControlName="position"
+                            [ngClass]="{ 'border-red-500 dark:border-red-500': trainingForm.get('position').hasError('required') && trainingForm.get('position').touched }"
+                            class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        <div
+                            *ngIf="trainingForm.get('position').hasError('required') && trainingForm.get('position').touched">
+                            <span class="text-red-500 text-sm">Position is required.</span>
+                        </div>
+                    </div>
+                    <div class="rounded-lg h-12 p-2">
+                        <label for="" class="flex-initial self-center w-28">Class Name</label>
+                    </div>
+                    <div class="col-start-5 col-end-7 rounded-lg h-20">
+                        <input type="text" formControlName="className"
+                            [ngClass]="{ 'border-red-500 dark:border-red-500': trainingForm.get('className').hasError('required') && trainingForm.get('className').touched }"
+                            class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        <div
+                            *ngIf="trainingForm.get('className').hasError('required') && trainingForm.get('className').touched">
+                            <span class="text-red-500 text-sm ">Class Name is required.</span>
+                        </div>
+                    </div>
+                    <div class="rounded-lg h-12 p-2">
+                        <label for="" class="flex-initial self-center w-28">No. of Person</label>
+                    </div>
+                    <div class="col-start-8 col-end-10 rounded-lg h-20">
+                        <input type="text" formControlName="no" (keypress)="onInputKeyPressNo($event)"
+                            [ngClass]="{ 'border-red-500 dark:border-red-500': trainingForm.get('no').hasError('required') && trainingForm.get('no').touched }"
+                            class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        <div *ngIf="(trainingForm.get('no').hasError('required') && trainingForm.get('no').touched) || invalidNoInput"
+                            class="text-red-500 text-sm">
+                            No. of Person is required and must be numeric.
+                        </div>
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="rounded-lg h-12 p-2">
+                        <label for="" class="flex-initial self-center w-28">Class Fee</label>
+                    </div>
+                    <div class="col-start-2 col-end-4 rounded-lg h-20">
+                        <input type="text" formControlName="fee" (keypress)="onInputKeyPressFee($event)"
+                            (blur)="onBlurFee($event)"
+                            [ngClass]="{ 'border-red-500 dark:border-red-500': trainingForm.get('fee').hasError('required') && trainingForm.get('fee').touched }"
+                            class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        <div *ngIf="(trainingForm.get('fee').hasError('required') && trainingForm.get('fee').touched) || invalidFeeInput"
+                            class="text-red-500 text-sm">
+                            Class Fee is required and must be numeric.
+                        </div>
+                    </div>
+
+                    <div class="rounded-lg h-12 pl-2 relative">
+                        <label for="" class="flex-initial self-center text-sm">Accommodation & AirFare</label>
+                    </div>
+                    <div class="col-start-5 col-end-7 rounded-lg h-20">
+                        <input type="text" formControlName="accommodation"
+                            (keypress)="onInputKeyPressAccommodation($event)" (blur)="onBlurAccommodation($event)"
+                            [ngClass]="{ 'border-red-500 dark:border-red-500': trainingForm.get('accommodation').hasError('required') && trainingForm.get('accommodation').touched }"
+                            class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        <div *ngIf="(trainingForm.get('accommodation').hasError('required') && trainingForm.get('accommodation').touched) || invalidAccommodationExpInput"
+                            class="text-red-500 text-sm">
+                            Accommodation & AirFare is required and must be numeric.
+                        </div>
+                    </div>
+
+                    <div class="rounded-lg h-12 p-2">
+                        <label for="" class="flex-initial self-center w-28">Total Exp.</label>
+                    </div>
+                    <div class="col-start-8 col-end-10 rounded-lg h-20">
+                        <input type="text" formControlName="totalExp" (keypress)="onInputKeyPressTotal($event)" (blur)="onBlurTotal($event)"
+                            [ngClass]="{ 'border-red-500 dark:border-red-500': trainingForm.get('totalExp').hasError('required') && trainingForm.get('totalExp').touched }"
+                            class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        <div *ngIf="(trainingForm.get('totalExp').hasError('required') && trainingForm.get('totalExp').touched) || invalidTotalExpInput"
+                            class="text-red-500 text-sm">
+                            Total Exp. is required and must be numeric.
+                        </div>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="rounded-lg h-12 p-2">
+                        <label for="" class="flex-initial self-center w-28">Remark :</label>
+                    </div>
+                    <div class="col-start-2 col-end-10 rounded-lg h-auto">
+                        <!-- ลบความสูง (h-20) และเปลี่ยนเป็น h-auto -->
+                        <textarea type="text" formControlName="remark"
+                            [ngClass]="{ 'border-red-500 dark:border-red-500': trainingForm.get('remark').hasError('required') && trainingForm.get('remark').touched }"
+                            class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-full xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"></textarea>
+                        <div
+                            *ngIf="trainingForm.get('remark').hasError('required') && trainingForm.get('remark').touched">
+                            <span class="text-red-500 text-sm">Remark is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <p class="mx-3 text-end text-xs text-font-header dark:text-[#e4e6eb]">
+            {{ 20-trainingForm.remark.length }}
+        </p> -->
+            </div>
+        </form>
+
+
+
+        <div class="flex justify-center my-6">
+            <div>
+                <button type="submit" (click)="addSv1Btn()" [disabled]="trainingForm.invalid"
+                    class="text-white p-2 w-24 rounded shadow-md {{ (trainingForm.invalid) ? 'cursor-not-allowed bg-gray-400 border-2 border-gray-400' : 'cursor-pointer bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]' }}">
+                    <i class="fa-solid fa-plus mr-1"></i> Add
+                </button>
+            </div>
+            <div class="mx-2">
+                <button type="button" (click)="refreshBtn()"
+                    class="text-[#696cf8] p-2 w-30 rounded shadow-md bg-transparent border-2 border-[#696cf8] hover:bg-[#7376fa] hover:text-white">
+                    <i class="fa-solid fa-refresh mr-1"></i> Refresh
+                </button>
+            </div>
+        </div>
+        <hr>
+        <!-- <div class="flex justify-center">
+        <p #yearAndDepartment class="p-2 m-3 text-xl text-center font-medium rounded-md select-none text-font-header dark:text-[#e4e6eb]">
+            Training Need for year {{ year ? year : '...' }}<br> ฝ่าย/แผนก {{ department ? department : '...' }}
+        </p>
+    </div> -->
+        <div class="flex justify-center">
+            <p
+                class="p-2 m-3 text-xl text-center font-medium rounded-md select-none text-font-header dark:text-[#e4e6eb]">
+                Training Need for year {{ readonlyYear ? readonlyYear : '...' }}<br> ฝ่าย/แผนก {{ readonlyDepartment ?
+                readonlyDepartment : '...' }}
+            </p>
+        </div>
+
+        <div class="w-full overflow-x-auto rounded-b-md shadow">
+            <table id="data-table" class="table-auto text-[#566a7f] text-base w-[75rem] lg:w-full dark:text-white">
+                <colgroup>
+                    <col style="width: 15%;" />
+                    <col style="width: 15%;" />
+                    <col style="width: 15%;" />
+                    <col style="width: 10%;" />
+                    <col style="width: 15%;" />
+                    <col style="width: 15%;" />
+                    <col style="width: 15%;" />
+                </colgroup>
+                <thead class="text-sm bg-white dark:bg-neutral-800 dark:shadow-none border-b ">
+                    <tr class="text-center border-b-gray-300 border-b-2 h-16">
+                        <th scope="col">Position</th>
+                        <th scope="col">Class Name</th>
+                        <th scope="col">No. of Person</th>
+                        <th scope="col">Class Fee</th>
+                        <th scope="col">Accommodation & Air Fare</th>
+                        <th scope="col">Total Exp.</th>
+                        <th scope="col">Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        class="text-center h-20 cursor-pointer odd:bg-white dark:odd:bg-[#3a3b3c] dark:even:bg-black even:bg-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700">
+                        <td>Software Developer</td>
+                        <td>Introduction to Spring Framework รุ่น 9</td>
+                        <td>1336</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>-</td>
+                    </tr>
+                    <tr
+                        class="text-center h-20 cursor-pointer odd:bg-white dark:odd:bg-[#3a3b3c] dark:even:bg-black even:bg-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700">
+                        <td>OSS Div.</td>
+                        <td>Introduction to Spring Framework รุ่น 9</td>
+                        <td>1279</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>-</td>
+                    </tr>
+                    <tr
+                        class="text-center h-20 cursor-pointer odd:bg-white dark:odd:bg-[#3a3b3c] dark:even:bg-black even:bg-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700">
+                        <td>Head Quarter</td>
+                        <td>Introduction to Spring Framework รุ่น 9</td>
+                        <td>1337</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>-</td>
+                    </tr>
+                    <tr *ngFor="let row of rows"
+                        class="odd:bg-white dark:odd:bg-[#3a3b3c] dark:even:bg-black even:bg-slate-100 text-center truncate h-20 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">
+                        <td>{{ row.position }}</td>
+                        <td>{{ row.className }}</td>
+                        <td>{{ row.no }}</td>
+                        <td>{{ row.fee }}</td>
+                        <td>{{ row.accommodation }}</td>
+                        <td>{{ row.totalExp }}</td>
+                        <td class="overflow-auto max-w-[10rem] m-2 whitespace-pre-line">{{ row.remark }}</td>
+                    </tr>
+                </tbody>
+                <tfoot class="border-t-gray-300 border-t-2 border-b-gray-300 border-b-2 ">
+                    <tr class="text-center h-12">
+                        <td colspan="3">Total</td>
+                        <td colspan="2"></td>
+                        <td>{{ total | number:'1.2-2'}}</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+
+        </div>
+        <div class="flex justify-center my-6">
+            <div>
+                <button type="submit" (click)="generateReport()"
+                    class="text-white mx-5 py-2 px-4 w-auto rounded shadow-md cursor-pointer bg-green-500 hover:bg-green-400">
+                    <i class="fa-regular fa-file-pdf fa-lg mr-1"></i> Export PDF</button>
+            </div>
+            <div>
+                <button type="submit" (click)="exportexcel()"
+                    class="text-white py-2 px-4 w-auto rounded shadow-md cursor-pointer bg-green-500 hover:bg-green-400">
+                    <i class="fa-regular fa-file-excel fa-lg mr-1"></i> Export Excel</button>
+            </div>
+        </div>
+
+        <button (click)="getUserList()"
+            class="text-white py-2 px-4 w-auto rounded shadow-md cursor-pointer bg-green-500 hover:bg-green-400">
+            Test</button>
+
+
+    </div>
