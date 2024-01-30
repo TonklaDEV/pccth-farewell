@@ -38,6 +38,7 @@ import { ApprovePageComponent } from './approve-page/approve-page.component';
 import { ManageUserPageComponent } from './manage-user-page/manage-user-page.component';
 import { ManageCoursePageComponent } from './manage-course-page/manage-course-page.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { WellfarePageComponent } from './wellfare-page/wellfare-page.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ApprovePageComponent,
     ManageUserPageComponent,
     ManageCoursePageComponent,
+    WellfarePageComponent,
   ],
   imports: [
     SharedModule,
