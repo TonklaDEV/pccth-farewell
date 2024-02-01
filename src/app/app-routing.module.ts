@@ -21,6 +21,7 @@ import { SignInPageComponent } from './pages/sign-in-page/sign-in-page.component
 import { ManageUserPageComponent } from './pages/manage-user-page/manage-user-page.component';
 import { ManageCoursePageComponent } from './pages/manage-course-page/manage-course-page.component';
 import { WellfarePageComponent } from './pages/wellfare-page/wellfare-page.component';
+import { BudgetComponent } from './pages/budget/budget.component';
 const routes: Routes = new Array<Route>(
   // {
   //   path: 'sign-in',
@@ -94,6 +95,10 @@ const routes: Routes = new Array<Route>(
       {
         path: 'wellfare',
         component: WellfarePageComponent,
+      },
+      {
+        path: 'budget',
+        component: BudgetComponent,
       },
       {
         // Redirects all paths that are not matching to the 'sign-in' route/path
