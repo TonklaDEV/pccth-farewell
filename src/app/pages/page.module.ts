@@ -41,6 +41,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { WellfarePageComponent } from './wellfare-page/wellfare-page.component';
 import { WellfareDetailPageComponent } from './wellfare-detail-page/wellfare-detail-page.component';
 import { BudgetComponent } from './budget/budget.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,9 @@ import { BudgetComponent } from './budget/budget.component';
   ],
   imports: [
     SharedModule,
+    MatPaginatorModule,
     MatDatepickerModule,
+    MatTableModule,
     MatAutocompleteModule,
     MatSnackBarModule,
     MatFormFieldModule,
@@ -92,8 +96,6 @@ import { BudgetComponent } from './budget/budget.component';
       useFactory: adapterFactory,
     }),
   ],
-  providers: [
-    FtrOf1Service
-  ]
+  providers: [FtrOf1Service],
 })
 export class PageModule {}
