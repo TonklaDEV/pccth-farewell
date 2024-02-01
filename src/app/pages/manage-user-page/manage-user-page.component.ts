@@ -32,9 +32,9 @@ export class ManageUserPageComponent implements OnInit {
 
     console.log('in manage-user')
     const role = this.authService.checkRole();
-    if (role !== 'ROLE_Admin'){
-      this.router.navigate(['/pccth']);
-    }
+    // if (role !== 'ROLE_Admin'){
+    //   this.router.navigate(['/pccth']);
+    // }
   }
 
   onSubmit() {

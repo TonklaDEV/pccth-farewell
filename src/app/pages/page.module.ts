@@ -40,6 +40,7 @@ import { ManageCoursePageComponent } from './manage-course-page/manage-course-pa
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { WellfarePageComponent } from './wellfare-page/wellfare-page.component';
 import { WellfareDetailPageComponent } from './wellfare-detail-page/wellfare-detail-page.component';
+import { BudgetComponent } from './budget/budget.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { WellfareDetailPageComponent } from './wellfare-detail-page/wellfare-det
     ManageCoursePageComponent,
     WellfarePageComponent,
     WellfareDetailPageComponent,
+    BudgetComponent,
   ],
   imports: [
     SharedModule,
