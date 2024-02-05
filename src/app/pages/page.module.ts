@@ -39,11 +39,14 @@ import { ManageUserPageComponent } from './manage-user-page/manage-user-page.com
 import { ManageCoursePageComponent } from './manage-course-page/manage-course-page.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { WellfarePageComponent } from './wellfare-page/wellfare-page.component';
+import { WellfareDetailPageComponent } from './wellfare-detail-page/wellfare-detail-page.component';
 import { BudgetComponent } from './budget/budget.component';
 import { WellfareDialogComponent } from './wellfare-page/wellfare-dialog/wellfare-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -79,6 +82,7 @@ import { MatRadioModule } from '@angular/material/radio';
     ManageUserPageComponent,
     ManageCoursePageComponent,
     WellfarePageComponent,
+    WellfareDetailPageComponent,
     BudgetComponent,
     WellfareDialogComponent,
   ],
@@ -87,7 +91,9 @@ import { MatRadioModule } from '@angular/material/radio';
     MatCheckboxModule,
     MatDialogModule,
     SharedModule,
+    MatPaginatorModule,
     MatDatepickerModule,
+    MatTableModule,
     MatAutocompleteModule,
     MatSnackBarModule,
     MatFormFieldModule,
@@ -98,8 +104,6 @@ import { MatRadioModule } from '@angular/material/radio';
       useFactory: adapterFactory,
     }),
   ],
-  providers: [
-    FtrOf1Service
-  ]
+  providers: [FtrOf1Service],
 })
 export class PageModule {}
