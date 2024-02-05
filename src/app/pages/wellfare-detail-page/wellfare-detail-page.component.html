@@ -1,46 +1,118 @@
 <div class="bg-transparent">
-    <div class="w-full p-6 bg-white rounded-md shadow text-font-header dark:text-font-header-dark dark:bg-content-dark">
-        <p class="mb-6 text-2xl">ตารางแสดงการเบิกค่ารักษาพยาบาลทั้งหมด</p>
-        <div class="w-1/2">
-            <input class="grow appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" matInput (keyup)="applyFilter($event)" placeholder="โปรดระบุสิ่งที่ต้องการค้นหา เช่น ชื่อ,จำนวนเงิน,รหัสพนักงาน, และอื่น" #input>
+    <div class="grid items-stretch w-full grid-cols-3 gap-5">
+        <div class="w-full col-span-2 h-[col-span-1] basis-2/3 flex flex-col">
+            <div
+                class="flex-1 w-full p-6 bg-white rounded-md shadow text-font-header dark:text-font-header-dark dark:bg-content-dark">
+                <p class="mb-6 text-2xl">ตารางแสดงการเบิกค่ารักษาพยาบาลทั้งหมด</p>
+                <div class="w-1/2">
+                    <input
+                        class="grow appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#6d6161]"
+                        matInput (keyup)="applyFilter($event)"
+                        placeholder="โปรดระบุสิ่งที่ต้องการค้นหา เช่น ชื่อ,จำนวนเงิน,รหัสพนักงาน, และอื่น" #input>
+                </div>
+                <div class="mx-2 my-4">
+                    <table class="w-full dark:bg-zinc-800 dark:rounded dark:drop-shadow dark:shadow-zinc-300" mat-table
+                        [dataSource]="dataSource" matSort>
+
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="id">
+                            <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef
+                                mat-sort-header> ID </th>
+                            <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row">
+                                {{row.id}} </td>
+                        </ng-container>
+
+                        <!-- Progress Column -->
+                        <ng-container matColumnDef="progress">
+                            <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef
+                                mat-sort-header> Progress </th>
+                            <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row">
+                                {{row.progress}}% </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef
+                                mat-sort-header> Name </th>
+                            <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row">
+                                {{row.name}} </td>
+                        </ng-container>
+
+                        <!-- Fruit Column -->
+                        <ng-container matColumnDef="fruit">
+                            <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef
+                                mat-sort-header> Fruit </th>
+                            <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row">
+                                {{row.fruit}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                        <!-- Row shown when there is no matching data. -->
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                        </tr>
+                    </table>
+
+                    <mat-paginator class="dark:bg-[#3a3b3c] dark:text-white" [pageSizeOptions]="[5, 10, 25, 100]"
+                        aria-label="Select page of users"></mat-paginator>
+                </div>
+            </div>
         </div>
-        <div class="mx-2 my-4">
-            <table class="w-full dark:bg-content-dark " mat-table [dataSource]="dataSource" matSort>
-
-                <!-- ID Column -->
-                <ng-container matColumnDef="id">
-                    <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row"> {{row.id}} </td>
-                </ng-container>
-
-                <!-- Progress Column -->
-                <ng-container matColumnDef="progress">
-                    <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-                    <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-                </ng-container>
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                    <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-                    <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row"> {{row.name}} </td>
-                </ng-container>
-
-                <!-- Fruit Column -->
-                <ng-container matColumnDef="fruit">
-                    <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef mat-sort-header> Fruit </th>
-                    <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row"> {{row.fruit}} </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-                <!-- Row shown when there is no matching data. -->
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-                </tr>
-            </table>
-
-            <mat-paginator class="dark:bg-[#3a3b3c] dark:text-white" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        <div class="flex flex-col flex-1 w-full col-span-1 basis-1/3 gap-y-5">
+            <div class="w-full p-5 rounded-md bg-content shadow-card dark:bg-content-dark dark:shadow-none">
+                <div class="flex items-center justify-center mt-1">
+                    <div class="px-3 py-2 text-white rounded-md bg-slate-400">
+                        <i class='bx bx-first-aid mt-1 text-[3rem]'></i>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div class="my-4">
+                        <h6 class="text-lg dark:text-white">ค่ารักษาพยาบาลผู้ป่วยนอก</h6>
+                    </div>
+                </div>
+                <div class="flex justify-between mx-8 dark:text-white">
+                    <p>ค่ารักษาพยาบาล</p>
+                    <p>{{ opdAllBudget }} บาท</p>
+                </div>
+                <div class="flex justify-between mx-8 dark:text-white">
+                    <p>คิดเป็นร้อยละ</p>
+                    <p>{{ opdAllBudget }} %</p>
+                </div>
+                <div class="w-full mt-2 text-center">
+                    <button (click)="openOPDDialog()"
+                        class="w-full py-1 text-center border border-gray-800 rounded-md cursor-pointer dark:hover:border-gray-500 hover:border-gray-500 hover:bg-gray-500 hover:text-white dark:text-white dark:border-white">
+                        ดูรายละเอียด
+                    </button>
+                </div>
+            </div>
+            <div class="w-full p-5 rounded-md bg-content shadow-card dark:bg-content-dark dark:shadow-none">
+                <div class="flex items-center justify-center mt-1">
+                    <div class="px-3 py-2 text-white rounded-md bg-lime-600">
+                        <i class='bx bx-clinic mt-1 text-[3rem]'></i>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div class="my-4">
+                        <h6 class="text-lg dark:text-white">ค่ารักษาพยาบาลผู้ป่วยใน</h6>
+                    </div>
+                </div>
+                <div class="flex justify-between mx-8 dark:text-white">
+                    <p>ค่ารักษาพยาบาล</p>
+                    <p>{{ opdAllBudget }} บาท</p>
+                </div>
+                <div class="flex justify-between mx-8 dark:text-white">
+                    <p>คิดเป็นร้อยละ</p>
+                    <p>{{ opdAllBudget }} %</p>
+                </div>
+                <div class="w-full mt-2 text-center">
+                    <button (click)="openIPDDialog()"
+                        class="w-full py-1 text-center border border-gray-800 rounded-md cursor-pointer dark:hover:border-lime-500 hover:border-lime-500 hover:bg-lime-500 hover:text-white dark:text-white dark:border-white">
+                        ดูรายละเอียด
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

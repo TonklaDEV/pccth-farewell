@@ -2,7 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-
+import { MatDialog } from '@angular/material/dialog';
+import { OpdDialogComponent } from './components/opd-dialog/opd-dialog.component';
+import { IpdDialogComponent } from './components/ipd-dialog/ipd-dialog.component';
 export interface UserData {
   id: string;
   name: string;
@@ -44,13 +46,12 @@ const NAMES: string[] = [
 @Component({
   selector: 'app-wellfare-detail-page',
   templateUrl: './wellfare-detail-page.component.html',
-  styleUrls: ['./wellfare-detail-page.component.scss']
+  styleUrls: ['./wellfare-detail-page.component.scss'],
 })
-export class WellfareDetailPageComponent implements OnInit , AfterViewInit {
-
+export class WellfareDetailPageComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
   dataSource!: MatTableDataSource<UserData>;
-
+  opdAllBudget: number = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -59,16 +60,15 @@ export class WellfareDetailPageComponent implements OnInit , AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
     // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
+    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
-   }
-
-  ngOnInit(): void {
   }
+
+  ngOnInit(): void {}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -79,8 +79,13 @@ export class WellfareDetailPageComponent implements OnInit , AfterViewInit {
     }
   }
 
-  
+  openOPDDialog() {
+    this.dialog.open(OpdDialogComponent);
+  }
 
+  openIPDDialog() {
+    this.dialog.open(IpdDialogComponent)
+  }
 }
 
 /** Builds and returns a new User. */
