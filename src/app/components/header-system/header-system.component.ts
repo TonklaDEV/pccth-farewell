@@ -12,7 +12,13 @@ import { ThemeModeService } from '../../shared/services/theme-mode/theme-mode.se
   styleUrls: ['./header-system.component.scss'],
 })
 export class HeaderSystemComponent {
-  user : any;
+  user: any = {
+    firstname: '',
+    lastname: '',
+    role: [{ authority: '' }],
+    email : '',
+    telephone : ''
+  };
   protected themeMode: boolean = false;
   protected showProfile: boolean = false;
 
@@ -47,17 +53,17 @@ export class HeaderSystemComponent {
     // this.ngOnInit()
   }
 
-  ngOnInit(){
+  ngOnInit() {
     // window.location.reload();
     const accessToken = localStorage.getItem('access_token');
     if (accessToken !== null) {
-      const decodedToken= this.jwtService.decodeToken(accessToken);
+      const decodedToken = this.jwtService.decodeToken(accessToken);
       // this.user = JSON.stringify(decodedToken);
-      this.user = decodedToken;
+      // this.user = decodedToken;
       // console.log(this.user);
-    } 
+    }
   }
-  signout(){
+  signout() {
     this.user = '';
     localStorage.removeItem('access_token');
     // localStorage.removeItem('refresh_token');
@@ -65,7 +71,7 @@ export class HeaderSystemComponent {
     // this.loadWindow
     this.router.navigate(['/sign-in']);
   }
-  loadWindow(){
+  loadWindow() {
     window.location.reload();
   }
 
