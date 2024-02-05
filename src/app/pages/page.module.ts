@@ -47,6 +47,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { OpdDialogComponent } from './wellfare-detail-page/components/opd-dialog/opd-dialog.component';
+import { IpdDialogComponent } from './wellfare-detail-page/components/ipd-dialog/ipd-dialog.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +87,8 @@ import { MatTableModule } from '@angular/material/table';
     WellfareDetailPageComponent,
     BudgetComponent,
     WellfareDialogComponent,
+    OpdDialogComponent,
+    IpdDialogComponent,
   ],
   imports: [
     MatRadioModule,
