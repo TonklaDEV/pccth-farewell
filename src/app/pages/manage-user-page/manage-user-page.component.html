@@ -59,7 +59,7 @@
 
                 <div
                     class="text-[#566a7f] rounded-md mt-5 mb-3 shadow p-6 pb-6 w-full bg-gray-50 dark:text-[#e4e6eb] dark:bg-[#242526]">
-                    <div class="grid grid-cols-9 gap-y-2">
+                    <div class="">
                         <!-- Row 1 -->
                         <div class="rounded-lg h-12 p-2">
                             <label for="" class="flex-initial self-center w-28">รหัสพนักงาน</label>
@@ -74,7 +74,26 @@
                                 <span class="text-red-500 text-sm">กรุณากรอกข้อมูล</span>
                             </div>
                         </div>
+
                         <div class="rounded-lg h-12 p-2">
+                            <label for="" class="flex-initial self-center w-28">คำนำหน้า</label>
+                          </div>
+                          <div class="col-start-5 col-end-7 rounded-lg h-20">
+                            <select formControlName="prefix"
+                              [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('prefix').hasError('required') && UserForm.get('prefix').touched }"
+                              class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                              <option value="" disabled selected>เลือกคำนำหน้า</option>
+                              <option value="นาย">นาย</option>
+                              <option value="นาง">นาง</option>
+                              <option value="นางสาว">นางสาว</option>
+                            </select>
+                            <div *ngIf="UserForm.get('prefix').hasError('required') && UserForm.get('prefix').touched">
+                              <span class="text-red-500 text-sm">กรุณาเลือกคำนำหน้า</span>
+                            </div>
+                          </div>
+                          
+                    
+                        <div class="rounded-lg h-12 p-2 ">
                             <label for="" class="flex-initial self-center w-28">ชื่อ</label>
                         </div>
                         <div class="col-start-5 col-end-7 rounded-lg h-20">
@@ -86,6 +105,8 @@
                                 <span class="text-red-500 text-sm ">กรุณากรอกข้อมูล</span>
                             </div>
                         </div>
+                    
+
                         <div class="rounded-lg h-12 p-2">
                             <label for="" class="flex-initial self-center w-28">นามสกุล</label>
                         </div>
@@ -98,6 +119,7 @@
                                 กรุณากรอกข้อมูล
                             </div>
                         </div>
+                    
                         <!-- Row 2 -->
                         <div class="rounded-lg h-12 p-2">
                             <label for="" class="flex-initial self-center w-28">ตำแหน่ง</label>
@@ -123,7 +145,39 @@
                                 มีข้อผิดพลาดในกรอกข้อมูล <br>(Exp @pccth.com)
                             </div>
                         </div>
+
+                        <div class="rounded-lg h-12 p-2">
+                            <label for="" class="flex-initial self-center w-28">สถานะ</label>
+                        </div>
+                        <div class="col-start-2 col-end-4 rounded-lg h-20">
+                            <select formControlName="remark"
+                                [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('remark').hasError('required') && UserForm.get('remark').touched }"
+                                class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                                <option value="" disabled selected>เลือกสถานะ</option>
+                                <option value="พนักงานประจำ">พนักงานประจำ</option>
+                                <option value="สัญญาจ้าง">สัญญาจ้าง</option>
+                                <option value="เงื่อนไขพิเศษ">เงื่อนไขพิเศษ</option>
+                            </select>
+                            <div *ngIf="UserForm.get('remark').hasError('required') && UserForm.get('remark').touched"
+                                class="text-red-500 text-sm">
+                                กรุณาเลือก Remark
+                            </div>
+                        </div>
+
+                        <div class="rounded-lg h-12 p-2">
+                            <label for="" class="flex-initial self-center w-28">วันที่เริ่มทำงาน</label>
+                        </div>
+                        <div class="col-start-2 col-end-4 rounded-lg h-20">
+                            <input type="date" formControlName="startDate"
+                                [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('startDate').hasError('required') && UserForm.get('startDate').touched }"
+                                class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                            <div *ngIf="UserForm.get('startDate').hasError('required') && UserForm.get('startDate').touched"
+                                class="text-red-500 text-sm">
+                                กรุณาเลือกวันที่เริ่มทำงาน
+                            </div>
+                        </div> 
                     </div>
+
                     <div class="flex justify-center mt-4">
                         <button type="submit" [disabled]="UserForm.invalid"
                             class="text-white p-2 w-24 rounded shadow-md {{ (UserForm.invalid) ? 'cursor-not-allowed bg-gray-400 border-2 border-gray-400' : 'cursor-pointer bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]' }}">

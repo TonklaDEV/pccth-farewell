@@ -2,10 +2,10 @@
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="expenseFrom">
         <h3>ประเภทการรักษา</h3>
-        <section class="example-section space-y-1">
+        <section class="space-y-1 example-section">
             <mat-radio-group formControlName="type">
-                <mat-radio-button class="mr-2" id="opd" value="opd">OPD</mat-radio-button>
-                <mat-radio-button class="mr-2" id="ipd" value="ipd">IPD</mat-radio-button>
+                <mat-radio-button [color]="'primary'" class="mr-2" id="opd" value="opd">OPD</mat-radio-button>
+                <mat-radio-button [color]="'primary'" class="mr-2" id="ipd" value="ipd">IPD</mat-radio-button>
             </mat-radio-group>
         </section><br>
         <h3>วัน/เดือน/ปี</h3>

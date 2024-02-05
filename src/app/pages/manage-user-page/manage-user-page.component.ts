@@ -24,6 +24,9 @@ export class ManageUserPageComponent implements OnInit {
       dept: ['', Validators.required],
       empId: ['', Validators.required],
       firstname: ['', Validators.required],
+      prefix: ['', Validators.required],
+      remark: ['', Validators.required],
+      startDate: ['', Validators.required],
       surname: ['', Validators.required],
       position: ['', Validators.required],
       mail: ['', Validators.email]
