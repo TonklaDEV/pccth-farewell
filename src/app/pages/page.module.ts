@@ -41,6 +41,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { WellfarePageComponent } from './wellfare-page/wellfare-page.component';
 import { WellfareDetailPageComponent } from './wellfare-detail-page/wellfare-detail-page.component';
 import { BudgetComponent } from './budget/budget.component';
+import { WellfareDialogComponent } from './wellfare-page/wellfare-dialog/wellfare-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
@@ -80,8 +84,12 @@ import { MatTableModule } from '@angular/material/table';
     WellfarePageComponent,
     WellfareDetailPageComponent,
     BudgetComponent,
+    WellfareDialogComponent,
   ],
   imports: [
+    MatRadioModule,
+    MatCheckboxModule,
+    MatDialogModule,
     SharedModule,
     MatPaginatorModule,
     MatDatepickerModule,

@@ -31,7 +31,7 @@ export class ManageUserPageComponent implements OnInit {
     console.log(this.UserForm);
 
     console.log('in manage-user')
-    const role = this.authService.checkRole();
+    // const role = this.authService.checkRole();
     // if (role !== 'ROLE_Admin'){
     //   this.router.navigate(['/pccth']);
     // }
