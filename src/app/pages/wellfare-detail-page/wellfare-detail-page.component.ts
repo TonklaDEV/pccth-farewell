@@ -50,7 +50,7 @@ export class WellfareDetailPageComponent implements OnInit , AfterViewInit {
 
   displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
   dataSource!: MatTableDataSource<UserData>;
-
+  opdAllBudget : number = 0
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
