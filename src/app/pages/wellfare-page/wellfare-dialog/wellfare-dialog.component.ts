@@ -36,6 +36,19 @@ export class WellfareDialogComponent implements OnInit {
   get dateRange() {
     return this.expenseFrom.get('dateRange') as FormGroup;
   }
+
+  updateNumberOfDays(): void {
+    const startDate = this.dateRange.get('start')?.value;
+    const endDate = this.dateRange.get('end')?.value;
+
+    if (startDate && endDate) {
+      const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+      this.expenseFrom.get('numberOfDays')?.setValue(diffDays);
+      console.log(diffDays);
+    }
+  }
   
 
   save(){
