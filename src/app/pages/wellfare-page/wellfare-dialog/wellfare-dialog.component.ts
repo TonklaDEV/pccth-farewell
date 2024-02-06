@@ -23,10 +23,7 @@ export class WellfareDialogComponent implements OnInit {
   ) {
     this.expenseFrom = this.fb.group({
       type: ['', Validators.required],
-      dateRange: this.fb.group({
-        start: [null, Validators.required],
-        end: [null, Validators.required],
-      }),
+      dateRange: [''],
       numberOfDays: [null, Validators.required],
       medicalExpenses: [null, Validators.required],
       roomAndFoodExpenses: [null, Validators.required],
