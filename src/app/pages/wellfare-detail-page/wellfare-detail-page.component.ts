@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { OpdDialogComponent } from './components/opd-dialog/opd-dialog.component';
 import { IpdDialogComponent } from './components/ipd-dialog/ipd-dialog.component';
+import { WellfareDetailsService } from 'src/app/api-services/wellfare-details.service';
 export interface UserData {
   id: string;
   name: string;
@@ -60,12 +61,24 @@ export class WellfareDetailPageComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  constructor(public dialog: MatDialog) {
+  constructor(
+    public dialog: MatDialog,
+    public wellfareDetailService: WellfareDetailsService
+  ) {
     // Create 100 users
     const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
 
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(users);
+
+    this.wellfareDetailService.getAllExpenseInUsed().subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 
   ngOnInit(): void {}
@@ -84,7 +97,7 @@ export class WellfareDetailPageComponent implements OnInit, AfterViewInit {
   }
 
   openIPDDialog() {
-    this.dialog.open(IpdDialogComponent)
+    this.dialog.open(IpdDialogComponent);
   }
 }
 
