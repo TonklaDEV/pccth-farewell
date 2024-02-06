@@ -1,0 +1,121 @@
+<div class="dark:bg-[#18191A] dark:text-white">
+    <div class="grid grid-cols-2 w-full gap-3">
+        <div class="col-span-2 text-start ml-1">
+            <div class="flex justify-start items-center">
+                <h3 class="mr-2">ประเภทการรักษา</h3>
+                <mat-radio-group>
+                    <mat-radio-button [color]="'primary'" class="mr-2" id="opd" value="opd">OPD</mat-radio-button>
+                    <mat-radio-button [color]="'primary'" class="mr-2" id="ipd" value="ipd">IPD</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <div class="col-span-2 text-start ml-1">
+            <h3>รายละเอียดการเบิกค่ารักษา</h3>
+        </div>
+        <div class="col-span-2 w-full mx-auto">
+            <div class="grid grid-cols-2 gap-2">
+                <div class="col-span-1 w-full ml-1">
+                    <p-calendar [inline]="true" selectionMode="range" [style]="{width:'100%'}"
+                        [showWeek]="true"></p-calendar>
+                </div>
+                <div class="col-span-1 w-full">
+                    <div
+                        class="grid grid-cols-2 gap-2 justify-start text-start text-[#566a7f] rounded-md shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526]">
+                        <div class="col-span-1 flex flex-col justify-start items-start">
+                            <label for="">วันที่</label>
+                            <input type="text"
+                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        </div>
+                        <div class="col-span-1 flex flex-col justify-start items-start">
+                            <label for="">จำนวนวัน</label>
+                            <input type="text"
+                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        </div>
+                        <div class="col-span-1 flex flex-col justify-start items-start">
+                            <label for="">ค่ารักษาพยาบาล</label>
+                            <input type="text"
+                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        </div>
+                        <div class="col-span-1 flex flex-col justify-start items-start">
+                            <label for="">ค่าห้อง + ค่าอาหาร</label>
+                            <input type="text"
+                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                        </div>
+                        <div class="col-span-2 flex flex-col justify-start items-start">
+                            <label for="">รายละเอียด</label>
+                            <textarea
+                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <form [formGroup]="expenseFrom">
+    <h3>ประเภทการรักษา</h3>
+    <section class="space-y-1 example-section">
+        <mat-radio-group formControlName="type">
+            <mat-radio-button [color]="'primary'" class="mr-2" id="opd" value="opd">OPD</mat-radio-button>
+            <mat-radio-button [color]="'primary'" class="mr-2" id="ipd" value="ipd">IPD</mat-radio-button>
+        </mat-radio-group>
+    </section><br>
+    <h3>วัน/เดือน/ปี</h3>
+    <div class="flex flex-wrap items-start">
+        <mat-form-field appearance="fill" class="flex-shrink-0 mr-4">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [formGroup]="expenseFrom.get('dateRange')" [rangePicker]="picker"
+                    (dateChange)="updateNumberOfDays()">
+                    <input matStartDate formControlName="start" placeholder="Start date">
+                    <input matEndDate formControlName="end" placeholder="End date">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+                <mat-error *ngIf="dateRange.get('start')?.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="dateRange.get('end')?.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+            </mat-form-field> 
+        <div class="flex flex-col">
+            <div class="flex items-center h-12 p-2 rounded-lg   ">
+                <label for="" class="self-center flex-initial w-28">วันที่</label>
+                <p-calendar [autoZIndex]="true" [tabIndex]="999999" selectionMode="range" [readonlyInput]="true" inputId="range" formControlName="dateRange">
+                </p-calendar>
+            </div>
+        </div>
+
+        <div class="flex flex-col">
+            <div class="flex items-center h-12 p-2 rounded-lg">
+                <label for="" class="self-center flex-initial w-28">จำนวนวัน</label>
+                <input type="text" formControlName="numberOfDays"
+                    class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" />
+            </div>
+        </div>
+    </div>
+    <p>Selected range: {{ dateRange.value | json }}</p>
+    <p> date: {{ numberOfDays.value | json }}</p>
+
+    <br>
+
+
+    <div class="flex flex-wrap items-start">
+        <div class="flex items-center h-12 rounded-lg">
+            <label for="" class="self-center flex-initial w-32">ค่ารักษาพยาบาล</label>
+            <input type="text" formControlName="medicalExpenses"
+                class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+        </div>
+
+        <div class="flex items-center h-12 rounded-lg">
+            <label for="" class="self-center flex-initial w-32">ค่าห้อง+อาหาร</label>
+            <input type="text" formControlName="roomAndFoodExpenses"
+                class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+        </div>
+    </div>
+
+    <div class="flex items-center h-12 rounded-lg">
+        <label for="" class="self-center flex-initial w-28">รายละเอียด</label>
+        <input type="text" formControlName="details"
+            class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+    </div>
+</form> -->

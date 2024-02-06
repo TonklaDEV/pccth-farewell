@@ -1,0 +1,181 @@
+input:focus {
+    border-color: blue; /* เปลี่ยนเป็นสีน้ำเงินเมื่อ input ถูก focus */
+    outline: none; /* ลบ outline ที่อาจปรากฏโดย default ในบางเบราว์เซอร์ */
+  }
+  
+  #ipd:focus {
+    border-color: blue; /* เปลี่ยนเป็นสีน้ำเงินเมื่อ input ที่มี id เป็น ipd ถูก focus */
+    outline: none; /* ลบ outline ที่อาจปรากฏโดย default ในบางเบราว์เซอร์ */
+  }
+  .modal {
+    display: none; /* ซ่อน modal ไว้ก่อน */
+    position: fixed; /* อยู่ในตำแหน่งที่ตรึงไว้ */
+    z-index: 1; /* อยู่ด้านบนสุด */
+    left: 0;
+    top: 0;
+    width: 100%; /* กว้างเต็มหน้าจอ */
+    height: 100%; /* สูงเต็มหน้าจอ */
+    overflow: auto; /* ทำให้สามารถเลื่อนได้ถ้าเนื้อหาเกิน */
+    background-color: rgb(0,0,0); /* สีพื้นหลัง */
+    background-color: rgba(0,0,0,0.4); /* สีพื้นหลังพร้อมความทึบแสง */
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* จัดกลาง */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* กว้าง 80% ของหน้าจอ */
+  }
+  
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+
+  .modal {
+    display: block; /* หรือ 'flex' ขึ้นอยู่กับ layout ของคุณ */
+    position: fixed; /* หรือ 'absolute' */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* สำหรับดูว่ามันแสดงบนหน้าเพจหรือไม่ */
+    z-index: 1000; /* ตัวเลขที่สูงเพื่อให้มันอยู่บนสุด */
+  }
+  
+  .table-center th, .table-center td {
+    text-align: center; /* จัดตัวหนังสือให้อยู่ตรงกลาง */
+    border: 1px solid #ddd; /* เพิ่มเส้นขอบ */
+  }
+  
+  .shadow-sm {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  .mt-6 {
+    margin-top: 1.5rem; /* ปรับขนาดตามต้องการ */
+  }
+  
+  .overflow-hidden {
+    overflow: hidden;
+  }
+  
+  .border {
+    border: 1px solid #e2e8f0;
+  }
+  
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+  
+  .min-w-full {
+    min-width: 100%;
+  }
+  
+  .divide-y > :not(template) ~ :not(template) {
+    border-top-width: 1px;
+  }
+  
+  .divide-gray-200 > :not(template) ~ :not(template) {
+    --tw-divide-opacity: 1;
+    border-color: rgba(229, 231, 235, var(--tw-divide-opacity));
+  }
+  
+  .bg-gray-50 {
+    background-color: #f9fafb;
+  }
+  
+  .text-left {
+    text-align: left;
+  }
+  
+  .text-xs {
+    font-size: 0.75rem;
+  }
+  
+  .font-medium {
+    font-weight: 500;
+  }
+  
+  .text-gray-500 {
+    color: #6b7280;
+  }
+  
+  .uppercase {
+    text-transform: uppercase;
+  }
+  
+  .tracking-wider {
+    letter-spacing: 0.05em;
+  }
+  
+  .px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  .bg-white {
+    background-color: #ffffff;
+  }
+  
+  .whitespace-nowrap {
+    white-space: nowrap;
+  }
+
+.dark .dark\:bg-black {
+  background-color: #000; /* สำหรับโหมดมืด */
+}
+
+.bg-white {
+  background-color: #fff; /* สำหรับโหมดปกติ */
+}

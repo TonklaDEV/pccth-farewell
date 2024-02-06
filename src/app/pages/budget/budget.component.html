@@ -1,1 +1,74 @@
-<p>budget works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Manage Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-white dark:dark:bg-black">
+
+  <div class="max-w-7xl mx-auto py-8">
+    <div class="mb-4 p-6 text-font-header shadow-md rounded-lg">
+        <h2 class="text-xl font-semibold mb-4"></h2>
+        <form class="space-y-6" (ngSubmit)="addBudget()">
+          <div class="flex items-center space-x-2">
+            <!-- คุณไม่จำเป็นต้องมีอินพุตสำหรับ ID เนื่องจากควรจะถูกสร้างอัตโนมัติ -->
+          </div>
+          
+          <div class="flex items-center space-x-2">
+            <label for="level" class="block text-gray-700 whitespace-nowrap w-1/4">Level</label>
+            <input id="level" name="level" [(ngModel)]="budgetData.level" class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark  dark:bg-content-dark">
+          </div>
+          
+          <div class="flex items-center space-x-2">
+            <label for="opd" class="block text-gray-700 whitespace-nowrap w-1/4">OPD (ผู้ป่วยนอก)</label>
+            <input id="opd" name="opd" [(ngModel)]="budgetData.opd" class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark" placeholder="0.00">
+          </div>
+          
+          <div class="flex items-center space-x-2">
+            <label for="ipd" class="block text-gray-700 whitespace-nowrap w-1/4">IPD (ผู้ป่วยใน)</label>
+            <input id="ipd" name="ipd" [(ngModel)]="budgetData.ipd" class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark" placeholder="0.00">
+          </div>
+          
+          <div class="flex items-center space-x-2">
+            <label for="roomAndFood" class="block text-gray-700 whitespace-nowrap w-1/4">ค่าห้อง+ค่าอาหาร</label>
+            <input id="roomAndFood" name="roomAndFood" [(ngModel)]="budgetData.roomFood" class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark  dark:bg-content-dark">
+          </div>
+          
+          <div class="flex justify-end mt-4">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2">เพิ่มข้อมูล</button>
+          </div>
+        </form>
+      
+<!-- โค้ดภายใน div class="mt-6" ถูกปรับเพื่อใช้คลาส CSS ใหม่ -->
+<div class="mt-6 shadow-sm border rounded-lg">
+  <div class="overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200 table-center">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID (รหัส)</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ระดับพนักงาน</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ผู้ป่วยนอก (OPD/ครั้ง)</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ผู้ป่วยใน (IPD/ครั้ง)</th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ค่าห้อง/ค่าอาหาร/ครั้ง</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <!-- Data rows go here -->
+        <tr *ngFor="let budget of budgets; let i = index">
+          <td class="px-6 py-4 whitespace-nowrap">{{ i + 1 }}</td> <!-- สร้างลำดับแทน ID -->
+          <td class="px-6 py-4 whitespace-nowrap">{{ budget.level }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ budget.opd }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ budget.ipd }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ budget.roomFood }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
