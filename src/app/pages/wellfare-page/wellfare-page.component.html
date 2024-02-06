@@ -17,8 +17,19 @@
 
         </form>
 
-        <button (click)="openDialog()"  class="bg-[#696cf8] text-white font-bold py-2.5 px-4 my-5 rounded cursor-pointer drop-shadow dark:bg-[#8385ff] xl:h-1/2 xl:w-44 xl:ml-1 xl:mr-2">เบิกค่ารักษาพยาบาล</button>
+        <button (click)="showModalDialog()"
+            class="bg-[#696cf8] text-white font-bold py-2.5 px-4 my-5 rounded cursor-pointer drop-shadow dark:bg-[#8385ff] xl:h-1/2 xl:w-44 xl:ml-1 xl:mr-2">เบิกค่ารักษาพยาบาล</button>
         <div class="">
             <app-news-table></app-news-table>
         </div>
     </div>
+
+    <!-- modal -->
+    <p-dialog header="ค่ารักษาพยาบาล" [(visible)]="displayModal" [modal]="true" [style]="{width: '75vw',height:'100vh'}"
+        [draggable]="false" [resizable]="false">
+        <app-wellfare-dialog></app-wellfare-dialog>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
+        </ng-template>
+    </p-dialog>
+</div>
