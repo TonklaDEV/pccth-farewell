@@ -50,6 +50,7 @@ import { MatTableModule } from '@angular/material/table';
 import { OpdDialogComponent } from './wellfare-detail-page/components/opd-dialog/opd-dialog.component';
 import { IpdDialogComponent } from './wellfare-detail-page/components/ipd-dialog/ipd-dialog.component';
 
+
 @NgModule({
   declarations: [
     HomePageComponent,

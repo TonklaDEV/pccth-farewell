@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+
 @Component({
   selector: 'app-wellfare-dialog',
   templateUrl: './wellfare-dialog.component.html',
@@ -70,15 +71,19 @@ export class WellfareDialogComponent implements OnInit {
         console.log('Selected range:', selectedRange);
     }
 }
-
-
-
   save() {
-    console.log(this.expenseFrom);
+    console.log("From",this.expenseFrom);
   }
 
+  // sumdate(){
+  //   this.numberOfDays
+  // }
+
   ngOnInit(): void {
+  console.log(this.numberOfDays);
+    
   this.updateNumberOfDays();
+  this.numberOfDays
   }
   
 }
