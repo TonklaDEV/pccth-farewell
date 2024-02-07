@@ -1,38 +1,43 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-wellfare-dialog',
   templateUrl: './wellfare-dialog.component.html',
-  styleUrls: ['./wellfare-dialog.component.scss']
+  styleUrls: ['./wellfare-dialog.component.scss'],
 })
 export class WellfareDialogComponent implements OnInit {
 
-  expenseForm: FormGroup;
+  expenseForm!: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    this.expenseForm = this.fb.group({
-      type: [''],
-      dateRange: this.fb.group({
-        startDate: [],
-        endDate: [],
-        dateRangeInput: [''],
-      }),
-      numberOfDays: this.fb.group({
-        numberOfDaysInput: [''],
-      }),
-      medicalExpenses: this.fb.group({
-        medicalExpensesInput: [0],
-      }),
-      roomAndFoodExpenses: this.fb.group({
-        roomAndFoodExpensesInput: [0],
-      }),
-      details: this.fb.group({
-        detailsInput: [''],
-      }),
-    });
+    // this.expenseForm = this.fb.group({
+    //   type: [''],
+    //   dateRange: this.fb.group({
+    //     startDate: [],
+    //     endDate: [],
+    //     dateRangeInput: [''],
+    //   }),
+    //   numberOfDays: this.fb.group({
+    //     numberOfDaysInput: [''],
+    //   }),
+    //   medicalExpenses: this.fb.group({
+    //     medicalExpensesInput: [0],
+    //   }),
+    //   roomAndFoodExpenses: this.fb.group({
+    //     roomAndFoodExpensesInput: [0],
+    //   }),
+    //   details: this.fb.group({
+    //     detailsInput: [''],
+    //   }),
+    // });
   }
-  
+
   selectedDates!: Date[];
 
   handleDateSelection(): void {
@@ -49,7 +54,7 @@ export class WellfareDialogComponent implements OnInit {
       this.expenseForm.get('numberOfDays.numberOfDaysInput')?.setValue(daysDifference);
     }
   }
-  
+
   //   get dateRange() {
   //     return this.expenseFrom.get('dateRange') as FormGroup;
   //   }
@@ -78,7 +83,7 @@ export class WellfareDialogComponent implements OnInit {
   //   }
   // }
 
- 
+
   onDateChange(selectedDates: Date[]): void {
     if (selectedDates && selectedDates.length > 0) {
       const startDate = selectedDates[0];
@@ -110,11 +115,65 @@ export class WellfareDialogComponent implements OnInit {
   save() {
     console.log(this.expenseForm);
     console.log(this.selectedDates);
-    
+    console.log(this.rangeDates);
+
   }
 
   ngOnInit(): void {
     // this.updateNumberOfDays();
   }
 
+  // range = new FormGroup({
+  //   start: new FormControl(),
+  //   end: new FormControl(),
+  // });
+  rangeDates!: Date[];
+
+  //   get dateRange() {
+  //     return this.expenseFrom.get('dateRange') as FormGroup;
+  //   }
+
+  //   get numberOfDays() {
+  //     return this.expenseFrom.get('numberOfDays') as FormGroup;
+  //   }
+
+  //   updateNumberOfDays(): void {
+  //     console.log('Updating number of days...');
+  //     const dateRangeFormGroup = this.expenseFrom.get('dateRange');
+  //     const startDate = dateRangeFormGroup?.get('start')?.value;
+  //     const endDate = dateRangeFormGroup?.get('end')?.value;
+
+  //     console.log('Start Date:', startDate);
+  //     console.log('End Date:', endDate);
+
+  //     if (startDate && endDate) {
+  //         const startTimestamp = new Date(startDate).getTime();
+  //         const endTimestamp = new Date(endDate).getTime();
+
+  //         const timeDiff = Math.abs(endTimestamp - startTimestamp);
+  //         const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  //         console.log('Calculated Diff Days:', diffDays);
+
+  //         const diffDaysString = diffDays.toString();
+  //         this.expenseFrom.get('numberOfDays')?.setValue(diffDaysString);
+  //         console.log('Updated numberOfDays:', diffDaysString);
+
+  //         // Convert timestamps to ISO strings in UTC timezone
+  //         const selectedRange = {
+  //             start: new Date(startTimestamp).toISOString(),
+  //             end: new Date(endTimestamp).toISOString(),
+  //         };
+  //         console.log('Selected range:', selectedRange);
+  //     }
+  // }
+
+  //   save() {
+  //     console.log(this.expenseFrom);
+  //   }
+
+  // console.log();
+
+  getRangeDates() {
+    console.log(this.rangeDates);
+  }
 }

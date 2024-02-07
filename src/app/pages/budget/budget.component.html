@@ -39,7 +39,7 @@
 
         <div class="flex items-center space-x-2">
           <label for="roomAndFood" class="block text-gray-700 whitespace-nowrap w-1/4">ค่าห้อง+ค่าอาหาร</label>
-          <input id="roomAndFood" name="roomAndFood" [(ngModel)]="budgetData.roomFood"
+          <input id="roomAndFood" name="roomAndFood" [(ngModel)]="budgetData.room"
             class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark  dark:bg-content-dark">
         </div>
 
@@ -74,7 +74,7 @@
                 <td class="px-6 py-4 whitespace-nowrap">{{ budget.level }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ budget.opd }}</td>
                 <td class="px-6 py-4 whitespace-nowrap">{{ budget.ipd }}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ budget.roomFood }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ budget.room }}</td>
               </tr>
             </tbody>
           </table>
