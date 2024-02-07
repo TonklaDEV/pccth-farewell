@@ -6,52 +6,23 @@ import { MatDialog } from '@angular/material/dialog';
 import { OpdDialogComponent } from './components/opd-dialog/opd-dialog.component';
 import { IpdDialogComponent } from './components/ipd-dialog/ipd-dialog.component';
 import { WellfareDetailsService } from 'src/app/api-services/wellfare-details.service';
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
-}
 
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
 @Component({
   selector: 'app-wellfare-detail-page',
   templateUrl: './wellfare-detail-page.component.html',
   styleUrls: ['./wellfare-detail-page.component.scss'],
 })
 export class WellfareDetailPageComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  dataSource!: MatTableDataSource<UserData>;
+  displayedColumns: string[] = [
+    'empid',
+    'date',
+    'description',
+    'OPD',
+    'IPD',
+    'remark',
+  ];
+
+  dataSource!: MatTableDataSource<any>;
   opdAllBudget: number = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -65,20 +36,53 @@ export class WellfareDetailPageComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     public wellfareDetailService: WellfareDetailsService
   ) {
-    // Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
-
-    this.wellfareDetailService.getAllExpenseInUsed().subscribe(
-      (res) => {
-        console.log(res);
+    const datas = [
+      {
+        empid: 1,
+        date: new Date(),
+        description: 'test1',
+        OPD: 10000,
+        IPD: 20000,
+        remark: 'test1',
       },
-      (err) => {
-        console.error(err);
-      }
-    );
+      {
+        empid: 2,
+        date: new Date(),
+        description: 'test1',
+        OPD: 10000,
+        IPD: 20000,
+        remark: 'test1',
+      },
+      {
+        empid: 3,
+        date: new Date(),
+        description: 'test1',
+        OPD: 10000,
+        IPD: 20000,
+        remark: 'test1',
+      },
+      {
+        empid: 4,
+        date: new Date(),
+        description: 'test1',
+        OPD: 10000,
+        IPD: 20000,
+        remark: 'test1',
+      },
+    ];
+    this.dataSource = new MatTableDataSource(datas)
+    // Create 100 users
+    // const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
+    // Assign the data to the data source for the table to render
+    // this.dataSource = new MatTableDataSource(users);
+    // this.wellfareDetailService.getAllExpenseInUsed().subscribe(
+    //   (res) => {
+    //     console.log(res);
+    //   },
+    //   (err) => {
+    //     console.error(err);
+    //   }
+    // );
   }
 
   ngOnInit(): void {}
@@ -101,18 +105,18 @@ export class WellfareDetailPageComponent implements OnInit, AfterViewInit {
   }
 }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
+// /** Builds and returns a new User. */
+// function createNewUser(id: number): UserData {
+//   const name =
+//     NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
+//     ' ' +
+//     NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
+//     '.';
 
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-  };
-}
+//   return {
+//     id: id.toString(),
+//     name: name,
+//     progress: Math.round(Math.random() * 100).toString(),
+//     fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
+//   };
+// }

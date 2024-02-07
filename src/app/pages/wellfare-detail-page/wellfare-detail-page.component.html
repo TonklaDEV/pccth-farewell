@@ -15,35 +15,47 @@
                         [dataSource]="dataSource" matSort>
 
                         <!-- ID Column -->
-                        <ng-container matColumnDef="id">
+                        <ng-container matColumnDef="empid">
                             <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef
-                                mat-sort-header> ID </th>
+                                mat-sort-header> รหัสพนักงาน </th>
                             <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row">
-                                {{row.id}} </td>
+                                {{row.empid}} </td>
                         </ng-container>
 
                         <!-- Progress Column -->
-                        <ng-container matColumnDef="progress">
+                        <ng-container matColumnDef="date">
                             <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef
-                                mat-sort-header> Progress </th>
+                                mat-sort-header> วันที่เบิก </th>
                             <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row">
-                                {{row.progress}}% </td>
+                                {{row.date}} </td>
                         </ng-container>
 
                         <!-- Name Column -->
-                        <ng-container matColumnDef="name">
+                        <ng-container matColumnDef="description">
                             <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef
-                                mat-sort-header> Name </th>
+                                mat-sort-header> รายละเอียด </th>
                             <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row">
-                                {{row.name}} </td>
+                                {{row.description}} </td>
                         </ng-container>
 
                         <!-- Fruit Column -->
-                        <ng-container matColumnDef="fruit">
+                        <ng-container matColumnDef="OPD">
                             <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef
-                                mat-sort-header> Fruit </th>
+                                mat-sort-header> OPD </th>
                             <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row">
-                                {{row.fruit}} </td>
+                                {{row.OPD}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="IPD">
+                            <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef
+                                mat-sort-header> IPD </th>
+                            <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row">
+                                {{row.IPD}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="remark">
+                            <th class="dark:border-white dark:text-font-header-dark" mat-header-cell *matHeaderCellDef
+                                mat-sort-header> หมายเหตุ </th>
+                            <td class="dark:border-white dark:text-font-header-dark" mat-cell *matCellDef="let row">
+                                {{row.remark}} </td>
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
