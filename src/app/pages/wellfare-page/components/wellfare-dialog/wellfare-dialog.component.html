@@ -1,58 +1,62 @@
-<div class="dark:bg-[#18191A] dark:text-white">
-    <div class="grid grid-cols-2 w-full gap-3">
-        <div class="col-span-2 text-start ml-1">
-            <div class="flex justify-start items-center">
-                <h3 class="mr-2">ประเภทการรักษา</h3>
-                <mat-radio-group>
-                    <mat-radio-button [color]="'primary'" class="mr-2" id="opd" value="opd">OPD</mat-radio-button>
-                    <mat-radio-button [color]="'primary'" class="mr-2" id="ipd" value="ipd">IPD</mat-radio-button>
-                </mat-radio-group>
+<div class="grid grid-cols-2 w-full gap-3" [formGroup]="expenseForm">
+    <div class="col-span-2 text-start ml-1">
+        <div class="flex justify-start items-center">
+            <h3 class="mr-2">ประเภทการรักษา</h3>
+            <mat-radio-group formControlName="type">
+                <mat-radio-button [color]="'primary'" class="mr-2" id="opd" value="opd">OPD</mat-radio-button>
+                <mat-radio-button [color]="'primary'" class="mr-2" id="ipd" value="ipd">IPD</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+    <div class="col-span-2 text-start ml-1">
+        <h3>รายละเอียดการเบิกค่ารักษา</h3>
+    </div>
+    <div class="col-span-2 w-full mx-auto">
+        <div class="grid grid-cols-2 items-stretch gap-2">
+            <div class="col-span-1 w-full ml-1">
+                <p-calendar formGroupName="dateRange" [inline]="true" selectionMode="range" [style]="{width:'100%'}" [showWeek]="true"
+                            (onSelect)="handleDateSelection()"></p-calendar>
             </div>
-        </div>
-        <div class="col-span-2 text-start ml-1">
-            <h3>รายละเอียดการเบิกค่ารักษา</h3>
-        </div>
-        <div class="col-span-2 w-full mx-auto">
-            <div class="grid grid-cols-2 gap-2">
-                <div class="col-span-1 w-full ml-1">
-                    <p-calendar [inline]="true" selectionMode="range" [style]="{width:'100%'}"
-                        [showWeek]="true"></p-calendar>
-                </div>
-                <div class="col-span-1 w-full">
-                    <div
-                        class="grid grid-cols-2 gap-2 justify-start text-start text-[#566a7f] rounded-md shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526]">
-                        <div class="col-span-1 flex flex-col justify-start items-start">
-                            <label for="">วันที่</label>
-                            <input type="text"
-                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
-                        </div>
-                        <div class="col-span-1 flex flex-col justify-start items-start">
-                            <label for="">จำนวนวัน</label>
-                            <input type="text"
-                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
-                        </div>
-                        <div class="col-span-1 flex flex-col justify-start items-start">
-                            <label for="">ค่ารักษาพยาบาล</label>
-                            <input type="text"
-                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
-                        </div>
-                        <div class="col-span-1 flex flex-col justify-start items-start">
-                            <label for="">ค่าห้อง + ค่าอาหาร</label>
-                            <input type="text"
-                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
-                        </div>
-                        <div class="col-span-2 flex flex-col justify-start items-start">
-                            <label for="">รายละเอียด</label>
-                            <textarea
-                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"></textarea>
-                        </div>
+            <div class="col-span-1 w-full">
+                <div
+                    class="grid grid-cols-2 gap-2 justify-start text-start text-[#566a7f] rounded-md shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526]">
 
+                    <div class="col-span-1 flex flex-col justify-start items-start" formGroupName="dateRange">
+                        <label for="">วันที่</label>
+                        <input formControlName="dateRangeInput"
+                            class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
                     </div>
+
+                    <div class="col-span-1 flex flex-col justify-start items-start" formGroupName="numberOfDays">
+                        <label for="">จำนวนวัน</label>
+                        <input [value]="expenseForm.get('numberOfDays')?.value" formControlName="numberOfDaysInput"
+                            class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                    </div>
+
+                    <div class="col-span-1 flex flex-col justify-start items-start" formGroupName="medicalExpenses">
+                        <label for="">ค่ารักษาพยาบาล</label>
+                        <input type="text" formControlName="medicalExpensesInput"
+                            class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                    </div>
+
+                    <div class="col-span-1 flex flex-col justify-start items-start" formGroupName="roomAndFoodExpenses">
+                        <label for="">ค่าห้อง + ค่าอาหาร</label>
+                        <input type="text" formControlName="roomAndFoodExpensesInput"
+                            class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                    </div>
+
+                    <div class="col-span-2 flex flex-col justify-start items-start" formGroupName="details">
+                        <label for="">รายละเอียด</label>
+                        <textarea formControlName="detailsInput"
+                            class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"></textarea>
+                    </div>
+                    <button (click)="save()">test</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- <form [formGroup]="expenseFrom">
     <h3>ประเภทการรักษา</h3>

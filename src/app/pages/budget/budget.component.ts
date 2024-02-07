@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BudgetService } from 'src/app/api-services/budget.service';
 export interface Budget {
   level: string;
   opd: number;
@@ -20,9 +21,23 @@ export class BudgetComponent implements OnInit {
   opdValue: string = '';
   ipdValue: string = '';
 
-  constructor() {}
+  constructor(private servicebudget: BudgetService,) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.findAllBudgets); 
+    this.findAllBudgets()
+   }
+
+  findAllBudgets(): void {
+    this.servicebudget.getBudgets().subscribe(
+      (budgets) => {
+        this.budgets = budgets;
+      },
+      (error) => {
+        console.error('Error loading budgets:', error);
+      }
+    );
+  }
 
   addBudget(): void {
     const newId = this.budgets.length + 1; // Generate an ID for the new budget
