@@ -32,14 +32,16 @@ export class BudgetComponent implements OnInit {
   constructor(private servicebudget: BudgetService,) { }
 
   ngOnInit(): void {
-    console.log(this.findAllBudgets); 
     this.findAllBudgets()
+
    }
 
    findAllBudgets(): void {
     this.servicebudget.getBudgets().subscribe(
-      (response: Budget[]) => {
+      (response) => {
         this.budgets = response;
+        console.log(this.budgets);
+        
       },
       (error) => {
         console.error('Error loading budgets:', error);

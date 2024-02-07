@@ -11,8 +11,8 @@ export class BudgetService {
 
   constructor(private http: HttpClient) { }
 
-  getBudgets(): Observable<Budget[]> {
-    return this.http.get<Budget[]>(`${this.apiUrl}/getBudget`);
+  getBudgets(): Observable<any> {
+    return this.http.get<any>(`/budget/getBudget`);
   }
 
 }
