@@ -1,99 +1,81 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { OpdDialogComponent } from './components/opd-dialog/opd-dialog.component';
 import { IpdDialogComponent } from './components/ipd-dialog/ipd-dialog.component';
 import { WellfareDetailsService } from 'src/app/api-services/wellfare-details.service';
-
+import { Table } from 'primeng/table';
+export interface Expenses {
+  empid : number
+  empname : string
+  dateOfAdmission : string;
+  dateRange : string;
+  opd :number
+  ipd : number
+  canWithdraw: number
+  remark : number
+}
 @Component({
   selector: 'app-wellfare-detail-page',
   templateUrl: './wellfare-detail-page.component.html',
   styleUrls: ['./wellfare-detail-page.component.scss'],
 })
-export class WellfareDetailPageComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = [
-    'empid',
-    'date',
-    'description',
-    'OPD',
-    'IPD',
-    'remark',
-  ];
+export class WellfareDetailPageComponent implements OnInit {
 
-  dataSource!: MatTableDataSource<any>;
+  dataSource: Expenses[] = [];
   opdAllBudget: number = 0;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
 
   constructor(
     public dialog: MatDialog,
     public wellfareDetailService: WellfareDetailsService
   ) {
-    const datas = [
-      {
-        empid: 1,
-        date: new Date(),
-        description: 'test1',
-        OPD: 10000,
-        IPD: 20000,
-        remark: 'test1',
-      },
-      {
-        empid: 2,
-        date: new Date(),
-        description: 'test1',
-        OPD: 10000,
-        IPD: 20000,
-        remark: 'test1',
-      },
-      {
-        empid: 3,
-        date: new Date(),
-        description: 'test1',
-        OPD: 10000,
-        IPD: 20000,
-        remark: 'test1',
-      },
-      {
-        empid: 4,
-        date: new Date(),
-        description: 'test1',
-        OPD: 10000,
-        IPD: 20000,
-        remark: 'test1',
-      },
-    ];
-    this.dataSource = new MatTableDataSource(datas)
-    // Create 100 users
-    // const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
-    // Assign the data to the data source for the table to render
-    // this.dataSource = new MatTableDataSource(users);
-    // this.wellfareDetailService.getAllExpenseInUsed().subscribe(
-    //   (res) => {
-    //     console.log(res);
-    //   },
-    //   (err) => {
-    //     console.error(err);
-    //   }
-    // );
+    // this.loadExpenseData()
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadExpenseData();
+  }
+  clear(table: Table) {
+    table.clear();
+  }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  loadExpenseData() {
+    this.wellfareDetailService.getAllExpenseInUsed().subscribe((res) => {
+      const formatted = res.map((item: any) => {
+        return {
+          empid: item.employee.empid,
+          empname:
+            item.employee.tprefix +
+            ' ' +
+            item.employee.tname +
+            ' ' +
+            item.employee.tsurname,
+          dateOfAdmission: new Date(item.dateOfAdmission).toLocaleDateString(
+            'th-TH',
+            { day: '2-digit', month: '2-digit', year: 'numeric' }
+          ),
+          description: item.description,
+          dateRange:
+            new Date(item.startDate).toLocaleDateString('th-TH', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+            }) +
+            ' - ' +
+            new Date(item.endDate).toLocaleDateString('th-TH', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+            }),
+          opd: item.opd,
+          ipd: item.ipd,
+          canWithdraw: item.canWithdraw,
+          remark: item.remark,
+        };
+      });
+      this.dataSource = formatted;
+    });
   }
 
   openOPDDialog() {
@@ -103,20 +85,11 @@ export class WellfareDetailPageComponent implements OnInit, AfterViewInit {
   openIPDDialog() {
     this.dialog.open(IpdDialogComponent);
   }
+
+  @ViewChild('dt1') dt1!: Table;
+  onInputChange(event: any) {
+    if (event && event.target && this.dt1) {
+      this.dt1.filterGlobal(event.target.value, 'contains');
+    }
+  }
 }
-
-// /** Builds and returns a new User. */
-// function createNewUser(id: number): UserData {
-//   const name =
-//     NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-//     ' ' +
-//     NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-//     '.';
-
-//   return {
-//     id: id.toString(),
-//     name: name,
-//     progress: Math.round(Math.random() * 100).toString(),
-//     fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-//   };
-// }

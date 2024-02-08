@@ -51,7 +51,7 @@ import { OpdDialogComponent } from './wellfare-detail-page/components/opd-dialog
 import { IpdDialogComponent } from './wellfare-detail-page/components/ipd-dialog/ipd-dialog.component';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -94,6 +94,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     IpdDialogComponent,
   ],
   imports: [
+    TableModule,
     MatRadioModule,
     DialogModule,
     InputTextareaModule,

@@ -12,8 +12,8 @@ export class WellfareDetailsService {
 
   constructor(private http: HttpClient) {}
 
-  getAllExpenseInUsed(): Observable<any> {
-    return this.http.get<any>(
+  getAllExpenseInUsed(): Observable<any[]> {
+    return this.http.get<any[]>(
       '/expenses/getAllExpenseInUsed'
     );
   }
