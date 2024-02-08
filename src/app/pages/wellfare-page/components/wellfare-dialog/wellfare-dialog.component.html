@@ -1,12 +1,20 @@
+<!-- wellfare-dialog.component.html -->
+
 <div class="dark:bg-[#18191A] dark:text-white">
     <div class="grid w-full grid-cols-2 gap-3">
         <div class="col-span-2 ml-1 text-start">
             <div class="flex items-center justify-start">
                 <h3 class="mr-2">ประเภทการรักษา</h3>
-                <mat-radio-group>
-                    <mat-radio-button [color]="'primary'" class="mr-2" id="opd" value="opd">OPD</mat-radio-button>
-                    <mat-radio-button [color]="'primary'" class="mr-2" id="ipd" value="ipd">IPD</mat-radio-button>
-                </mat-radio-group>
+                <form [formGroup]="expenseForm">
+                    <mat-radio-group formControlName="type">
+                        <mat-radio-button [color]="'primary'" class="mr-2" id="opd" value="opd">OPD</mat-radio-button>
+                        <mat-radio-button [color]="'primary'" class="mr-2" id="ipd" value="ipd">IPD</mat-radio-button>
+                    </mat-radio-group>
+                    <p *ngIf="expenseForm.get('type')?.invalid"
+                        class="absolute font-light text-red-700 -right-2 -top-2 dark:text-red-500">
+                        *
+                    </p>
+                </form>
             </div>
         </div>
         <div class="col-span-2 ml-1 text-start">
@@ -15,44 +23,62 @@
         <div class="w-full col-span-2 mx-auto">
             <div class="grid grid-cols-2 gap-2">
                 <div class="w-full col-span-1 ml-1">
-                    <p-calendar [(ngModel)]="rangeDates" (ngModelChange)="getRangeDates()" [inline]="true" selectionMode="range" [style]="{width:'100%'}"
-                        [showWeek]="true" inputId="range"></p-calendar>
+                    <p-calendar [(ngModel)]="rangeDates" (ngModelChange)="getRangeDates()" [inline]="true"
+                        selectionMode="range" [style]="{width:'100%'}" [showWeek]="true" inputId="range">
+                    </p-calendar>
                 </div>
                 <div class="w-full col-span-1">
-                    <div
-                        class="grid grid-cols-2 gap-2 justify-start text-start text-[#566a7f] rounded-md shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526]">
-                        <div class="flex flex-col items-start justify-start col-span-1">
-                            <label for="">วันที่</label>
-                            <input type="text"
-                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                    <form [formGroup]="expenseForm">
+                        <div
+                            class="grid grid-cols-2 gap-2 justify-start text-start text-[#566a7f] rounded-md shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526]">
+                            <div class="flex flex-col items-start justify-start col-span-1">
+                                <label for="dateRangeInput">วันที่</label>
+                                <input [disabled]="true" type="text" formControlName="dateRangeInput"
+                                    [value]="expenseForm.get('dateRange.dateRangeInput')?.value"
+                                    class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                            </div>
+                            <div class="flex flex-col items-start justify-start col-span-1">
+                                <label for="numberOfDaysInput">จำนวนวัน</label>
+                                <input [disabled]="true" type="text" formControlName="numberOfDaysInput"
+                                    id="numberOfDaysInput"
+                                    class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                            </div>
+                            <div class="flex flex-col items-start justify-start col-span-1">
+                                <label for="medicalExpensesInput">ค่ารักษาพยาบาล</label>
+                                <input type="text" formControlName="medicalExpensesInput" id="medicalExpensesInput"
+                                    class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                                <div class="text-red-700"
+                                    *ngIf="expenseForm.get('medicalExpensesInput')?.hasError('required') && expenseForm.get('medicalExpensesInput')?.touched">
+                                    กรุณากรอกค่ารักษาพยาบาล
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-start justify-start col-span-1">
+                                <label for="roomAndFoodExpensesInput">ค่าห้อง + ค่าอาหาร</label>
+                                <input type="text" formControlName="roomAndFoodExpensesInput"
+                                    id="roomAndFoodExpensesInput"
+                                    class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                            </div>
+                            <div class="flex flex-col items-start justify-start col-span-2">
+                                <label for="detailsInput">รายละเอียด</label>
+                                <textarea formControlName="detailsInput" id="detailsInput"
+                                    class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"></textarea>
+                                <div class="text-red-700"
+                                    *ngIf="expenseForm.get('detailsInput')?.hasError('required') && expenseForm.get('detailsInput')?.touched">
+                                    กรุณากรอกรายละเอียด
+                                </div>
+                            </div>
+                            <button type="button" (click)="save()">test</button>
+                            <!-- แก้ไขการเรียกใช้ใน template เพื่อส่งอาร์กิวเมนต์ตามที่ฟังก์ชันรอ -->
+                            <button (click)="handleDateSelection(startDate, endDate, startUTC, endUTC)">Click
+                                me</button>
                         </div>
-                        <div class="flex flex-col items-start justify-start col-span-1">
-                            <label for="">จำนวนวัน</label>
-                            <input type="text"
-                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
-                        </div>
-                        <div class="flex flex-col items-start justify-start col-span-1">
-                            <label for="">ค่ารักษาพยาบาล</label>
-                            <input type="text"
-                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
-                        </div>
-                        <div class="flex flex-col items-start justify-start col-span-1">
-                            <label for="">ค่าห้อง + ค่าอาหาร</label>
-                            <input type="text"
-                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
-                        </div>
-                        <div class="flex flex-col items-start justify-start col-span-2">
-                            <label for="">รายละเอียด</label>
-                            <textarea
-                                class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"></textarea>
-                        </div>
-
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- <form [formGroup]="expenseFrom">
     <h3>ประเภทการรักษา</h3>
