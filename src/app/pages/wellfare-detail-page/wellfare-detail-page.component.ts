@@ -7,14 +7,33 @@ import { IpdDialogComponent } from './components/ipd-dialog/ipd-dialog.component
 import { WellfareDetailsService } from 'src/app/api-services/wellfare-details.service';
 import { Table } from 'primeng/table';
 export interface Expenses {
-  empid : number
-  empname : string
-  dateOfAdmission : string;
-  dateRange : string;
-  opd :number
-  ipd : number
-  canWithdraw: number
-  remark : number
+  empid: number;
+  empname: string;
+  dateOfAdmission: string;
+  dateRange: string;
+  opd: number;
+  ipd: number;
+  canWithdraw: number;
+  remark: number;
+}
+
+export interface ExpenseInfo {
+  typeExpense: string;
+  dateAdd: string;
+  empName: string;
+  level: string;
+  tposition: string;
+  company: string;
+  divisionid: string;
+  tdivision: string;
+  deptcode: string;
+  tdept: string;
+  typeEmp: string;
+  dateRange: string;
+  days: number;
+  healthCost: number;
+  roomSerive: number;
+  withDraw: number;
 }
 @Component({
   selector: 'app-wellfare-detail-page',
@@ -22,16 +41,31 @@ export interface Expenses {
   styleUrls: ['./wellfare-detail-page.component.scss'],
 })
 export class WellfareDetailPageComponent implements OnInit {
-
   dataSource: Expenses[] = [];
   opdAllBudget: number = 0;
+  expenseInfo: ExpenseInfo = {
+    typeExpense: '',
+    dateAdd: '',
+    empName: '',
+    level: '',
+    tposition: '',
+    company: '',
+    divisionid: '',
+    tdivision: '',
+    deptcode: '',
+    tdept: '',
+    typeEmp: '',
+    dateRange: '',
+    days: 0,
+    healthCost: 0,
+    roomSerive: 0,
+    withDraw: 0,
+  };
 
   constructor(
     public dialog: MatDialog,
     public wellfareDetailService: WellfareDetailsService
-  ) {
-    // this.loadExpenseData()
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loadExpenseData();
@@ -42,9 +76,9 @@ export class WellfareDetailPageComponent implements OnInit {
 
   loadExpenseData() {
     this.wellfareDetailService.getAllExpenseInUsed().subscribe((res) => {
-      const formatted = res.map((item: any) => {
+      const formatted = res.responseData.result.map((item: any) => {
         return {
-          empid: item.employee.empid,
+          emplevel: item.employee.budget.level,
           empname:
             item.employee.tprefix +
             ' ' +
@@ -68,14 +102,57 @@ export class WellfareDetailPageComponent implements OnInit {
               month: '2-digit',
               year: 'numeric',
             }),
-          opd: item.opd,
-          ipd: item.ipd,
           canWithdraw: item.canWithdraw,
-          remark: item.remark,
+          expenseId: item.id,
         };
       });
       this.dataSource = formatted;
     });
+  }
+
+  getExpense(id: number) {
+    this.wellfareDetailService.getExpenseInfo(id).subscribe(
+      (res) => {
+        const result = res.responseData.result;
+        const emp = result.employee;
+        const options: object = {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        };
+        const expenseinfo: ExpenseInfo = {
+          typeExpense: result.ipd > result.opd ? 'IPD' : 'OPD',
+          dateAdd: new Date(result.dateOfAdmission).toLocaleDateString(
+            'th-TH',
+            options
+          ),
+          empName: `${emp.tprefix} ${emp.tname} ${emp.tsurname}`,
+          level: emp.budget.level,
+          tposition: emp.tposition,
+          company: emp.dept.company,
+          divisionid: emp.dept.divisionid,
+          tdivision: emp.dept.tdivision,
+          deptcode: emp.dept.deptcode,
+          tdept: emp.dept.tdept,
+          typeEmp: emp.remark,
+          dateRange: `${new Date(result.startDate).toLocaleDateString(
+            'th-TH',
+            options
+          )} - ${new Date(result.endDate).toLocaleDateString(
+            'th-TH',
+            options
+          )}`,
+          days: result.days,
+          healthCost: result.ipd > result.opd ? result.ipd : result.opd,
+          roomSerive: result.roomService,
+          withDraw: result.canWithdraw,
+        };
+        console.log('Expense info :', expenseinfo);
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 
   openOPDDialog() {

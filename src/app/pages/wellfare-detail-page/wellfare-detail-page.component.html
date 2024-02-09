@@ -1,99 +1,96 @@
 <div class="bg-transparent">
-    <div class="grid items-stretch w-full grid-cols-3 gap-5">
-        <div class="w-full col-span-2 h-[col-span-1] basis-2/3 flex flex-col">
-            <div
-                class="flex-1 w-full p-6 bg-white rounded-md shadow text-font-header dark:text-font-header-dark dark:bg-content-dark">
-                <p class="mb-6 text-2xl">ตารางแสดงการเบิกค่ารักษาพยาบาลทั้งหมด</p>
-                <div class="w-1/2">
-                    <input
-                        class="grow appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#6d6161]"
-                        placeholder="โปรดระบุสิ่งที่ต้องการค้นหา เช่น ชื่อ,จำนวนเงิน,รหัสพนักงาน, และอื่น" (input)="onInputChange($event)">
-                </div>
-                <div class="mx-2 my-4">
-                    <p-table #dt1 dataKey="id" [value]="dataSource" [paginator]="true" [rows]="5"
-                        [showCurrentPageReport]="true"
-                        currentPageReportTemplate="แสดง {first} ถึง {last} ของ {totalRecords} ข้อมูล"
-                        [rowsPerPageOptions]="[5,10]"
-                        [globalFilterFields]="['dateOfAdmission','empid','empname','canWithdraw']">
-                        <ng-template pTemplate="caption">
-                            <div class="flex items-center justify-start">
-                                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
-                                    (click)="clear(dt1)"></button>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th style="width:20%">วันที่เบิก</th>
-                                <th style="width:20%">รหัสพนักงาน</th>
-                                <th style="width:35%">ชื่อ - นามสกุล</th>
-                                <th style="width:25%">เงินที่เบิกได้</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-expense>
-                            <tr>
-                                <td>{{expense.dateOfAdmission}}</td>
-                                <td>{{expense.empid}}</td>
-                                <td>{{expense.empname}}</td>
-                                <td>{{expense.canWithdraw}}</td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-            </div>
+  <div class="grid items-stretch w-full grid-cols-3 gap-5">
+    <div class="w-full col-span-2 h-[col-span-1] basis-2/3 flex flex-col">
+      <div
+        class="flex-1 w-full p-6 bg-white rounded-md shadow text-font-header dark:text-font-header-dark dark:bg-content-dark"
+      >
+        <p class="mb-6 text-2xl">ตารางแสดงการเบิกค่ารักษาพยาบาลทั้งหมด</p>
+        <div class="w-1/2">
+          <input
+            class="grow appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#6d6161]"
+            placeholder="โปรดระบุสิ่งที่ต้องการค้นหา เช่น ชื่อ,จำนวนเงิน,รหัสพนักงาน, และอื่น"
+            (input)="onInputChange($event)"
+          />
         </div>
-        <div class="flex flex-col flex-1 w-full col-span-1 basis-1/3 gap-y-5">
-            <div class="w-full p-5 rounded-md bg-content shadow-card dark:bg-content-dark dark:shadow-none">
-                <div class="flex items-center justify-center mt-1">
-                    <div class="px-3 py-2 text-white rounded-md bg-slate-400">
-                        <i class='bx bx-first-aid mt-1 text-[3rem]'></i>
-                    </div>
-                </div>
-                <div class="flex items-center justify-center">
-                    <div class="my-4">
-                        <h6 class="text-lg dark:text-white">ค่ารักษาพยาบาลผู้ป่วยนอก</h6>
-                    </div>
-                </div>
-                <div class="flex justify-between mx-8 dark:text-white">
-                    <p>ค่ารักษาพยาบาล</p>
-                    <p>{{ opdAllBudget }} บาท</p>
-                </div>
-                <div class="flex justify-between mx-8 dark:text-white">
-                    <p>คิดเป็นร้อยละ</p>
-                    <p>{{ opdAllBudget }} %</p>
-                </div>
-                <div class="w-full mt-2 text-center">
-                    <button (click)="openOPDDialog()"
-                        class="w-full py-1 text-center border border-gray-800 rounded-md cursor-pointer dark:hover:border-gray-500 hover:border-gray-500 hover:bg-gray-500 hover:text-white dark:text-white dark:border-white">
-                        ดูรายละเอียด
-                    </button>
-                </div>
-            </div>
-            <div class="w-full p-5 rounded-md bg-content shadow-card dark:bg-content-dark dark:shadow-none">
-                <div class="flex items-center justify-center mt-1">
-                    <div class="px-3 py-2 text-white rounded-md bg-lime-600">
-                        <i class='bx bx-clinic mt-1 text-[3rem]'></i>
-                    </div>
-                </div>
-                <div class="flex items-center justify-center">
-                    <div class="my-4">
-                        <h6 class="text-lg dark:text-white">ค่ารักษาพยาบาลผู้ป่วยใน</h6>
-                    </div>
-                </div>
-                <div class="flex justify-between mx-8 dark:text-white">
-                    <p>ค่ารักษาพยาบาล</p>
-                    <p>{{ opdAllBudget }} บาท</p>
-                </div>
-                <div class="flex justify-between mx-8 dark:text-white">
-                    <p>คิดเป็นร้อยละ</p>
-                    <p>{{ opdAllBudget }} %</p>
-                </div>
-                <div class="w-full mt-2 text-center">
-                    <button (click)="openIPDDialog()"
-                        class="w-full py-1 text-center border border-gray-800 rounded-md cursor-pointer dark:hover:border-lime-500 hover:border-lime-500 hover:bg-lime-500 hover:text-white dark:text-white dark:border-white">
-                        ดูรายละเอียด
-                    </button>
-                </div>
-            </div>
+        <div class="mx-2 my-4">
+          <p-table
+            #dt1
+            dataKey="id"
+            [value]="dataSource"
+            [paginator]="true"
+            [rows]="5"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="แสดง {first} ถึง {last} ของ {totalRecords} ข้อมูล"
+            [rowsPerPageOptions]="[5, 10]"
+            [globalFilterFields]="[
+              'dateOfAdmission',
+              'empid',
+              'empname',
+              'canWithdraw'
+            ]"
+          >
+            <ng-template pTemplate="caption">
+              <div class="flex items-center justify-start">
+                <button
+                  pButton
+                  label="Clear"
+                  class="p-button-outlined"
+                  icon="pi pi-filter-slash"
+                  (click)="clear(dt1)"
+                ></button>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 20%">วันที่เบิก</th>
+                <th style="width: 35%">ชื่อ - นามสกุล</th>
+                <th style="width: 20%">ระดับ</th>
+                <th style="width: 25%">เงินที่เบิกได้</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-expense>
+              <tr class="t-body" (click)="getExpense(expense.expenseId)">
+                <td>{{ expense.dateOfAdmission }}</td>
+                <td>{{ expense.empname }}</td>
+                <td>{{ expense.emplevel }}</td>
+                <td>{{ expense.canWithdraw }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
         </div>
+      </div>
     </div>
+    <div class="flex flex-col flex-1 w-full col-span-1 basis-1/3 gap-y-5">
+      <div
+        class="w-full p-5 rounded-md bg-content shadow-card dark:bg-content-dark dark:shadow-none"
+      >
+        <div class="flex items-center justify-center mt-1">
+          <div class="px-3 py-2 text-white rounded-md bg-lime-600">
+            <i class="bx bx-clinic mt-1 text-[3rem]"></i>
+          </div>
+        </div>
+        <div class="flex items-center justify-center">
+          <div class="my-4">
+            <h6 class="text-lg dark:text-white">ค่ารักษาพยาบาลผู้ป่วยใน</h6>
+          </div>
+        </div>
+        <div class="flex justify-between mx-8 dark:text-white">
+          <p>ค่ารักษาพยาบาล</p>
+          <p>{{ opdAllBudget }} บาท</p>
+        </div>
+        <div class="flex justify-between mx-8 dark:text-white">
+          <p>คิดเป็นร้อยละ</p>
+          <p>{{ opdAllBudget }} %</p>
+        </div>
+        <div class="w-full mt-2 text-center">
+          <button
+            (click)="openIPDDialog()"
+            class="w-full py-1 text-center border border-gray-800 rounded-md cursor-pointer dark:hover:border-lime-500 hover:border-lime-500 hover:bg-lime-500 hover:text-white dark:text-white dark:border-white"
+          >
+            ดูรายละเอียด
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
