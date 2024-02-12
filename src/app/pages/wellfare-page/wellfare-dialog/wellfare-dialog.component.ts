@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -9,11 +9,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class WellfareDialogComponent implements OnInit {
   expenseFrom: any;
-
-  // range = new FormGroup({
-  //   start: new FormControl(),
-  //   end: new FormControl(),
-  // });
 
   constructor(
     public dialogRef: MatDialogRef<WellfareDialogComponent>,
@@ -40,22 +35,37 @@ export class WellfareDialogComponent implements OnInit {
   updateNumberOfDays(): void {
     const startDate = this.dateRange.get('start')?.value;
     const endDate = this.dateRange.get('end')?.value;
-
+  
     if (startDate && endDate) {
       const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
       const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
+  
       this.expenseFrom.get('numberOfDays')?.setValue(diffDays);
       console.log(diffDays);
+  
+      // ทำการตรวจสอบว่าทั้งสองวันถูกเลือกแล้วหรือไม่
+      const bothDatesSelected = startDate && endDate;
+      
+      // ทำการเปลี่ยนค่า disabled ของ input ตามที่ตรวจสอบได้
+      if (bothDatesSelected) {
+        this.expenseFrom.get('numberOfDays')?.disable();
+      } else {
+        this.expenseFrom.get('numberOfDays')?.enable();
+      }
     }
+
   }
   
 
-  save(){
+  onDateChange(): void {
+    this.updateNumberOfDays();
+  }
+  
+  save() {
     console.log(this.expenseFrom);
   }
 
   ngOnInit(): void {
-
+    this.updateNumberOfDays();
   }
 }
