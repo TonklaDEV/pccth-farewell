@@ -4,6 +4,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { JobDayAddPageModule } from './job-day-add-page/job-day-add-page.module';
+import { ButtonModule } from 'primeng/button';
 
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -94,8 +95,9 @@ import { TableModule } from 'primeng/table';
     IpdDialogComponent,
   ],
   imports: [
-    TableModule,
     MatRadioModule,
+    ButtonModule,
+    TableModule,
     DialogModule,
     InputTextareaModule,
     MatCheckboxModule,
