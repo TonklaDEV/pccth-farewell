@@ -10,7 +10,6 @@ import { ScrollToModule } from "@nicky-lenaers/ngx-scroll-to";
 import { NgApexchartsModule } from "ng-apexcharts";
 
 import { SelectorComponent } from './components/selector/selector.component';
-import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -22,7 +21,6 @@ import { CalendarModule } from 'primeng/calendar';
     HttpClientModule,
     NgApexchartsModule,
     DragDropModule,
-    CalendarModule,
     ScrollToModule.forRoot(),
   ],
   exports: [
@@ -35,7 +33,6 @@ import { CalendarModule } from 'primeng/calendar';
     DragDropModule,
     SelectorComponent,
     ScrollToModule,
-    CalendarModule,
   ],
   declarations: [SelectorComponent],
 })

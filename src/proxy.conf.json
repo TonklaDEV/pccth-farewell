@@ -2,17 +2,5 @@
     "/api": {
         "target": "http://localhost:8080",
         "secure": false
-    },
-    "/expenses": {
-        "target": "http://localhost:8080",
-        "secure": false
-    },
-    "/budget": {
-        "target": "http://localhost:8080",
-        "secure": false
-    },
-    "/employees": {
-        "target": "http://localhost:8080",
-        "secure": false
     }
 }
