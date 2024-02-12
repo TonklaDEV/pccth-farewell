@@ -4,7 +4,6 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { JobDayAddPageModule } from './job-day-add-page/job-day-add-page.module';
-import { ButtonModule } from 'primeng/button';
 
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -36,7 +35,6 @@ import { NewsTableComponent } from './news-page/components/news-table/news-table
 import { NewsPageComponent } from './news-page/news-page.component';
 import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
 import { ApprovePageComponent } from './approve-page/approve-page.component';
-import { ManageUserPageComponent } from './manage-user-page/manage-user-page.component';
 import { ManageCoursePageComponent } from './manage-course-page/manage-course-page.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { WellfarePageComponent } from './wellfare-page/wellfare-page.component';
@@ -53,6 +51,7 @@ import { IpdDialogComponent } from './wellfare-detail-page/components/ipd-dialog
 import { DialogModule } from 'primeng/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
+import { ManageUserPageComponent } from './manage-user-page/manage-user-page.component';
 
 @NgModule({
   declarations: [
@@ -95,9 +94,8 @@ import { TableModule } from 'primeng/table';
     IpdDialogComponent,
   ],
   imports: [
-    MatRadioModule,
-    ButtonModule,
     TableModule,
+    MatRadioModule,
     DialogModule,
     InputTextareaModule,
     MatCheckboxModule,

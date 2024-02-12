@@ -121,7 +121,7 @@ export class WellfareDetailPageComponent implements OnInit {
           year: 'numeric',
         };
         const expenseinfo: ExpenseInfo = {
-          typeExpense: result.ipd > result.opd ? 'ใน' : 'นอก',
+          typeExpense: result.ipd > result.opd ? 'IPD' : 'OPD',
           dateAdd: new Date(result.dateOfAdmission).toLocaleDateString(
             'th-TH',
             options
