@@ -1,1 +1,90 @@
-<p>budget works!</p>
+<div class="py-8 mx-auto max-w-7xl">
+  <div class="p-6 mb-4 rounded-lg shadow-md text-font-header">
+    <h2 class="mb-4 text-xl font-semibold"></h2>
+    <form class="space-y-6" (ngSubmit)="addBudget()">
+      <div class="flex items-center space-x-2">
+      </div>
+      <p class="mb-3 text-2xl">รายละเอียดข้อมูลงบประมาณ</p>
+      <div class="flex items-center space-x-2">
+        <label for="level" class="block w-1/4 text-gray-700 whitespace-nowrap">ระดับพนักงาน (Level)</label>
+        <input id="level" name="level" [(ngModel)]="budgetData.level"
+          class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark">
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <label for="opd" class="block w-1/4 text-gray-700 whitespace-nowrap">(ผู้ป่วยนอก) OPD</label>
+        <input id="opd" name="opd" [(ngModel)]="budgetData.opd"
+          class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark"
+          placeholder="0.00">
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <label for="ipd" class="block w-1/4 text-gray-700 whitespace-nowrap">(ผู้ป่วยใน) IPD</label>
+        <input id="ipd" name="ipd" [(ngModel)]="budgetData.ipd"
+          class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark"
+          placeholder="0.00">
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <label for="roomAndFood" class="block w-1/4 text-gray-700 whitespace-nowrap">ค่าห้อง+ค่าอาหาร</label>
+        <input id="roomAndFood" name="roomAndFood" [(ngModel)]="budgetData.room"
+          class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark">
+      </div>
+
+      <div class="flex justify-center mt-4">
+        <button type="submit"
+          class="px-8 py-2 mr-4 text-white bg-blue-500 rounded hover:bg-blue-600">เพิ่มข้อมูล</button>
+      </div>
+    </form>
+    <br>
+
+
+    <div class="flex items-center space-x-2">
+      <label for="level" class="block w-1/4 text-gray-700 whitespace-nowrap">Search by Level:</label>
+
+      <div class="flex items-center space-x-2">
+        <input type="text" placeholder="Enter level" aria-label="Level"
+          class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark"
+          [(ngModel)]="searchLevel" (input)="filterBudgets()" [matAutocomplete]="auto" />
+
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let item of (searchLevel.trim() ? filteredBudgets : budgets)" [value]="item.level">
+            {{ item.level }}
+          </mat-option>
+        </mat-autocomplete>
+        <button class="px-4 py-2 mr-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+          (click)="searchBudgetByLevel()">Search</button>
+      </div>
+    </div>
+
+    <div class="mt-6 border rounded-lg shadow-sm" *ngIf="searchResults">
+      <div class="overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200 table-center">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                ลำดับที่ </th>
+              <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                ระดับพนักงาน (Level)</th>
+              <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                ผู้ป่วยนอก (OPD/ปี)</th>
+              <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                ผู้ป่วยใน (IPD/ปี)</th>
+              <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                ค่าห้อง/ค่าอาหาร/วัน</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let budget of (searchResults.length > 0 ? searchResults : budgets); let i = index">
+              <td class="px-6 py-4 whitespace-nowrap">{{ i + 1 }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ budget.level }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ budget.opd }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ budget.ipd }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ budget.room }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
