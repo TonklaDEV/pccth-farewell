@@ -35,7 +35,6 @@ import { NewsTableComponent } from './news-page/components/news-table/news-table
 import { NewsPageComponent } from './news-page/news-page.component';
 import { SignInPageComponent } from './sign-in-page/sign-in-page.component';
 import { ApprovePageComponent } from './approve-page/approve-page.component';
-import { ManageUserPageComponent } from './manage-user-page/manage-user-page.component';
 import { ManageCoursePageComponent } from './manage-course-page/manage-course-page.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { WellfarePageComponent } from './wellfare-page/wellfare-page.component';
@@ -52,6 +51,7 @@ import { IpdDialogComponent } from './wellfare-detail-page/components/ipd-dialog
 import { DialogModule } from 'primeng/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
+import { ManageUserPageComponent } from './manage-user-page/manage-user-page.component';
 
 @NgModule({
   declarations: [
