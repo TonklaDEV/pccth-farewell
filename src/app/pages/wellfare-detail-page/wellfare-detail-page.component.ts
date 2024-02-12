@@ -1,6 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OpdDialogComponent } from './components/opd-dialog/opd-dialog.component';
 import { IpdDialogComponent } from './components/ipd-dialog/ipd-dialog.component';
@@ -61,7 +59,8 @@ export class WellfareDetailPageComponent implements OnInit {
     roomSerive: 0,
     withDraw: 0,
   };
-
+  nonExpenseSelect: boolean = true; //hidden before select object
+  expenseSelect: boolean = false;
   constructor(
     public dialog: MatDialog,
     public wellfareDetailService: WellfareDetailsService
@@ -121,7 +120,7 @@ export class WellfareDetailPageComponent implements OnInit {
           year: 'numeric',
         };
         const expenseinfo: ExpenseInfo = {
-          typeExpense: result.ipd > result.opd ? 'IPD' : 'OPD',
+          typeExpense: result.ipd > result.opd ? 'ใน' : 'นอก',
           dateAdd: new Date(result.dateOfAdmission).toLocaleDateString(
             'th-TH',
             options
@@ -147,12 +146,14 @@ export class WellfareDetailPageComponent implements OnInit {
           roomSerive: result.roomService,
           withDraw: result.canWithdraw,
         };
-        console.log('Expense info :', expenseinfo);
+        this.expenseInfo = expenseinfo;
+        this.nonExpenseSelect = false; //show expense info in card
       },
       (err) => {
         console.error(err);
       }
     );
+    this.expenseSelect = true;
   }
 
   openOPDDialog() {
