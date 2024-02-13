@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/api-services/auth.service';
+import { ManageUserService } from 'src/app/api-services/manage-user.service';
+
 
 @Component({
   selector: 'app-manage-user-page',
@@ -14,6 +16,7 @@ export class ManageUserPageComponent implements OnInit {
   invalidNoInput: boolean = false;
 
   constructor(
+    private Mservice: ManageUserService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router) { }
@@ -38,6 +41,7 @@ export class ManageUserPageComponent implements OnInit {
     // if (role !== 'ROLE_Admin'){
     //   this.router.navigate(['/pccth']);
     // }
+    this.loadEmployees();
   }
 
   onSubmit() {
@@ -116,6 +120,19 @@ onInputKeyPressNo(event: KeyboardEvent) {
     } else {
       this.invalidNoInput = false;
     }
+  }
+
+  loadEmployees(): void {
+    const sort = 'userId,asc'; 
+    this.Mservice.getEmployees(0, 10, sort).subscribe(
+      (data: any)  => {
+        console.log(data.content);
+        
+      },
+      (error: any) => {
+        console.error('Error:', error);
+      }
+    );
   }
 
   
