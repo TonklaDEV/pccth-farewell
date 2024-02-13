@@ -13,7 +13,7 @@ export class WellfarePageComponent implements OnInit {
   ngOnInit(): void {}
 
   search() {}
-
+  isHovered: boolean = false;
   showModalDialog() {
     this.displayModal = true;
 }

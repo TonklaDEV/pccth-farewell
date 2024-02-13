@@ -67,10 +67,14 @@
                                     กรุณากรอกรายละเอียด
                                 </div>
                             </div>
+                            <button type="button" (click)="resetForm()">ล้างข้อมูล</button>
                             <button type="button" (click)="save()">test</button>
                             <!-- แก้ไขการเรียกใช้ใน template เพื่อส่งอาร์กิวเมนต์ตามที่ฟังก์ชันรอ -->
                             <button (click)="handleDateSelection(startDate, endDate, startUTC, endUTC)">Click
                                 me</button>
+                                <!-- เพิ่มปุ่มล้างข้อมูล -->
+                                
+
                         </div>
                     </form>
                 </div>

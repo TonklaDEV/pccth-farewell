@@ -84,6 +84,7 @@ export class WellfareDialogComponent implements OnInit {
   }
   
   save() {
+    this.resetForm();
     console.log(this.expenseForm.value);
     console.log(this.selectedDates);
     console.log(this.rangeDates);
@@ -108,4 +109,14 @@ export class WellfareDialogComponent implements OnInit {
       }
     }
   }
+
+  resetForm(): void {
+    // ล้างค่าใน FormGroup
+    this.expenseForm.reset();
+    // รีเซ็ตค่าใน p-calendar
+    this.rangeDates = [];
+    this.expenseForm.get('numberOfDaysInput')?.disable();
+    this.expenseForm.get('dateRangeInput')?.disable();
+  }
+  
 }
