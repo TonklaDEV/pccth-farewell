@@ -29,34 +29,50 @@ export class WellfareDialogComponent implements OnInit {
     this.initForm();
     this.expenseForm.get('numberOfDaysInput')?.disable();
     this.expenseForm.get('dateRangeInput')?.disable();
+
+
   }
+
 
   initForm(): void {
     this.expenseForm = this.fb.group({
-      type: ['', Validators.required],
+      types: ['', Validators.required],
       dateRangeInput: [''],
       startDate: [],
       endDate: [],
-      numberOfDaysInput: [''],
-      medicalExpensesInput: [0, Validators.required],
-      roomAndFoodExpensesInput: [0],
-      detailsInput: ['', Validators.required],
+      days: [''],
+      ipd: [0],
+      opd: [0],
+      medicalExpensesInput: [0],
+      roomService: [0],
+      includeRoomFood: [false], // Checkbox control
+      description: ['', Validators.required],
+      remark: ['', Validators.required],
     });
+
   }
+
+  // includeRoomFood(): void {
+  //   this.expenseForm.get('includeRoomFood')?.valueChanges.subscribe((checked) => {
+  //     if (checked) {
+  //       this.expenseForm.get('roomService')?.enable();
+  //     } 
+  //   });
+  // }
 
   formatDateForInput(dateString: string): string {
     const [year, month, day] = dateString.split('-');
     const monthIndex = parseInt(month, 10) - 1;
     return `${day + 1}/${monthIndex + 1}/${year}`;
   }
-  
+
   formatDateISO(date: Date): string {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
     const year = date.getFullYear();
     return `${year}-${month}-${day}`;
   }
-  
+
   handleDateSelection(startDate: Date, endDate: Date, startUTC: number, endUTC: number): void {
     const formattedStartDate = this.formatDatePart(startDate);
     const formattedEndDate = this.formatDatePart(endDate);
@@ -64,25 +80,25 @@ export class WellfareDialogComponent implements OnInit {
     const isoEndDate = this.formatDateISO(endDate);
     const timeDifference = Math.abs(endUTC - startUTC);
     const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-  
+
     this.expenseForm.get('startDate')?.setValue(isoStartDate);
     this.expenseForm.get('endDate')?.setValue(isoEndDate);
     this.expenseForm.get('dateRangeInput')?.setValue(`${formattedStartDate} - ${formattedEndDate}`);
-    this.expenseForm.get('numberOfDaysInput')?.setValue(daysDifference);
-  
+    this.expenseForm.get('days')?.setValue(daysDifference);
+
     console.log("handleDateSelection", isoStartDate);
     console.log("handleDateSelection", isoEndDate);
     console.log(daysDifference);
   }
-  
+
   formatDatePart(date: Date): string {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
     const year = date.getFullYear();
-  
+
     return `${day}/${month}/${year}`;
   }
-  
+
   save() {
     console.log(this.expenseForm.value);
     console.log(this.selectedDates);
@@ -106,6 +122,18 @@ export class WellfareDialogComponent implements OnInit {
       } else {
         console.error('startDate or endDate is null');
       }
+    }
+  }
+
+  insertCost() {
+    const type = this.expenseForm.get("types")?.value
+    const cost = this.expenseForm.get("medicalExpensesInput")?.value
+    if (type == 'ipd') {
+      this.expenseForm.get('ipd')?.setValue(cost);
+      this.expenseForm.get('opd')?.setValue(0);
+    } else {
+      this.expenseForm.get('opd')?.setValue(cost);
+      this.expenseForm.get('ipd')?.setValue(0);
     }
   }
 }
