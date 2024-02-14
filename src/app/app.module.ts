@@ -14,7 +14,12 @@ import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, LayoutModule, PageModule, AppRoutingModule,
+  imports: [
+    BrowserModule, 
+    BrowserAnimationsModule, 
+    LayoutModule, 
+    PageModule, 
+    AppRoutingModule,
     JwtModule.forRoot({
     config: {
       tokenGetter: () => {

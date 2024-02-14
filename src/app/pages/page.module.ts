@@ -52,6 +52,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
 import { ManageUserPageComponent } from './manage-user-page/manage-user-page.component';
+import { EditModalComponent } from './manage-user-page/modal/edit-modal/edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { ManageUserPageComponent } from './manage-user-page/manage-user-page.com
     WellfareDialogComponent,
     OpdDialogComponent,
     IpdDialogComponent,
+    EditModalComponent,
   ],
   imports: [
     TableModule,

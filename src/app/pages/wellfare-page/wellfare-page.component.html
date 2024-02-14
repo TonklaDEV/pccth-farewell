@@ -27,7 +27,7 @@
     <!-- modal -->
     <p-dialog header="ค่ารักษาพยาบาล" [(visible)]="displayModal" [modal]="true" [style]="{width: '75vw',height:'100vh'}"
         [draggable]="false" [resizable]="false">
-        <app-wellfare-dialog></app-wellfare-dialog>
+        <app-edit-modal></app-edit-modal>
         <ng-template pTemplate="footer">
             <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
         </ng-template>

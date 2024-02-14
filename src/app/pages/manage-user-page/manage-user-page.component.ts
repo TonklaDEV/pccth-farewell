@@ -11,17 +11,28 @@ import { ManageUserService } from 'src/app/api-services/manage-user.service';
   styleUrls: ['./manage-user-page.component.scss']
 })
 export class ManageUserPageComponent implements OnInit {
-
+  
+  emps: any;
   UserForm: any;
   invalidNoInput: boolean = false;
+  EditModal: boolean= false;
+  selectedUserId: number | null = null;
+  getEmployees: any;
+  getUserById: any;
+ 
+  
+ 
 
   constructor(
-    private Mservice: ManageUserService,
+    
+    private Mservices: ManageUserService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router) { }
 
+
   ngOnInit(): void {
+    this.loadEmployees();
     this.UserForm = this.formBuilder.group({
       deptCode: ['', Validators.required],
       dept: ['', Validators.required],
@@ -124,9 +135,12 @@ onInputKeyPressNo(event: KeyboardEvent) {
 
   loadEmployees(): void {
     const sort = 'userId,asc'; 
-    this.Mservice.getEmployees(0, 10, sort).subscribe(
+    this.Mservices.getEmployees(0, 10, sort).subscribe(
       (data: any)  => {
-        console.log(data.content);
+        this.emps = (data.content);
+
+        //เพื่อดูตัวแปล
+         console.log(data.content);
         
       },
       (error: any) => {
@@ -134,6 +148,44 @@ onInputKeyPressNo(event: KeyboardEvent) {
       }
     );
   }
+
+  isHovered: boolean = false;
+  showModal(userId: number) {
+    this.selectedUserId = userId;
+    this.loadUserData(userId);
+    this.EditModal = true;
+
+    // console.log(userId);
+    
+  }
+  
+  
+
+  
+  loadUserData(userId: number) {
+    this.Mservices['getUserById'](userId).subscribe(
+      (data: any) => {
+        this.UserForm.setValue({
+          deptCode: data.deptCode,
+          dept: data.dept,
+          empId: data.empid,
+          firstname: data.tname,
+          prefix: data.tprefix,
+          remark: data.remark,
+          startDate: data.startDate,
+          surname: data.tsurname,
+          position: data.tposition,
+          mail: data.email,
+        });
+      },
+      (error: any) => {
+        console.error('Error:', error);
+      }
+    );
+  }
+  
+  
+  
 
   
 }

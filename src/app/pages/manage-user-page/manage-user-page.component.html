@@ -209,17 +209,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr
+                    <tr *ngFor="let data of emps"
                         class="odd:bg-white dark:odd:bg-[#3a3b3c] dark:even:bg-black even:bg-slate-100 text-center h-20 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">
-                        <td>122222</td>
-                        <td>วันศุกร์</td>
-                        <td>วันมงคล</td>
-                        <td>โปรแกรมเมอร์</td>
-                        <td>wanwan@hotmail.com</td>
+                        <td>{{data.empid}}</td>
+                        <td>{{data.tname}}</td>
+                        <td>{{data.tsurname}}</td>
+                        <td>{{data.tposition}}</td>
+                        <td>{{data.email}}</td>
                         <td>
-                            <button type="submit"
-                                class="flex items-center justify-center text-[#FFAB00] py-2  rounded w-32 border-2 border-gray-400 mr-1 hover:bg-[#FFAB00] hover:text-white hover:border-[#FFAB00]">
-                                <i class="mt-1 mb-1 mr-2 bx bx-edit"></i><span class="mr-1">ปรับปรุงข้อมูล</span>
+                            <button (click)="showModal(data.userId)"
+                             class="flex items-center justify-center text-[#FFAB00] py-2  rounded w-32 border-2 border-gray-400 mr-1 hover:bg-[#FFAB00] hover:text-white hover:border-[#FFAB00]">
+                                <i class="mt-1 mb-1 mr-2 bx bx-edit"></i><span class="mr-1" >ปรับปรุงข้อมูล</span>
                             </button>
                         </td>
                         <td>
@@ -234,3 +234,15 @@
         </div>
     </div>
 </div>
+
+<!-- modal -->
+<p-dialog header="ค่ารักษาพยาบาล" [(visible)]="EditModal" [modal]="true" [style]="{width: '75vw',height:'100vh'}"
+[draggable]="false" [resizable]="false">
+<app-edit-modal></app-edit-modal>
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="EditModal=false" label="Ok" styleClass="p-button-text"></p-button>
+</ng-template>
+</p-dialog>
+
+
+ 
