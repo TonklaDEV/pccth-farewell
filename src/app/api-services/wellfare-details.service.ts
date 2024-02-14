@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 interface ResponseData {
   result: {
     id: number;
@@ -58,14 +59,16 @@ export class WellfareDetailsService {
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
   });
-
-  constructor(private http: HttpClient) {}
+  private domain: String | undefined;
+  constructor(private http: HttpClient) {
+    this.domain = environment.domain;
+  }
 
   getAllExpenseInUsed(): Observable<any> {
-    return this.http.get<any>('/expenses/getAllExpenseInUsed');
+    return this.http.get<any>(`${this.domain}expenses/getAllExpenseInUsed`);
   }
 
   getExpenseInfo(id: number): Observable<ResponseMessage> {
-    return this.http.get<ResponseMessage>(`/expenses/info?id=${id}`);
+    return this.http.get<ResponseMessage>(`${this.domain}expenses/info?id=${id}`);
   }
 }
