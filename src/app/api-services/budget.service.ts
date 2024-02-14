@@ -8,6 +8,7 @@ import { Budget, BudgetResponse } from '../pages/budget/budget.component';
   providedIn: 'root'
 })
 export class BudgetService {
+  [x: string]: any;
   private apiUrl = '/budget';
 
   constructor(private http: HttpClient) { }
