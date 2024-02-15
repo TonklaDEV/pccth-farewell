@@ -1,6 +1,8 @@
 // wellfare-dialog.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { WellfareService } from 'src/app/api-services/wellfare.service';
+
 
 @Component({
   selector: 'app-wellfare-dialog',
@@ -8,16 +10,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./wellfare-dialog.component.scss'],
 })
 export class WellfareDialogComponent implements OnInit {
+  @Input() userId: any;
+  @Output() userIdChanged: EventEmitter<string> = new EventEmitter<string>();
+  @Output() closeDialog: EventEmitter<void> = new EventEmitter<void>();
   expenseForm!: FormGroup;
   rangeDates: Date[] = [];
   selectedDates: Date[] = [];
+  responseData: any;
 
   startDate: Date;
   endDate: Date;
   startUTC: number;
   endUTC: number;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private createExpenseService: WellfareService) {
     this.startDate = new Date();
     this.endDate = new Date();
     this.startUTC = 0;
@@ -26,10 +32,10 @@ export class WellfareDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('userId in WellfareDialogComponent:', this.userId);
     this.initForm();
     this.expenseForm.get('numberOfDaysInput')?.disable();
     this.expenseForm.get('dateRangeInput')?.disable();
-
 
   }
 
@@ -45,13 +51,13 @@ export class WellfareDialogComponent implements OnInit {
       opd: [0],
       medicalExpensesInput: [0],
       roomService: [0],
-      includeRoomFood: [false], // Checkbox control
+      // includeRoomFood: [false], // Checkbox control
       description: ['', Validators.required],
       remark: ['', Validators.required],
+      adMission: '',
     });
 
   }
-
   // includeRoomFood(): void {
   //   this.expenseForm.get('includeRoomFood')?.valueChanges.subscribe((checked) => {
   //     if (checked) {
@@ -100,11 +106,29 @@ export class WellfareDialogComponent implements OnInit {
   }
 
   save() {
-    this.resetForm();
+    // this.resetForm();
     console.log(this.expenseForm.value);
     console.log(this.selectedDates);
     console.log(this.rangeDates);
+    if (this.expenseForm.valid) {
+      this.userId
+      const expenseData = this.expenseForm.value;
+
+      this.createExpenseService.createExpense(this.userId, expenseData).subscribe(
+        (response) => {
+          console.log('Expense created successfully:', response);
+        },
+        (error) => {
+          console.error('Error creating expense:', error);
+        }
+      );
+    } else {
+      console.error('Form is not valid.');
+    }
+    console.log(this.userId);
+    this.resetForm();
   }
+
 
   getRangeDates() {
     if (this.rangeDates && this.rangeDates.length > 0) {
@@ -145,5 +169,8 @@ export class WellfareDialogComponent implements OnInit {
     this.expenseForm.get('numberOfDaysInput')?.disable();
     this.expenseForm.get('dateRangeInput')?.disable();
   }
-  
+
+  close(): void {
+    this.closeDialog.emit();
+  }
 }
