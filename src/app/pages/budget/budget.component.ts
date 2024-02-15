@@ -111,15 +111,45 @@ export interface Budget {
 
   editBudget(budget: Budget) {
     // this.showEditModal = true;
-    this.budgetData.id = budget.id;
+    this.budgetData.level = budget.level;
     this.budgetData.opd = budget.opd;
     this.budgetData.ipd = budget.ipd;
     this.budgetData.room = budget.room;
   }
 
-  deleteBudget(budget: any) {
-    // โค้ดสำหรับลบข้อมูล
+  deleteBudget(budget: Budget) {
+    // แสดงแจ้งเตือนก่อนการลบ
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You are about to delete this budget!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // ถ้าผู้ใช้กด "Yes"
+        this.performDelete(budget);
+      }
+    });
   }
+  
+  private performDelete(budget: Budget) {
+    // ทำการลบข้อมูล
+    // ทำการลบข้อมูล
+    this.servicebudget['deleteBudget'](budget).subscribe(
+      (response: any) => {
+        console.log('Budget deleted successfully:', response);
+        Swal.fire('Deleted!', 'Budget has been deleted successfully!', 'success');
+        this.findAllBudgets(); // โหลดข้อมูลใหม่
+      },
+      (error: any) => {
+        console.error('Error deleting budget:', error);
+        Swal.fire('Error!', 'Error deleting budget!', 'error');
+      }
+    );
+  }
+  
 
  // ใน Angular Component
  openEditModal(budget: Budget): void {
