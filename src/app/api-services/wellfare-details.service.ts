@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 interface ResponseData {
@@ -64,11 +65,15 @@ export class WellfareDetailsService {
     this.domain = environment.domain;
   }
 
-  getAllExpenseInUsed(): Observable<any> {
-    return this.http.get<any>(`${this.domain}expenses/getAllExpenseInUsed`);
+  getAllExpenseInUsed(lazyEvent: LazyLoadEvent): Observable<any> {
+    return this.http.get<any>(`${this.domain}/expenses/getAllExpenseInUsed`, { params: { lazyEvent: JSON.stringify(lazyEvent) } });
+  }
+
+  getExpense(page : number, size : number) {
+    return this.http.get<any>(`${this.domain}/expenses/getExpenseByPage?page=${page}&size=${size}&sort=id,desc`)
   }
 
   getExpenseInfo(id: number): Observable<ResponseMessage> {
-    return this.http.get<ResponseMessage>(`${this.domain}expenses/info?id=${id}`);
+    return this.http.get<ResponseMessage>(`${this.domain}/expenses/info?id=${id}`);
   }
 }

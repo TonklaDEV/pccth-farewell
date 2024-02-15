@@ -11,12 +11,13 @@
             (input)="onInputChange($event)" />
         </div>
         <div class="mx-2 my-4">
-          <p-table #dt1 dataKey="id" [value]="dataSource" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
-            currentPageReportTemplate="แสดง {first} ถึง {last} ของ {totalRecords} ข้อมูล" [rowsPerPageOptions]="[5, 10]"
-            [globalFilterFields]="[
+          <p-table #dt1 [totalRecords]="totalRecords" [lazy]="true" [loading]="loading"
+            (onLazyLoad)="loadExpenseData($event)" dataKey="id" [value]="dataSource" [paginator]="true" [rows]="5"
+            [showCurrentPageReport]="true" currentPageReportTemplate="แสดง {first} ถึง {last} ของ {totalRecords} ข้อมูล"
+            [rowsPerPageOptions]="[5, 10]" [globalFilterFields]="[
               'dateOfAdmission',
-              'empid',
               'empname',
+              'emplevel',
               'canWithdraw'
             ]">
             <ng-template pTemplate="caption">
@@ -57,11 +58,11 @@
             <h6 class="text-lg dark:text-white">รายละเอียดการเบิกค่ารักษาพยาบาล</h6>
           </div>
         </div>
-        <div [hidden]="expenseSelect"
+        <div *ngIf="expenseSelect"
           class="่่w-full m-auto h-32 flex justify-center items-center rounded-md text-start dark:text-white bg-gray-100 dark:bg-transparent">
           <h4>กรุณาเลือกข้อมูลจากตาราง</h4>
         </div>
-        <div [hidden]="nonExpenseSelect"
+        <div [hidden]="expenseSelect"
           class="่่mx-8 p-2 rounded-md text-start dark:text-white bg-gray-100 dark:bg-transparent">
           <p><span class="font-semibold">ประเภทการเข้ารับการรักษา</span>: ผู้ป่วย{{expenseInfo.typeExpense}}</p>
           <p><span class="font-semibold">วันที่เบิก</span>: {{expenseInfo.dateAdd}}</p>
@@ -76,7 +77,8 @@
           <p><span class="font-semibold">รวม</span>: {{expenseInfo.days}} วัน</p>
           <p><span class="font-semibold">ค่ารักษาพยาบาล</span>: {{expenseInfo.healthCost | number: '1.0-0'}} บาท</p>
           <p><span class="font-semibold">ค่าห้องและอาหาร</span>: {{expenseInfo.roomSerive | number: '1.0-0'}} บาท</p>
-          <p><span class="font-semibold">จำนวนเงินที่สามารถเบิกได้</span>: {{expenseInfo.withDraw | number: '1.0-0'}} บาท</p>
+          <p><span class="font-semibold">จำนวนเงินที่สามารถเบิกได้</span>: {{expenseInfo.withDraw | number: '1.0-0'}}
+            บาท</p>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { OpdDialogComponent } from './components/opd-dialog/opd-dialog.component
 import { IpdDialogComponent } from './components/ipd-dialog/ipd-dialog.component';
 import { WellfareDetailsService } from 'src/app/api-services/wellfare-details.service';
 import { Table } from 'primeng/table';
+import { LazyLoadEvent } from 'primeng/api';
 export interface Expenses {
   empid: number;
   empname: string;
@@ -41,6 +42,8 @@ export interface ExpenseInfo {
 export class WellfareDetailPageComponent implements OnInit {
   dataSource: Expenses[] = [];
   opdAllBudget: number = 0;
+  loading!: boolean;
+  totalRecords!: number;
   expenseInfo: ExpenseInfo = {
     typeExpense: '',
     dateAdd: '',
@@ -59,23 +62,31 @@ export class WellfareDetailPageComponent implements OnInit {
     roomSerive: 0,
     withDraw: 0,
   };
-  nonExpenseSelect: boolean = true; //hidden before select object
-  expenseSelect: boolean = false;
+  expenseSelect!: boolean;
+  filteredExpenses!: any[];
   constructor(
     public dialog: MatDialog,
     public wellfareDetailService: WellfareDetailsService
   ) {}
 
   ngOnInit(): void {
-    this.loadExpenseData();
+    this.loading = true;
+    this.expenseSelect = true;
+    // this.loadExpenseData();
   }
   clear(table: Table) {
     table.clear();
   }
 
-  loadExpenseData() {
-    this.wellfareDetailService.getAllExpenseInUsed().subscribe((res) => {
-      const formatted = res.responseData.result.map((item: any) => {
+  loadExpenseData(event: LazyLoadEvent) {
+    this.loading = true;
+    const first = (event.first) ? event.first : 0
+    const rows = (event.rows) ? event.rows : 0
+    const page = first / rows
+    
+    this.wellfareDetailService.getExpense(page,rows).subscribe((res) => {
+      const a: string[] = [];
+      const formatted = res.content.map((item: any) => {
         return {
           emplevel: item.employee.budget.level,
           empname:
@@ -106,6 +117,8 @@ export class WellfareDetailPageComponent implements OnInit {
         };
       });
       this.dataSource = formatted;
+      this.totalRecords = res.pageable.totalElements;
+      this.loading = false;
     });
   }
 
@@ -147,13 +160,13 @@ export class WellfareDetailPageComponent implements OnInit {
           withDraw: result.canWithdraw,
         };
         this.expenseInfo = expenseinfo;
-        this.nonExpenseSelect = false; //show expense info in card
+        this.expenseSelect = false;
       },
       (err) => {
         console.error(err);
       }
     );
-    this.expenseSelect = true;
+    console.log(this.expenseSelect);
   }
 
   openOPDDialog() {
@@ -165,9 +178,7 @@ export class WellfareDetailPageComponent implements OnInit {
   }
 
   @ViewChild('dt1') dt1!: Table;
-  onInputChange(event: any) {
-    if (event && event.target && this.dt1) {
-      this.dt1.filterGlobal(event.target.value, 'contains');
-    }
+  onInputChange(event: any) {    
+    this.dt1.filterGlobal(event.target.value, 'contains');
   }
 }
