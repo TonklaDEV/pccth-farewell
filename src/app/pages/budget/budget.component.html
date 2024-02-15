@@ -30,8 +30,11 @@
       </div>
 
       <div class="flex justify-end mt-4">
-        <button type="submit" class="px-8 py-2 mr-4 text-white bg-blue-500 rounded hover:bg-blue-600">เพิ่มข้อมูล</button>
+        <button *ngIf="!editingMode" type="submit" class="px-8 py-2 mr-4 text-white bg-blue-500 rounded hover:bg-blue-600">เพิ่มข้อมูล</button>
+        <button *ngIf="editingMode" type="submit" class="px-8 py-2 mr-4 text-white bg-green-500 rounded hover:bg-green-600">อัปเดต</button>
+        <button *ngIf="editingMode" type="button" class="px-8 py-2 text-white bg-gray-500 rounded hover:bg-gray-600" (click)="closeEditModal()">ปิด</button>
       </div>
+
     </form>
 
     <div class="flex items-center space-x-2">
@@ -43,8 +46,8 @@
           [(ngModel)]="searchLevel" (input)="filterBudgets()" [matAutocomplete]="auto" />
 
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option *ngFor="let item of (searchLevel.trim() ? filteredBudgets : budgets)" [value]="item.level">
-            {{ item.level }}
+          <mat-option *ngFor="let budget of  (searchLevel.trim() ? filteredBudgets : budgets)" [value]="budget.level">
+            {{ budget.level }}
           </mat-option>
         </mat-autocomplete>
         <button class="px-4 py-2 mr-2 text-white bg-blue-500 rounded hover:bg-blue-600"
@@ -98,5 +101,8 @@
       <span>{{ currentPage }} / {{ totalPages }}</span>
       <button *ngIf="currentPage < totalPages" (click)="nextPage()">Next</button>
     </div>
+
+   
+
   </div>
 </div>

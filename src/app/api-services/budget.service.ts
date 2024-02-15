@@ -26,5 +26,12 @@ export class BudgetService {
     return this.http.get<BudgetResponse>(`${this.apiUrl}/searchBudget`, { params });
   }
 
+  deleteBudget(budgetId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/deleteBudget?budgetId=${budgetId}`);
+  }
+
+  updateBudget(budgetId: number, updatedBudget: Budget): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/editBudget?budgetId=${budgetId}`, updatedBudget);
+  }
 
 }
