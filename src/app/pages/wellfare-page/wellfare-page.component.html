@@ -30,12 +30,37 @@
                         class="bg-[#696cf8] text-white font-bold py-2.5 px-4 my-5 rounded cursor-pointer drop-shadow dark:bg-[#8385ff] xl:h-1/2 xl:w-44 xl:ml-1 xl:mr-2">เบิกค่ารักษาพยาบาล</button>
                 </div>
             </div>
+            <!-- [value]="dataSource" -->
+            <div class="mx-2 my-4">
+                <p-table #dt1 [value]="responseData" dataKey="id" [paginator]="true" [rows]="5"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="แสดง {first} ถึง {last} ของ {totalRecords} ข้อมูล"
+                    [rowsPerPageOptions]="[5, 10]"
+                    [globalFilterFields]="['budget.level', 'tprefix', 'tname', 'tsurname']">
+                    <ng-template pTemplate="caption">
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 20%">วันที่เบิก</th>
+                            <th style="width: 35%">ชื่อ - นามสกุล</th>
+                            <th style="width: 20%">ระดับ</th>
+                            <th style="width: 25%">เงินที่เบิกได้</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-expense>
+                        <!-- (click)="getExpense(expense.expenseId)" -->
+                        <tr class="t-body">
+                            <td>{{ expense.budget.level }}</td>
+                            <td>{{ expense.tprefix }}</td>
+                            <td>{{ expense.tname }}</td>
+                            <td>{{ expense.tsurname }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
         </div>
         <div *ngIf="responseData.result && responseData.result.length === 0">
             <p>No data found.</p>
-        </div>
-        <div class="">
-            <!-- <app-news-table></app-news-table> -->
         </div>
     </div>
 
