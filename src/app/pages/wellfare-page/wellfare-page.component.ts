@@ -17,6 +17,7 @@ export class WellfarePageComponent implements OnInit {
   ngOnInit(): void {
     console.log('UserId in WellfareDialogComponent ngOnInit:', this.userId);
     this.cdr.detectChanges();
+    this.searchUsers();
   }
 
   showModalDialog(userId: string): void {
@@ -42,7 +43,7 @@ export class WellfarePageComponent implements OnInit {
       }
     );
   }
-  
+
   isHovered: boolean = false;
   userId: any;
   handleUserIdChanged(userId: any): void {
