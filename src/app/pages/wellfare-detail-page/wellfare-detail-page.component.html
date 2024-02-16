@@ -4,11 +4,25 @@
       <div
         class="flex-1 w-full p-6 bg-white rounded-md shadow text-font-header dark:text-font-header-dark dark:bg-content-dark">
         <p class="mb-6 text-2xl">ตารางแสดงการเบิกค่ารักษาพยาบาลทั้งหมด</p>
-        <div class="w-1/2">
-          <input
-            class="grow appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#6d6161]"
-            placeholder="โปรดระบุสิ่งที่ต้องการค้นหา เช่น ชื่อ,จำนวนเงิน,รหัสพนักงาน, และอื่น"
-            (input)="onInputChange($event)" />
+        <div class="flex items-center justify-start w-full">
+          <div class="">
+            <label for="typeSearch" class="inline-block mr-1 text-sm font-medium dark:text-white">ค้นหาด้วย</label>
+            <select [(ngModel)]="selectedType" name="typeSearch" id="typeSearch"
+              class="bg-gray-50 border mr-1 border-gray-300 inline-block text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option value="" disabled>เลือกสิ่งที่ต้องการค้นหา</option>
+              <option value="code">รหัสพนักงาน</option>
+              <option value="name">ชื่อ - นามสกุล</option>
+            </select>
+            <p-autoComplete class="dark:bg-gray-700" [(ngModel)]="selectedSearchValue" [showEmptyMessage]="true"
+              [suggestions]="filteredSearchValues" (completeMethod)="filterValue($event)"></p-autoComplete>
+          </div>
+          <div class="ml-2">
+            <button (click)="fetchSearchData()" type="button"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <i class="pi pi-search"></i>
+              ค้นหา
+            </button>
+          </div>
         </div>
         <div class="mx-2 my-4">
           <p-table #dt1 [totalRecords]="totalRecords" [lazy]="true" [loading]="loading"
