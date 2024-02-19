@@ -3,64 +3,68 @@ import { HttpClient } from '@angular/common/http';
 import { BudgetService } from 'src/app/api-services/budget.service';
 import Swal from 'sweetalert2';
 import { NgZone } from '@angular/core';
-
-// budget.model.ts
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface Budget {
-    id?: number;
-    level: string;
-    opd: string | number;
-    ipd: string | number;
-    room: string | number;
-  }
-  
-  export interface BudgetResponse {
-    responseMessage: string;
-    responseData: {
-      result: Budget[];
-    };
-  }
-  
-  @Component({
-    selector: 'app-budget',
-    templateUrl: './budget.component.html',
-    styleUrls: ['./budget.component.scss'],
-  })
-  export class BudgetComponent implements OnInit {
-    
+  id?: number;
+  level: string;
+  opd: string | number;
+  ipd: string | number;
+  room: string | number;
+}
 
+export interface BudgetResponse {
+  responseMessage: string;
+  responseData: {
+    result: Budget[];
+  };
+}
 
- addBudget(): void {
+@Component({
+  selector: 'app-budget',
+  templateUrl: './budget.component.html',
+  styleUrls: ['./budget.component.scss'],
+})
+export class BudgetComponent implements OnInit {
+  UserForm: FormGroup | undefined;
+  updatedData: any;
+
+  addBudget(): void {
     this.servicebudget.createBudget(this.budgetData).subscribe(
       (response) => {
-        console.log('Budget created successfully:', response);
+        console.log('งบประมาณถูกสร้างเรียบร้อย:', response);
       },
       (error) => {
-        console.error('Error creating budget:', error);
+        console.error('เกิดข้อผิดพลาดในการสร้างงบประมาณ:', error);
       }
     );
     window.location.reload();
   }
 
-    showAddModal = false;
-    showEditModal = false;
-    budgetData: Budget = { id: 0, level: '', opd: '', ipd: '', room: '' };
-    budgets: Budget[] = [];
-    budgetId: number | null = null;
-    opdValue: string = '';
-    ipdValue: string = '';
-    searchLevel: string = '';
-    searchResults: Budget[] = [];
+  showAddModal = false;
+  showEditModal = false;
+  budgetData: Budget = { id: 0, level: '', opd: '', ipd: '', room: '' };
+  budgets: Budget[] = [];
+  budgetId: number | null = null;
+  opdValue: string = '';
+  ipdValue: string = '';
+  searchLevel: string = '';
+  searchResults: Budget[] = [];
+
+  constructor(
+    private servicebudget: BudgetService,
+    private ngZone: NgZone,
+    private fb: FormBuilder
+  ) {
+    
   
 
-    constructor(
-      private servicebudget: BudgetService,
-      private ngZone: NgZone) { }
+  }
 
   ngOnInit(): void {
-    this.findAllBudgets()
+    this.findAllBudgets();
+    this.updateBudget();
   }
-  
 
   levels: string[] = [];
   findAllBudgets(): void {
@@ -71,10 +75,9 @@ export interface Budget {
         console.log(this.budgets);
       },
       (error) => {
-        console.error('Error loading budgets:', error);
+        console.error('เกิดข้อผิดพลาดในการโหลดงบประมาณ:', error);
       }
     );
-    
   }
 
   filteredBudgets: Budget[] = [];
@@ -84,7 +87,7 @@ export interface Budget {
       this.filteredBudgets = this.budgets;
     } else {
       this.filteredBudgets = this.budgets.filter((item) =>
-        item.level.toLowerCase().includes(this.searchLevel.toLowerCase())
+        item.level.toLowerCase() === this.searchLevel.toLowerCase()
       );
     }
     console.log('Filtered Budgets:', this.filteredBudgets);
@@ -92,154 +95,179 @@ export interface Budget {
   
   searchBudgetByLevel(): void {
     console.log('Search Level:', this.searchLevel);
-    this.servicebudget.searchBudget(this.searchLevel).subscribe(
-      (response: BudgetResponse) => {
-        console.log('Search results:', response);
+    if (this.searchLevel.trim()) {
+      this.servicebudget.searchBudget(this.searchLevel).subscribe(
+        (response: BudgetResponse) => {
+          console.log('Search results:', response);
   
-        if (response.responseData.result) {
-          this.searchResults = Array.isArray(response.responseData.result)
-            ? response.responseData.result
-            : [response.responseData.result];
-        } else {
-          this.searchResults = [];
+          if (response.responseData.result) {
+            this.searchResults = Array.isArray(response.responseData.result)
+              ? response.responseData.result
+              : [response.responseData.result];
+          } else {
+            this.searchResults = [];
+          }
+  
+    
+        },
+        (error) => {
+          console.error('Error searching budget:', error);
         }
-      },
-      (error) => {
-        console.error('Error searching budget:', error);
-      }
-    );
-  }
-  
-
-  formatNumber(event: any) {
-    let value = event.target.value.replace(/\D/g, ''); // ลบทุกตัวที่ไม่ใช่ตัวเลขออกจากค่าที่ป้อน
-    if (value.length >= 3) {
-      value = parseInt(value).toLocaleString(); // จัดรูปแบบตัวเลขใหม่โดยใช้ toLocaleString()
+      );
+    } else {
+     
+      this.searchResults = this.budgets;
+    
     }
-    event.target.value = value; // กำหนดค่าใหม่กลับไปยังอิลิเมนต์ input
   }
   
+  
+  formatNumber(event: any) {
+    let value = event.target.value.replace(/\D/g, '');
+    if (value.length >= 3) {
+      value = parseInt(value).toLocaleString();
+    }
+    event.target.value = value;
+  }
+
   editingMode = false;
 
   editBudget(budget: Budget) {
-    this.editingMode = true; // เปลี่ยนสถานะเป็น true เมื่อกดปุ่ม "แก้ไขข้อมูล"
+    this.editingMode = true;
     this.budgetData.level = budget.level;
     this.budgetData.opd = budget.opd;
     this.budgetData.ipd = budget.ipd;
     this.budgetData.room = budget.room;
   }
 
-  
-
   deleteBudget(budget: Budget) {
-    // แสดงแจ้งเตือนก่อนการลบ
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'You are about to delete this budget!',
+      title: 'คุณแน่ใจหรือไม่?',
+      text: 'คุณกำลังจะลบงบประมาณนี้!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'Cancel',
+      confirmButtonText: 'ใช่, ลบเลย!',
+      cancelButtonText: 'ยกเลิก',
     }).then((result) => {
       if (result.isConfirmed) {
-        // ถ้าผู้ใช้กด "Yes"
         this.performDelete(budget);
       }
     });
   }
 
-  
-
   private performDelete(budget: Budget) {
-    // ทำการลบข้อมูล
     if (budget.id !== undefined) {
       this.servicebudget.deleteBudget(budget.id).subscribe(
         (response: any) => {
-          console.log('Budget deleted successfully:', response);
-          Swal.fire('Deleted!', 'Budget has been deleted successfully!', 'success');
-          this.findAllBudgets(); // โหลดข้อมูลใหม่
+          console.log('งบประมาณถูกลบเรียบร้อย:', response);
+          Swal.fire('ลบแล้ว!', 'งบประมาณถูกลบเรียบร้อยแล้ว!', 'success');
+          this.findAllBudgets();
         },
         (error: any) => {
-          console.error('Error deleting budget:', error);
-          Swal.fire('Error!', 'Error deleting budget!', 'error');
+          console.error('เกิดข้อผิดพลาดในการลบงบประมาณ:', error);
+          Swal.fire('ข้อผิดพลาด!', 'เกิดข้อผิดพลาดในการลบงบประมาณ!', 'error');
         }
       );
     } else {
-      console.error('Budget ID is undefined. Cannot delete.');
+      console.error('ID ของงบประมาณไม่ได้ระบุ. ไม่สามารถลบได้.');
     }
   }
 
-
   openEditModal(budget: Budget): void {
-    this.editingMode = true; // เปิดโหมดแก้ไข
+    this.editingMode = true;
     this.budgetData = { ...budget };
     this.showEditModal = true;
   }
 
   closeEditModal(): void {
-    this.editingMode = false; // ปิดโหมดแก้ไข
+    this.editingMode = false;
     this.showEditModal = false;
     this.budgetData = { id: 0, level: '', opd: '', ipd: '', room: '' };
   }
 
+  updateBudget(): void {
+    if (this.budgetData.id && this.budgetData) {
+      this.UserForm = this.fb.group({
+        empId: [''],
+      });
 
-// budget.component.ts
+      this.servicebudget.updateBudget(this.budgetData.id, this.budgetData).subscribe(
+        (response: any) => {
+          console.log('งบประมาณถูกอัปเดตเรียบร้อย:', response);
+          Swal.fire('สำเร็จ!', 'งบประมาณถูกอัปเดตเรียบร้อย!', 'success');
+          this.closeEditModal();
+          this.findAllBudgets();
+        },
+        (error: any) => {
+          console.error('เกิดข้อผิดพลาดในการอัปเดตงบประมาณ:', error);
+          Swal.fire('ข้อผิดพลาด!', 'เกิดข้อผิดพลาดในการอัปเดตงบประมาณ!', 'error');
+        }
+      );
+    } else {
+      console.error('ข้อมูลงบประมาณไม่ถูกต้องสำหรับการอัปเดต.');
+    }
+  }
 
-updateBudget(): void {
-  if (this.budgetData.id && this.budgetData) {
-    this.servicebudget.updateBudget(this.budgetData.id, this.budgetData).subscribe(
+  onEditButtonClick() {
+    if (this.UserForm && this.updatedData && this.isValidBudgetData(this.updatedData)) {
+      this.UserForm.setValue({
+        empId: this.updatedData.empId,
+      });
+    } else {
+      console.error("ข้อมูลงบประมาณไม่ถูกต้องสำหรับการอัปเดต.");
+    }
+  }
+
+  isValidBudgetData(data: any): boolean {
+    return !!data.empId;
+  }
+
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+
+  get totalPages(): number {
+    return Math.ceil(this.budgets.length / this.itemsPerPage);
+  }
+
+  get displayedBudgets(): Budget[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.budgets.slice(startIndex, endIndex);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      const startIndex = this.currentPage * this.itemsPerPage;
+      const endIndex = (this.currentPage + 1) * this.itemsPerPage;
+    
+      this.currentPage++;
+    }
+  }
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      const startIndex = (this.currentPage - 2) * this.itemsPerPage;
+      const endIndex = (this.currentPage - 1) * this.itemsPerPage;
+      
+      this.currentPage--;
+    }
+  }
+  updateBudgetData(): void {
+    const budgetIdToUpdate = 5;
+    const updatedBudgetData: Budget = {
+      level: 'newLevel',
+      opd: 'newOPD',
+      ipd: 'newIPD',
+      room: 'newRoom',
+    };
+
+    this.servicebudget.updateBudget(budgetIdToUpdate, updatedBudgetData).subscribe(
       (response: any) => {
-        console.log('Budget updated successfully:', response);
-        Swal.fire('Success!', 'Budget updated successfully!', 'success');
-        this.closeEditModal(); // ปิด Modal หลังจากการแก้ไขเสร็จสิ้น
-        this.findAllBudgets(); // โหลดข้อมูลใหม่
+        console.log('งบประมาณถูกอัปเดตเรียบร้อย:', response);
       },
       (error: any) => {
-        console.error('Error updating budget:', error);
-        Swal.fire('Error!', 'Error updating budget!', 'error');
+        console.error('เกิดข้อผิดพลาดในการอัปเดตงบประมาณ:', error);
       }
     );
-  } else {
-    console.error('Invalid budget data for update.');
   }
-}
-
-
-currentPage: number = 1;
-itemsPerPage: number = 5;
-
-get totalPages(): number {
-  return Math.ceil(this.budgets.length / this.itemsPerPage);
-}
-
-get displayedBudgets(): Budget[] {
-  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-  const endIndex = startIndex + this.itemsPerPage;
-  return this.budgets.slice(startIndex, endIndex);
-}
-
-// ... โค้ดอื่น ๆ ...
-
-nextPage(): void {
-  if (this.currentPage < this.totalPages) {
-    this.currentPage++;
-  }
-}
-
-prevPage(): void {
-  if (this.currentPage > 1) {
-    this.currentPage--;
-  }
-}
-
-
-
-}
-
-
   
-  
-
-
-
-
+}
