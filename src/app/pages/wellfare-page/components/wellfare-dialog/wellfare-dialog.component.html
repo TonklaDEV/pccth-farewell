@@ -4,9 +4,9 @@
             <div
                 class="grid grid-cols-2 gap-2 justify-start text-start text-[#566a7f] rounded-md shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526] align-start">
                 <div class="flex flex-col items-start justify-start col-span-1">
-                    <label for="days">OPD : </label>
-                    <label for="days">IPD : </label>
-                    <label for="days">ค่าห้อง + ค่าอาหาร : </label>
+                    <label for="days">OPD: {{ opdValue }}</label>
+                    <label for="days">IPD: {{ ipdValue }}</label>
+                    <label for="days">ค่าห้อง + ค่าอาหาร: {{ roomValue }}</label>
                 </div>
             </div><br>
             <div class="w-full col-span-1">
@@ -86,7 +86,7 @@
                             กรุณากรอกรายละเอียด
                         </div>
                     </div>
-                    <button type="button" (click)="save()">test</button>
+                    <button type="button" (click)="save()">บันทึกข้อมูล</button>
 
                     <button (click)="handleDateSelection(startDate, endDate, startUTC, endUTC)">Click
                         me</button>

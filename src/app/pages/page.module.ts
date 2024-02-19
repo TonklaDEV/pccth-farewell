@@ -46,12 +46,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { OpdDialogComponent } from './wellfare-detail-page/components/opd-dialog/opd-dialog.component';
-import { IpdDialogComponent } from './wellfare-detail-page/components/ipd-dialog/ipd-dialog.component';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
 import { ManageUserPageComponent } from './manage-user-page/manage-user-page.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -60,18 +60,13 @@ import { ManageUserPageComponent } from './manage-user-page/manage-user-page.com
     ListCardSystemComponent,
     ListDescriptionComponent,
     ListCardPeopleComponent,
-
     NewsPageComponent,
-
     CalenderPageComponent,
     CalendarTableComponent,
-
     DashboardPageComponent,
     InformationUserComponent,
     InformationProjectUserComponent,
-
     JobDayViewPageComponent,
-
     ManagementNewsPageComponent,
     ManagementDashboardPageComponent,
     ManagementRolePageComponent,
@@ -90,10 +85,10 @@ import { ManageUserPageComponent } from './manage-user-page/manage-user-page.com
     WellfareDetailPageComponent,
     BudgetComponent,
     WellfareDialogComponent,
-    OpdDialogComponent,
-    IpdDialogComponent,
   ],
   imports: [
+    AutoCompleteModule,
+    ButtonModule,
     TableModule,
     MatRadioModule,
     DialogModule,

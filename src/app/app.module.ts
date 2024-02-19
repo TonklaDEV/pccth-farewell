@@ -9,13 +9,17 @@ import { PageModule } from './pages/page.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
-import { EditModalComponent } from './edit-modal/edit-modal.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent, EditModalComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, LayoutModule, PageModule, AppRoutingModule,
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule, 
+    BrowserAnimationsModule, 
+    LayoutModule, 
+    PageModule, 
+    AppRoutingModule,
     JwtModule.forRoot({
     config: {
       tokenGetter: () => {

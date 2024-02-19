@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/api-services/auth.service';
 import { ManageUserService } from 'src/app/api-services/manage-user.service';
+
+
+
+
 
 
 @Component({
@@ -12,45 +16,70 @@ import { ManageUserService } from 'src/app/api-services/manage-user.service';
 })
 export class ManageUserPageComponent implements OnInit {
 
+ 
+  emps: any;
   UserForm: any;
   invalidNoInput: boolean = false;
+  isDataSelected: boolean = false;
+  isEditing: boolean = false;
+  selectedUserId: number | null = null;
+  userIdToUpdate: any;
+
+  
+  
 
   constructor(
-    private Mservice: ManageUserService,
+    
+    private Mservices: ManageUserService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router) { }
 
-  ngOnInit(): void {
-    this.UserForm = this.formBuilder.group({
-      deptCode: ['', Validators.required],
-      dept: ['', Validators.required],
-      empId: ['', Validators.required],
-      firstname: ['', Validators.required],
-      prefix: ['', Validators.required],
-      remark: ['', Validators.required],
-      startDate: ['', Validators.required],
-      surname: ['', Validators.required],
-      position: ['', Validators.required],
-      mail: ['', Validators.email]
-    });
-    console.log(this.UserForm);
+    
 
-    console.log('in manage-user')
-    // const role = this.authService.checkRole();
-    // if (role !== 'ROLE_Admin'){
-    //   this.router.navigate(['/pccth']);
-    // }
-    this.loadEmployees();
-  }
-
-  onSubmit() {
-    if (this.UserForm.valid) {
-      // ทำสิ่งที่คุณต้องการเมื่อยื่นฟอร์ม
-      console.log(this.UserForm.value);
+    ngOnInit(): void {
+      this.UserForm = this.formBuilder.group({
+        budget: this.formBuilder.group({
+          level: ['', Validators.required],
+          opd: [''],
+          ipd: [''],
+          room: ['']
+        }),
+        deptCode: ['',Validators.required],
+        code: ['',Validators.required],
+        dept: this.formBuilder.group({
+          deptid: ['', Validators.required],
+          deptcode: ['', Validators.required]
+        }),
+        empid: ['', Validators.required],
+        tname: ['', Validators.required],
+        tprefix: ['', Validators.required],
+        remark: ['', Validators.required],
+        startDate: ['', Validators.required],
+        tsurname: ['', Validators.required],
+        tposition: ['', Validators.required],
+        email: ['', Validators.email]
+      });
+    
+      console.log('in manage-user');
+      this.loadEmployees();
     }
-    this.UserForm.reset();
-  }
+    
+    
+    
+    
+
+    onSubmit() {
+      if (this.UserForm.valid) {
+        // ทำสิ่งที่คุณต้องการเมื่อยื่นฟอร์ม
+        console.log(this.UserForm.value);
+      } else {
+        this.UserForm.markAllAsTouched();
+        console.log('กรุณากรอกข้อมูลให้ถูกต้อง');
+      }
+      this.UserForm.reset();
+    }
+    
 
   ///////pcc-dept
   pccDept = [
@@ -124,9 +153,12 @@ onInputKeyPressNo(event: KeyboardEvent) {
 
   loadEmployees(): void {
     const sort = 'userId,asc'; 
-    this.Mservice.getEmployees(0, 10, sort).subscribe(
+    this.Mservices.getEmployees(0, 5, sort).subscribe(
       (data: any)  => {
-        console.log(data.content);
+        this.emps = (data.content);
+
+        //เพื่อดูตัวแปล
+         console.log(data.content);
         
       },
       (error: any) => {
@@ -134,6 +166,144 @@ onInputKeyPressNo(event: KeyboardEvent) {
       }
     );
   }
+
+  
+  
+  onEditButtonClick(userId: number): void {
+    this.isDataSelected = true;
+    this.isEditing = true;
+    this.selectedUserId = userId;
+    this.userIdToUpdate = userId; // เพิ่มบรรทัดนี้
+  
+    this.Mservices.getUserById(userId).subscribe(
+      (data: any) => {
+        // ทำการแปลงรูปแบบวันที่จาก API
+        data.startDate = new Date(data.startDate).toISOString().split('T')[0];
+  
+        const budgetData = data.budget;
+        if (budgetData) {
+          this.UserForm.get('budget.level').setValue(budgetData.level);
+          console.log('Level from API:', budgetData.level);
+        }
+  
+        this.UserForm.patchValue(data); // ใช้ patchValue เพื่อกำหนดค่าข้อมูลในฟอร์ม
+  
+        // แสดงข้อมูลฝ่าย/แผนกใน div
+        this.UserForm.get('deptCode').setValue(data.dept.deptcode);
+        this.UserForm.get('code').setValue(data.dept.code);
+  
+        // ตรวจสอบและกำหนดค่า level เดิม
+        if (this.userIdToUpdate !== undefined && this.userIdToUpdate !== null) {
+          this.Mservices.getUserById(this.userIdToUpdate).subscribe(
+            (previousData: any) => {
+              const previousLevel = previousData.budget.level;
+              if (previousLevel) {
+                // กำหนดค่า level เดิม
+                this.UserForm.get('budget.level').setValue(previousLevel);
+              }
+            },
+            (error: any) => {
+              console.error('Error getting previous data:', error);
+            }
+          );
+        }
+      },
+      (error: any) => {
+        console.error('Error:', error);
+      }
+    );
+  }
+  
+  onUpdateButtonClick(): void {
+    if (this.userIdToUpdate !== undefined && this.userIdToUpdate !== null) {
+      if (this.UserForm.valid) {
+        const userData = this.UserForm.value;
+  
+        // ตรวจสอบว่ามีค่าใน deptCode และ budget.level
+        if (userData.deptCode && userData.budget && userData.budget.level) {
+          // ดำเนินการอัปเดตข้อมูลเฉพาะ level และ code
+          const updatedData = {
+            budget: {
+              level: userData.budget.level
+            },
+            dept: {
+              code: userData.dept.code
+            },
+            // แนบฟิลด์อื่นๆที่คุณไม่ต้องการให้อัพเดท
+            remark: userData.remark,
+            email: userData.email,
+            tprefix: userData.tprefix,
+            tsurname: userData.tsurname,
+            tposition: userData.tposition,
+            tname: userData.tname
+          };
+  
+          // ดำเนินการอัปเดตข้อมูล
+          this.Mservices.updateUser(this.userIdToUpdate, updatedData).subscribe(
+            response => {
+              console.log('อัปเดตข้อมูลสำเร็จ', response);
+              // ทำบางอย่างหลังจากอัปเดตสำเร็จ (เช่น รีเฟรชหน้าหรือปรับปรุงข้อมูล)
+            },
+            error => {
+              console.error('เกิดข้อผิดพลาดในการอัปเดตข้อมูล', error);
+            }
+          );
+        } else {
+          console.log('กรุณากรอกข้อมูลให้ครบถ้วน');
+        }
+      } else {
+        // กรณี Form ไม่ถูกต้อง
+        console.log('กรุณากรอกข้อมูลให้ถูกต้อง');
+  
+        // ดูว่าฟิลด์ไหนทำให้ฟอร์มไม่ผ่านการตรวจสอบความถูกต้อง
+        Object.keys(this.UserForm.controls).forEach(field => {
+          const control = this.UserForm.get(field);
+          if (control instanceof FormControl && !control.valid) {
+            console.log(`Field ${field} is INVALID`);
+            // แสดงข้อความเกี่ยวกับข้อผิดพลาดที่ไม่ผ่านการตรวจสอบความถูกต้อง
+          }
+        });
+      }
+    } else {
+      console.error('Invalid userId: undefined');
+    }
+  }
+  
+  
+  
+  
+  
+  
+
+
+  
+
+
+  onCancelUpdateButtonClick() {
+    // ทำการยกเลิกการเลือกข้อมูล
+    // ...
+
+    // เปลี่ยนค่า isDataSelected เป็น false เพื่อซ่อนปุ่ม
+    this.isDataSelected = false;
+    this.isEditing = false;
+  }
+
+  onDeleteButtonClick(userId: number): void {
+    this.Mservices.deleteUser(userId).subscribe(
+      response => {
+        console.log('User deleted successfully', response);
+        // ทำอย่างอื่นตามต้องการหลังจากลบข้อมูลเรียบร้อย
+      },
+      error => {
+        console.error('Error deleting user', error);
+        // ทำอย่างอื่นตามต้องการหากเกิดข้อผิดพลาด
+      }
+    );
+  }
+  
+  
+  
+  
 
   
 }
