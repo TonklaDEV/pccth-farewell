@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,11 +16,18 @@ export class WellfareService {
     this.domain = environment.domain;
   }
 
+  // searchUserByName(searchTerm: string): Observable<any> {
+  //   const url = `http://localhost:8080/employee/seacrhUser/byNames?searchTerm=${encodeURIComponent(searchTerm)}`;
+  //   return this.http.get<any>(url, { headers: this.headers });
+  // }
+
   searchUserByName(searchTerm: string): Observable<any> {
-    const url = `http://localhost:8080/employee/seacrhUser/byNames?searchTerm=${encodeURIComponent(
-      searchTerm
-    )}`;
-    return this.http.get<any>(url, { headers: this.headers });
+    const url = `http://localhost:8080/employee/seacrhUser/byNames?searchTerm=${encodeURIComponent(searchTerm)}`;
+    return this.http.get<any>(url, { headers: this.headers }).pipe(
+      tap((response) => {
+        console.log('API Response:', response);
+      })
+    );
   }
 
   private apiUrl = 'http://localhost:8080/expenses/create';
@@ -41,4 +48,22 @@ export class WellfareService {
       `${this.domain}/employee/seacrhUser/byNames?searchTerm=${term}`
     );
   }
+  searchExpensesByUserId(userId: number): Observable<any> {
+    const url = `http://localhost:8080/expenses/searchExpenses/${userId}`;
+    return this.http.get<any>(url, { headers: this.headers }).pipe(
+      tap((response) => {
+        console.log('API Response searchExpensesByUserId:', response); // Log the entire response
+      })
+    );
+  }
+  // searchExpensesByUserId(userId: number): Observable<any> {
+  //   const url = `http://localhost:8080/expenses/searchExpenses/${userId}`;
+  //   return this.http.get(url);
+  // }
+
+  deleteExpense(expenseId: number): Observable<any> {
+    const url = `http://localhost:8080/expenses/deleteExpenses/${expenseId}`;
+    return this.http.delete<any>(url, { headers: this.headers });
+  }
+
 }
