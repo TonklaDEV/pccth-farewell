@@ -8,6 +8,7 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./wellfare-page.component.scss'],
 })
 export class WellfarePageComponent implements OnInit {
+[x: string]: any;
   @Output() userIdChanged: EventEmitter<string> = new EventEmitter<string>();
   // expenseFrom: any;
   responseData: any = {};
@@ -16,8 +17,7 @@ export class WellfarePageComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('UserId in WellfareDialogComponent ngOnInit:', this.userId);
-    this.cdr.detectChanges();
-    this.searchUsers();
+    this.cdr.detectChanges()
   }
 
   showModalDialog(userId: string): void {
@@ -31,12 +31,19 @@ export class WellfarePageComponent implements OnInit {
 
   searchInput: any;
   searchUsers(): void {
+    this.userId
     const searchTerm = this.searchInput;
     this.wellfareService.searchUserByName(searchTerm).subscribe(
       (response) => {
         this.responseData = response.responseData.result;
-        this.userIdChanged.emit(response.userId);
-        console.log(this.responseData);
+        const userId = this.responseData[0]?.userId;
+        if (userId) {
+          this.userIdChanged.emit(userId);
+          console.log('User ID from response:', userId);
+          this.searchExpensesByUserId(userId);
+        } else {
+          console.error('User ID is undefined.');
+        }
       },
       (error) => {
         console.error(error);
@@ -48,11 +55,52 @@ export class WellfarePageComponent implements OnInit {
   userId: any;
   handleUserIdChanged(userId: any): void {
     console.log('UserId changed in WellfarePageComponent:', userId);
-    this.userId = userId; 
+    this.userId = userId;
   }
 
   closeModal(): void {
     this.displayModal = false;
   }
+
+  userData: any;
+
+  searchExpensesByUserId(userId: number): void {
+    this.userId
+    this.wellfareService.searchExpensesByUserId(userId).subscribe(
+      (response) => {
+        this.userData = response.expenses;
+      },
+      (error) => {
+        console.error('Error getting user data:', error);
+      }
+    );
+  }
+
+  // deleteExpense() {
+  //   if (this.userId && this.userId.expense && this.userId.expense.id !== undefined && this.userId.expense.id !== null) {
+  //     const expenseIdToDelete = this.userId.expense.id;
+
+  //     this.wellfareService.deleteExpense(expenseIdToDelete).subscribe(
+  //       (response) => {
+  //         console.log('Expense deleted successfully:', response);
+  //       },
+  //       (error) => {
+  //         console.error('Error deleting expense:', error);
+  //       }
+  //     );
+  //   } else {
+  //     console.error('Invalid or missing expense ID');
+  //   }
+  // }
+
+  expenseId: any;
+  deleteById(expenseId:any) {
+    this.wellfareService.deleteExpense(expenseId).subscribe((res: any) => {
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    });
+  }
+
 
 }
