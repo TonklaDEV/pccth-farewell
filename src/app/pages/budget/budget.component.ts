@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BudgetService } from 'src/app/api-services/budget.service';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
+
 import { NgZone } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
