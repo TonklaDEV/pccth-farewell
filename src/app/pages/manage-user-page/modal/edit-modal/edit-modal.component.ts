@@ -8,8 +8,7 @@ import { Validators } from '@angular/forms';
 })
 export class EditModalComponent implements OnInit {
 UserForm: any;
-invalidNoInput: any;
-  formBuilder: any;
+formBuilder: any;
 
   constructor() { }
 
@@ -17,6 +16,8 @@ invalidNoInput: any;
     this.UserForm = this.formBuilder.group({
       
       dept: ['', Validators.required],
+
+      email: ['', Validators.email],
       empId: ['', Validators.required],
       remark: ['', Validators.required],
       status: ['', Validators.required],
@@ -25,7 +26,7 @@ invalidNoInput: any;
       tposition: ['', Validators.required],
       tprefix: ['', Validators.required],
       tsurname: ['', Validators.required],
-      email: ['', Validators.email],
+      
       startDate: ['', Validators.required],
       deptCode: ['', Validators.required]
       

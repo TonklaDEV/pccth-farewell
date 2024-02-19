@@ -13,8 +13,17 @@ export class ManageUserService {
     return this.http.get<any>(`/employee/getEmpsByPage?page=${page}&size=${size}&sort=${sort}`);
   }
 
-  getUserById(userId: number): Observable<any> {
+  getUserById(userId: number ): Observable<any> {
     return this.http.get(`http://localhost:8080/employee/search/${userId}`);
   }
+
+  deleteUser(userId: number): Observable<any> {
+    return this.http.delete(`http://localhost:8080/employee/deleteEmployee?userid=${userId}`);
+  }
+
+  updateUser(userId: number, userData: any): Observable<any> {
+    return this.http.put(`http://localhost:8080/employee/editEmployee?userid=${userId}`, userData);
+  }
+  
   
 }

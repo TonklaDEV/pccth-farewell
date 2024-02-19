@@ -7,27 +7,44 @@
             </div>
         </div>
         <form class="grid grid-cols-1 justify-start items-center my-7 xl:my-12 xl:flex">
-
-            <input type="text"
+            <input [(ngModel)]="searchInput" id="searchInput" type="text"
                 class="appearance-none rounded-md border outline-none my-5 py-2.5 px-7 xl:px-3 xl:mx-1 xl:w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"
                 placeholder="กรอกชื่อหรือรหัสพนักงานที่ต้องการค้นหา">
-            <input type="button" (click)="search()"
-                class="bg-[#696cf8] text-white font-bold py-2.5 px-4 my-5 rounded cursor-pointer drop-shadow dark:bg-[#8385ff] xl:h-1/2 xl:w-44 xl:ml-1 xl:mr-2"
-                value="ค้นหา">
-
+            <button (click)="searchUsers()"
+                class="bg-[#696cf8] text-white font-bold py-2.5 px-4 my-5 rounded cursor-pointer drop-shadow dark:bg-[#8385ff] xl:h-1/2 xl:w-44 xl:ml-1 xl:mr-2">
+                search</button>
         </form>
 
-        <button (click)="showModalDialog()"
-            class="bg-[#696cf8] text-white font-bold py-2.5 px-4 my-5 rounded cursor-pointer drop-shadow dark:bg-[#8385ff] xl:h-1/2 xl:w-44 xl:ml-1 xl:mr-2">เบิกค่ารักษาพยาบาล</button>
+        <div *ngIf="responseData?.length > 0">
+            <div *ngFor="let data of responseData">
+                <div
+                    class="card grid grid-cols-2 gap-2 justify-start text-start text-[#566a7f] rounded-md shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526] align-start">
+                    <h2>{{ data.tprefix }} {{ data.tname }} {{ data.tsurname }}</h2>
+                    <p>รหัสพนักงาน: {{ data.empid }}</p>
+                    <p>Department: {{ data.dept.deptid }}</p>
+                    <p>{{ data.tposition }}</p>
+                    <p>Email: {{ data.email }}</p>
+                    <p>ระดับพนักงาน (LEVEL): {{ data.budget.level }}</p>
+                    <p>หมายเหตุ: {{ data.remark }}</p>
+                    <button (click)="showModalDialog(data.userId)"
+                        class="bg-[#696cf8] text-white font-bold py-2.5 px-4 my-5 rounded cursor-pointer drop-shadow dark:bg-[#8385ff] xl:h-1/2 xl:w-44 xl:ml-1 xl:mr-2">เบิกค่ารักษาพยาบาล</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="responseData.result && responseData.result.length === 0">
+            <p>No data found.</p>
+        </div>
         <div class="">
             <!-- <app-news-table></app-news-table> -->
         </div>
     </div>
 
+
     <!-- modal -->
     <p-dialog header="ค่ารักษาพยาบาล" [(visible)]="displayModal" [modal]="true" [style]="{width: '75vw',height:'100vh'}"
         [draggable]="false" [resizable]="false">
-        <app-edit-modal></app-edit-modal>
+        <app-wellfare-dialog *ngIf="displayModal" [userId]="userId" (userIdChanged)="handleUserIdChanged($event)"
+            (closeDialog)="closeModal()"></app-wellfare-dialog>
         <ng-template pTemplate="footer">
             <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
         </ng-template>
