@@ -56,4 +56,9 @@ export class WellfareService {
     return this.http.delete<any>(url, { headers: this.headers });
   }
 
+  updateExpense(expenseId: number, updatedExpenseData: any): Observable<any> {
+    const url = `http://localhost:8080/expenses/update/${expenseId}`;
+    return this.http.put<any>(url, updatedExpenseData, { headers: this.headers });
+  }
+  
 }

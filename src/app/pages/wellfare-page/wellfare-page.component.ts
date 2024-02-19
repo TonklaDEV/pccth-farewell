@@ -8,7 +8,7 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./wellfare-page.component.scss'],
 })
 export class WellfarePageComponent implements OnInit {
-[x: string]: any;
+  [x: string]: any;
   @Output() userIdChanged: EventEmitter<string> = new EventEmitter<string>();
   // expenseFrom: any;
   responseData: any = {};
@@ -75,26 +75,9 @@ export class WellfarePageComponent implements OnInit {
       }
     );
   }
-
-  // deleteExpense() {
-  //   if (this.userId && this.userId.expense && this.userId.expense.id !== undefined && this.userId.expense.id !== null) {
-  //     const expenseIdToDelete = this.userId.expense.id;
-
-  //     this.wellfareService.deleteExpense(expenseIdToDelete).subscribe(
-  //       (response) => {
-  //         console.log('Expense deleted successfully:', response);
-  //       },
-  //       (error) => {
-  //         console.error('Error deleting expense:', error);
-  //       }
-  //     );
-  //   } else {
-  //     console.error('Invalid or missing expense ID');
-  //   }
-  // }
-
+  
   expenseId: any;
-  deleteById(expenseId:any) {
+  deleteById(expenseId: any) {
     this.wellfareService.deleteExpense(expenseId).subscribe((res: any) => {
       setTimeout(() => {
         location.reload();
@@ -102,5 +85,15 @@ export class WellfarePageComponent implements OnInit {
     });
   }
 
+  editExpense(expenseId: number, updatedExpenseData: any) {
+    this.wellfareService.updateExpense(expenseId, updatedExpenseData).subscribe(
+      (response) => {
+        console.log('Expense updated successfully:', response);
+      },
+      (error) => {
+        console.error('Error updating expense:', error);
+      }
+    );
+  }
 
 }

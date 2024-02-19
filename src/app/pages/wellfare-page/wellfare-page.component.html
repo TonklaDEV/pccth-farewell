@@ -62,7 +62,7 @@
                             <td>{{ expense.ipd }}</td>
                             <td>{{ expense.opd }}</td>
                             <td>
-                                <button type="submit"
+                                <button type="submit" (click)="showModalDialog(expense.id)"
                                     class="flex items-center justify-center text-[#FFAB00] py-2  rounded w-32 border-2 border-gray-400 hover:bg-[#FFAB00] hover:text-white hover:border-[#FFAB00]">
                                     <i class="mt-1 mb-1 mr-2 bx bx-edit"></i><span class="mr-1">ปรับปรุงข้อมูล</span>
                                 </button>
