@@ -22,8 +22,11 @@ export class WellfareDialogComponent implements OnInit {
   endDate: Date;
   startUTC: number;
   endUTC: number;
+  opdValue!: number;
+  ipdValue!: number;
+  roomValue!: number;
 
-  constructor(private fb: FormBuilder, private createExpenseService: WellfareService) {
+  constructor(private fb: FormBuilder, private wellfareService: WellfareService) {
     this.startDate = new Date();
     this.endDate = new Date();
     this.startUTC = 0;
@@ -33,10 +36,11 @@ export class WellfareDialogComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('userId in WellfareDialogComponent:', this.userId);
+    this.getExpenseRemaining();
     this.initForm();
     this.expenseForm.get('numberOfDaysInput')?.disable();
     this.expenseForm.get('dateRangeInput')?.disable();
-
+    
   }
 
 
@@ -114,7 +118,7 @@ export class WellfareDialogComponent implements OnInit {
       this.userId
       const expenseData = this.expenseForm.value;
 
-      this.createExpenseService.createExpense(this.userId, expenseData).subscribe(
+      this.wellfareService.createExpense(this.userId, expenseData).subscribe(
         (response) => {
           console.log('Expense created successfully:', response);
         },
@@ -172,5 +176,15 @@ export class WellfareDialogComponent implements OnInit {
 
   close(): void {
     this.closeDialog.emit();
+  }
+
+
+  getExpenseRemaining() {
+    this.userId
+    this.wellfareService.getExpenseRemaining(this.userId).subscribe(data => {
+      this.opdValue = data.responseData.result.opd;
+      this.ipdValue = data.responseData.result.ipd;
+      this.roomValue = data.responseData.result.room;
+    });
   }
 }

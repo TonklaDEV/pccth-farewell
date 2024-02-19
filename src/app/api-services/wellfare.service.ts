@@ -22,4 +22,9 @@ export class WellfareService {
     const url = `${this.apiUrl}?userId=${encodeURIComponent(userId)}`;
     return this.http.post<any>(url, expenseData, { headers: this.headers });
   }
+
+  getExpenseRemaining(userId: string): Observable<any> {
+    const url = `http://localhost:8080/expenses/getExpenseRemaining?userId=${encodeURIComponent(userId)}`;
+    return this.http.get<any>(url, { headers: this.headers });
+  }
 }
