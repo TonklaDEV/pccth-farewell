@@ -24,6 +24,8 @@ export class ManageUserService {
   updateUser(userId: number, userData: any): Observable<any> {
     return this.http.put(`http://localhost:8080/employee/editEmployee?userid=${userId}`, userData);
   }
+
+  
   
   
 }
