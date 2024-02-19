@@ -12,7 +12,11 @@ export class WellfarePageComponent implements OnInit {
   // expenseFrom: any;
   responseData: any = {};
   displayModal: boolean = false;
-  constructor(private wellfareService: WellfareService, private cdr: ChangeDetectorRef) { }
+  filteredSearchValues: any[] = [];
+  constructor(
+    private wellfareService: WellfareService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     console.log('UserId in WellfareDialogComponent ngOnInit:', this.userId);
@@ -23,7 +27,7 @@ export class WellfarePageComponent implements OnInit {
   showModalDialog(userId: string): void {
     if (this.responseData) {
       this.displayModal = true;
-      console.log("User ID:", userId);
+      console.log('User ID:', userId);
       this.userId = userId;
       this.userIdChanged.emit(userId);
     }
@@ -48,11 +52,25 @@ export class WellfarePageComponent implements OnInit {
   userId: any;
   handleUserIdChanged(userId: any): void {
     console.log('UserId changed in WellfarePageComponent:', userId);
-    this.userId = userId; 
+    this.userId = userId;
   }
 
   closeModal(): void {
     this.displayModal = false;
   }
 
+  filterValue(event: any) {
+    let query = event.query;
+    this.wellfareService.getFilterName(query).subscribe(
+      (res: any) => {
+        let names: string[] = res.responseData?.result?.map((item: any) => {
+          return `${item.tname} ${item.tsurname}`;
+        });
+        this.filteredSearchValues = names ? names : [];
+      },
+      (err) => {
+        this.filteredSearchValues = [];
+      }
+    );
+  }
 }
