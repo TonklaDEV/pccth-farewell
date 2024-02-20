@@ -57,8 +57,6 @@ export class BudgetComponent implements OnInit {
     private ngZone: NgZone,
     private fb: FormBuilder
   ) {
-    
-  
 
   }
 
@@ -88,19 +86,19 @@ export class BudgetComponent implements OnInit {
       this.filteredBudgets = this.budgets;
     } else {
       this.filteredBudgets = this.budgets.filter((item) =>
-        item.level.toLowerCase() === this.searchLevel.toLowerCase()
+        item.level.toLowerCase().includes(this.searchLevel.toLowerCase())
       );
     }
     console.log('Filtered Budgets:', this.filteredBudgets);
   }
-  
+
   searchBudgetByLevel(): void {
     console.log('Search Level:', this.searchLevel);
     if (this.searchLevel.trim()) {
       this.servicebudget.searchBudget(this.searchLevel).subscribe(
         (response: BudgetResponse) => {
           console.log('Search results:', response);
-  
+
           if (response.responseData.result) {
             this.searchResults = Array.isArray(response.responseData.result)
               ? response.responseData.result
@@ -108,21 +106,21 @@ export class BudgetComponent implements OnInit {
           } else {
             this.searchResults = [];
           }
-  
-    
+
+
         },
         (error) => {
           console.error('Error searching budget:', error);
         }
       );
     } else {
-     
+
       this.searchResults = this.budgets;
-    
+
     }
   }
-  
-  
+
+
   formatNumber(event: any) {
     let value = event.target.value.replace(/\D/g, '');
     if (value.length >= 3) {
@@ -223,35 +221,6 @@ export class BudgetComponent implements OnInit {
     return !!data.empId;
   }
 
-  currentPage: number = 1;
-  itemsPerPage: number = 5;
-
-  get totalPages(): number {
-    return Math.ceil(this.budgets.length / this.itemsPerPage);
-  }
-
-  get displayedBudgets(): Budget[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    return this.budgets.slice(startIndex, endIndex);
-  }
-
-  nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      const startIndex = this.currentPage * this.itemsPerPage;
-      const endIndex = (this.currentPage + 1) * this.itemsPerPage;
-    
-      this.currentPage++;
-    }
-  }
-  prevPage(): void {
-    if (this.currentPage > 1) {
-      const startIndex = (this.currentPage - 2) * this.itemsPerPage;
-      const endIndex = (this.currentPage - 1) * this.itemsPerPage;
-      
-      this.currentPage--;
-    }
-  }
   updateBudgetData(): void {
     const budgetIdToUpdate = 5;
     const updatedBudgetData: Budget = {
@@ -270,5 +239,5 @@ export class BudgetComponent implements OnInit {
       }
     );
   }
-  
+
 }
