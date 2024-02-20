@@ -3,10 +3,12 @@
         <div class="col-span-1 ml-1 text-start">
             <div
                 class="grid grid-cols-2 gap-2 justify-start text-start text-[#566a7f] rounded-md shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526] align-start">
-                <div class="flex flex-col items-start justify-start col-span-1">
-                    <label for="days">OPD: {{ opdValue }}</label>
-                    <label for="days">IPD: {{ ipdValue }}</label>
-                    <label for="days">ค่าห้อง + ค่าอาหาร: {{ roomValue }}</label>
+                <div class="items-start justify-start w-full col-span-2">
+                    <p>ค่ารักษาพยาบาลคงเหลือ</p>
+                    <p>OPD: {{ opdValue | number: '1.0-0'}} บาท</p>
+                    <p>IPD: {{ ipdValue | number: '1.0-0'}} บาท</p>
+                    <p>ค่าห้องและค่าอาหารที่สามารถเบิกได้ต่อวัน</p>
+                    <p>ค่าห้อง + ค่าอาหาร: {{ roomValue | number: '1.0-0'}} บาท</p>
                 </div>
             </div><br>
             <div class="w-full col-span-1">
@@ -22,7 +24,7 @@
                     <div class="flex flex-col items-start justify-start col-span-2">
                         <h3 class="mr-2">ประเภทการรักษา</h3>
                         <form [formGroup]="expenseForm">
-                            <mat-radio-group formControlName="types">
+                            <mat-radio-group formControlName="types" (change)="emitdata()">
                                 <mat-radio-button [color]="'primary'" class="mr-2" id="opd"
                                     value="opd">OPD</mat-radio-button>
                                 <mat-radio-button [color]="'primary'" class="mr-2" id="ipd"
@@ -65,13 +67,13 @@
                     <div class="flex flex-col items-start justify-start col-span-1">
                         <label for="roomService">ค่าห้อง +
                             ค่าอาหาร</label>
-                        <input type="text" formControlName="roomService" id="roomService"
+                        <input type="text" (change)="emitdata()" formControlName="roomService" id="roomService"
                             class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
                     </div>
                     <div class="flex flex-col items-start justify-start col-span-2">
                         <label for="description">รายละเอียด</label>
                         <textarea formControlName="description" id="description"
-                            class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"></textarea>
+                            class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]" (change)="emitdata()" ></textarea>
                         <div class="text-red-700"
                             *ngIf="expenseForm.get('description')?.hasError('required') && expenseForm.get('description')?.touched">
                             กรุณากรอกรายละเอียด
@@ -79,17 +81,13 @@
                     </div>
                     <div class="flex flex-col items-start justify-start col-span-2">
                         <label for="remark">หมายเหตุ</label>
-                        <textarea formControlName="remark" id="remark"
+                        <textarea formControlName="remark" (change)="emitdata()"  id="remark"
                             class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]"></textarea>
                         <div class="text-red-700"
                             *ngIf="expenseForm.get('remark')?.hasError('required') && expenseForm.get('remark')?.touched">
                             กรุณากรอกรายละเอียด
                         </div>
                     </div>
-                    <button type="button" (click)="save()">บันทึกข้อมูล</button>
-
-                    <button (click)="handleDateSelection(startDate, endDate, startUTC, endUTC)">Click
-                        me</button>
                 </div>
             </form>
         </div>
