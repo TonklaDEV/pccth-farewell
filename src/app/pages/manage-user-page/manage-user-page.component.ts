@@ -9,6 +9,14 @@ import { Router } from '@angular/router';
 import { Paginator } from 'primeng/paginator';
 import { AuthService } from 'src/app/api-services/auth.service';
 import { ManageUserService } from 'src/app/api-services/manage-user.service';
+<<<<<<< HEAD
+import Swal from 'sweetalert2';
+
+
+
+
+=======
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
 
 @Component({
   selector: 'app-manage-user-page',
@@ -16,6 +24,11 @@ import { ManageUserService } from 'src/app/api-services/manage-user.service';
   styleUrls: ['./manage-user-page.component.scss'],
 })
 export class ManageUserPageComponent implements OnInit {
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
   emps: any;
   UserForm: any;
   invalidNoInput: boolean = false;
@@ -23,16 +36,45 @@ export class ManageUserPageComponent implements OnInit {
   isEditing: boolean = false;
   selectedUserId: number | null = null;
   userIdToUpdate: any;
+<<<<<<< HEAD
+
+
+
+
+  constructor(
+
+=======
   tableRows = 10;
   tablePages = 0;
   tableTotalRecord = 0;
   constructor(
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
     private Mservices: ManageUserService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router
   ) {}
 
+<<<<<<< HEAD
+
+
+  ngOnInit(): void {
+    this.UserForm = this.formBuilder.group({
+      level: ['', Validators.required],
+      deptid: ['', Validators.required],
+      deptCode: ['', Validators.required],
+      empId: ['', Validators.required],
+      tname: ['', Validators.required],
+      tprefix: ['', Validators.required],
+      remark: ['', Validators.required],
+      startDate: ['', Validators.required],
+      tsurname: ['', Validators.required],
+      tposition: ['', Validators.required],
+      email: ['', Validators.email],
+      dept: ['', Validators.required]
+    });
+
+=======
   ngOnInit(): void {
     this.UserForm = this.formBuilder.group({
       budget: this.formBuilder.group({
@@ -57,10 +99,19 @@ export class ManageUserPageComponent implements OnInit {
       email: ['', Validators.email],
     });
 
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
     console.log('in manage-user');
     this.loadEmployees();
   }
 
+<<<<<<< HEAD
+
+
+
+
+
+=======
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
   onSubmit() {
     if (this.UserForm.valid) {
       // ทำสิ่งที่คุณต้องการเมื่อยื่นฟอร์ม
@@ -71,6 +122,10 @@ export class ManageUserPageComponent implements OnInit {
     }
     this.UserForm.reset();
   }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
 
   ///////pcc-dept
   pccDept = [
@@ -104,12 +159,21 @@ export class ManageUserPageComponent implements OnInit {
     { name: 'SD (BOI)', code: '5000' },
   ];
   //The Middle dept array
+<<<<<<< HEAD
+  dept = this.pccDept
+
+  //for switch option in dept selector
+  company !: string
+  selectCompany(company: string) {
+    this.company = company
+=======
   dept = this.pccDept;
 
   //for switch option in dept selector
   company!: string;
   selectCompany(company: string) {
     this.company = company;
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
     console.log(this.company);
     if (company == 'pcc') {
       this.dept = this.pccDept;
@@ -122,11 +186,21 @@ export class ManageUserPageComponent implements OnInit {
       this.UserForm.get('dept').setValue('');
       this.UserForm.get('deptCode').setValue('');
     }
+<<<<<<< HEAD
+
+  }
+
+  //gen dept CODE after select dept NAME
+  setDept() { 
+    this.UserForm.get('deptCode').setValue(this.UserForm.get('dept').value[1])
+  
+=======
   }
 
   //gen dept CODE after select dept NAME
   setDept() {
     this.UserForm.get('deptCode').setValue(this.UserForm.get('dept').value[1]);
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
   }
 
   onInputKeyPressNo(event: KeyboardEvent) {
@@ -141,12 +215,22 @@ export class ManageUserPageComponent implements OnInit {
 
   loadEmployees(): void {
     const sort = 'userId,asc';
+<<<<<<< HEAD
+    this.Mservices.getEmployees(0, 5, sort).subscribe(
+      (data: any) => {
+        this.emps = (data.content);
+
+        //เพื่อดูตัวแปล
+        console.log(data.content);
+
+=======
     this.Mservices.getEmployees(this.tablePages, this.tableRows, sort).subscribe(
       (data: any) => {
         this.emps = data.content;
         this.tableTotalRecord = data.totalElements;
         //เพื่อดูตัวแปล
         // console.log(data.content);
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
       },
       (error: any) => {
         console.error('Error:', error);
@@ -154,6 +238,11 @@ export class ManageUserPageComponent implements OnInit {
     );
   }
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
   onEditButtonClick(userId: number): void {
     this.isDataSelected = true;
     this.isEditing = true;
@@ -165,6 +254,15 @@ export class ManageUserPageComponent implements OnInit {
         // ทำการแปลงรูปแบบวันที่จาก API
         data.startDate = new Date(data.startDate).toISOString().split('T')[0];
 
+<<<<<<< HEAD
+        // const budgetData = data.budget;
+        // if (budgetData) {
+        //   this.UserForm.get('level').setValue(budgetData.level);
+        //   console.log('Level from API:', budgetData.level);
+        // }
+        const selectedDeptName = data.dept[0]; // เลือกตำแหน่งที่ 0 จาก Array นี้
+    this.UserForm.get('dept').setValue(selectedDeptName);
+=======
         const budgetData = data.budget;
         if (budgetData) {
           this.UserForm.get('budget.level').setValue(budgetData.level);
@@ -172,12 +270,21 @@ export class ManageUserPageComponent implements OnInit {
           console.log('userId:', userId);
           console.log('data:', data.dept.code);
         }
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
 
         this.UserForm.patchValue(data); // ใช้ patchValue เพื่อกำหนดค่าข้อมูลในฟอร์ม
 
         // แสดงข้อมูลฝ่าย/แผนกใน div
+<<<<<<< HEAD
+        this.UserForm.get('deptid').setValue(data.dept.deptid);
+        this.UserForm.get('level').setValue(data.budget.level);
+        // this.UserForm.get('dept').setValue(data.dept.deptcode);
+        this.UserForm.get('deptCode').setValue(data.dept.code);
+        this.UserForm.get('empId').setValue(data.empid);
+=======
         this.UserForm.get('deptCode').setValue(data.dept.deptcode);
         this.UserForm.get('code').setValue(data.dept.code);
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
 
         // ตรวจสอบและกำหนดค่า level เดิม
         if (this.userIdToUpdate !== undefined && this.userIdToUpdate !== null) {
@@ -188,6 +295,7 @@ export class ManageUserPageComponent implements OnInit {
                 // กำหนดค่า level เดิม
                 this.UserForm.get('budget.level').setValue(previousLevel);
               }
+              
             },
             (error: any) => {
               console.error('Error getting previous data:', error);
@@ -201,8 +309,33 @@ export class ManageUserPageComponent implements OnInit {
     );
   }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
   onUpdateButtonClick(): void {
+    console.log(this.UserForm.value);
+
     if (this.userIdToUpdate !== undefined && this.userIdToUpdate !== null) {
+<<<<<<< HEAD
+      const userData = this.UserForm.value;
+
+      // ตรวจสอบว่ามีค่าใน deptCode และ budget.level
+
+
+      // ดำเนินการอัปเดตข้อมูล
+      this.Mservices.updateUser(this.userIdToUpdate, userData).subscribe(
+        response => {
+          console.log('อัปเดตข้อมูลสำเร็จ', response);
+          // ทำบางอย่างหลังจากอัปเดตสำเร็จ (เช่น รีเฟรชหน้าหรือปรับปรุงข้อมูล)
+        },
+        error => {
+          console.error('เกิดข้อผิดพลาดในการอัปเดตข้อมูล', error);
+        }
+      );
+
+
+=======
       if (this.UserForm.valid) {
         const userData = this.UserForm.value;
 
@@ -244,10 +377,39 @@ export class ManageUserPageComponent implements OnInit {
           }
         });
       }
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
     } else {
       console.error('Invalid userId: undefined');
     }
+    // window.location.reload();
   }
+<<<<<<< HEAD
+
+
+
+  onCreateButtonClick(): void {
+
+    const userData = this.UserForm.value;
+    this.Mservices.createUser(userData).subscribe(
+      response => {
+        console.log('User created successfully', response);
+        // ทำบางอย่างหลังจากสร้างข้อมูลสำเร็จ
+      },
+      error => {
+        console.error('Error creating user', error);
+
+        // // ตรวจสอบ Validation Errors จาก API
+        // if (error.error && error.error.details && error.error.details.length > 0) {
+        //   console.log('Validation Errors:', error.error.details);
+        // }
+
+        // ทำอย่างอื่นตามต้องการหากเกิดข้อผิดพลาด
+      }
+    );
+  }
+
+=======
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
 
   onCancelUpdateButtonClick() {
     // ทำการยกเลิกการเลือกข้อมูล
@@ -259,6 +421,39 @@ export class ManageUserPageComponent implements OnInit {
   }
 
   onDeleteButtonClick(userId: number): void {
+<<<<<<< HEAD
+    if (userId) {
+      Swal.fire({
+        title: 'คุณแน่ใจหรือไม่?',
+        text: 'คุณกำลังจะลบผู้ใช้นี้!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'ใช่, ลบเลย!',
+        cancelButtonText: 'ยกเลิก',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.Mservices.deleteUser(userId).subscribe(
+            (response: any) => {
+              console.log('User deleted successfully:', response);
+              Swal.fire('ลบแล้ว!', 'ผู้ใช้ถูกลบเรียบร้อยแล้ว!', 'success');
+              // ทำอย่างอื่นตามต้องการหลังจากลบข้อมูลเรียบร้อย
+            },
+            (error: any) => {
+              console.error('เกิดข้อผิดพลาดในการลบผู้ใช้:', error);
+              Swal.fire('ข้อผิดพลาด!', 'เกิดข้อผิดพลาดในการลบผู้ใช้!', 'error');
+              // ทำอย่างอื่นตามต้องการหากเกิดข้อผิดพลาด
+            }
+          );
+        } else {
+          console.log('การลบผู้ใช้ถูกยกเลิก');
+        }
+      });
+    } else {
+      console.error('ID ของผู้ใช้ไม่ได้ระบุ. ไม่สามารถลบได้.');
+    }
+  }
+
+=======
     this.Mservices.deleteUser(userId).subscribe(
       (response) => {
         console.log('User deleted successfully', response);
@@ -276,4 +471,5 @@ export class ManageUserPageComponent implements OnInit {
     this.tablePages = event.page    
     this.loadEmployees()
     }
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
 }
