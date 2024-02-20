@@ -169,6 +169,8 @@ export class ManageUserPageComponent implements OnInit {
         if (budgetData) {
           this.UserForm.get('budget.level').setValue(budgetData.level);
           console.log('Level from API:', budgetData.level);
+          console.log('userId:', userId);
+          console.log('data:', data.dept.code);
         }
 
         this.UserForm.patchValue(data); // ใช้ patchValue เพื่อกำหนดค่าข้อมูลในฟอร์ม
@@ -208,13 +210,8 @@ export class ManageUserPageComponent implements OnInit {
         if (userData.deptCode && userData.budget && userData.budget.level) {
           // ดำเนินการอัปเดตข้อมูลเฉพาะ level และ code
           const updatedData = {
-            budget: {
-              level: userData.budget.level,
-            },
-            dept: {
-              code: userData.dept.code,
-            },
-            // แนบฟิลด์อื่นๆที่คุณไม่ต้องการให้อัพเดท
+            level: userData.budget.level,
+            deptCode: userData.dept.code,
             remark: userData.remark,
             email: userData.email,
             tprefix: userData.tprefix,
@@ -222,7 +219,8 @@ export class ManageUserPageComponent implements OnInit {
             tposition: userData.tposition,
             tname: userData.tname,
           };
-
+          
+          
           // ดำเนินการอัปเดตข้อมูล
           this.Mservices.updateUser(this.userIdToUpdate, updatedData).subscribe(
             (response) => {
@@ -237,15 +235,12 @@ export class ManageUserPageComponent implements OnInit {
           console.log('กรุณากรอกข้อมูลให้ครบถ้วน');
         }
       } else {
-        // กรณี Form ไม่ถูกต้อง
         console.log('กรุณากรอกข้อมูลให้ถูกต้อง');
-
-        // ดูว่าฟิลด์ไหนทำให้ฟอร์มไม่ผ่านการตรวจสอบความถูกต้อง
         Object.keys(this.UserForm.controls).forEach((field) => {
           const control = this.UserForm.get(field);
           if (control instanceof FormControl && !control.valid) {
+            console.log("userData.dept.code",this.UserForm);
             console.log(`Field ${field} is INVALID`);
-            // แสดงข้อความเกี่ยวกับข้อผิดพลาดที่ไม่ผ่านการตรวจสอบความถูกต้อง
           }
         });
       }
