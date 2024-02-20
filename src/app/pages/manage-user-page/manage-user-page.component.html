@@ -24,74 +24,110 @@
                             </div>
                         </div>
                     </div>
-                    
+
+                    <!-- <div
+                        class="grid self-center justify-center my-6 space-x-2 text-sm sm:grid-cols-1 md:grid-cols-3 justify-items-center xl:flex xl:p-0">
+                        
+                        <div class="flex items-center justify-center">
+                            <label for="deptcodeT">ฝ่าย/แผนก</label>
+                            <div class="relative inline-flex flex-col">
+                                <input type="text" formControlName="deptcodeT" required [minlength]="4" [maxlength]="4"
+                                    id="deptcodeT"
+                                    class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder-200 ease-linear placeholder:text-[#b4b4b4] dark:placeholder-text-[#d8adad]" />
+                                <p *ngIf="UserForm.get('deptcodeT').invalid && (UserForm.get('deptcodeT').dirty || UserForm.get('deptcodeT').touched)"
+                                    class="absolute font-light text-red-700 -right-2 -top-2 dark:text-red-500">
+                                    *
+                                </p>
+                            </div>
+                        </div>
+
+                       
+                        <div class="flex items-center justify-center">
+                            <label for="deptCode">รหัสฝ่าย/แผนก</label>
+                            <div class="relative inline-flex flex-col">
+                                <input type="text" formControlName="deptCode" required [minlength]="4" [maxlength]="4"
+                                    id="deptCode"
+                                    class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder-200 ease-linear placeholder:text-[#b4b4b4] dark:placeholder-text-[#d8adad]" />
+                                <p *ngIf="UserForm.get('deptCode').invalid && (UserForm.get('deptCode').dirty || UserForm.get('deptCode').touched)"
+                                    class="absolute font-light text-red-700 -right-2 -top-2 dark:text-red-500">
+                                    *
+                                </p>
+                            </div>
+                        </div>
+                    </div> -->
+
                     <div
                         class="grid self-center justify-center my-6 space-x-2 text-sm sm:grid-cols-1 md:grid-cols-3 justify-items-center xl:flex xl:p-0">
-                        <!-- ตรวจสอบความถูกต้องของ deptCode -->
-                            <div class="flex items-center justify-center">
-                                <label for="deptCode">ฝ่าย/แผนก</label>
-                                <div class="relative inline-flex flex-col">
-                                    <input  type="text" formControlName="deptCode" required [minlength]="4"
-                                        [maxlength]="4" id="deptCode"
-                                        class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder-200 ease-linear placeholder:text-[#b4b4b4] dark:placeholder-text-[#d8adad]" />
-                                    <p *ngIf="UserForm.get('deptCode').invalid && (UserForm.get('deptCode').dirty || UserForm.get('deptCode').touched)"
-                                        class="absolute font-light text-red-700 -right-2 -top-2 dark:text-red-500">
-                                        *
-                                    </p>
-                                </div>
+                        <div class="flex items-center justify-center">
+                            <label for="dept">ฝ่าย/แผนก</label>
+                            <div class="relative inline-flex flex-col">
+                                <select (change)="setDept()" required formControlName="dept"  id="dept" 
+                                    class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder-200 ease-linear placeholder:text-[#b4b4b4] dark:placeholder-text-[#b4b4b4]">
+                                    <option value="" disabled>เลือกแผนก</option>
+                                    <option *ngFor="let dept of dept" [ngValue]="[dept.name, dept.code]">
+                                        {{ dept.name }}
+                                    </option>
+                                </select>
+                                {{ UserForm.get('dept').value | json }}
+                                <p *ngIf="UserForm.get('dept').invalid"
+                                    class="absolute font-light text-red-700 -right-2 -top-2 dark:text-red-500">
+                                    *
+                                </p>
                             </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <label for="deptCode">รหัสฝ่าย/แผนก</label>
+                            <div class="relative inline-flex flex-col">
+                                <input readonly type="text" formControlName="deptCode" required value="" [minlength]="4"
+                                    [maxlength]="4" id="deptCode"
+                                    class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder-200 ease-linear placeholder:text-[#b4b4b4] dark:placeholder-text-[#d8adad]" />
+                                <p *ngIf="UserForm.get('deptCode').invalid"
+                                    class="absolute font-light text-red-700 -right-2 -top-2 dark:text-red-500">
+                                    *
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                            <!-- ตรวจสอบความถูกต้องของ code -->
-                            <div class="flex items-center justify-center">
-                                <label for="code">รหัสฝ่าย/แผนก</label>
-                                <div class="relative inline-flex flex-col">
-                                    <input  type="text" formControlName="code" required [minlength]="4"
-                                        [maxlength]="4" id="code"
-                                        class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder-200 ease-linear placeholder:text-[#b4b4b4] dark:placeholder-text-[#d8adad]" />
-                                    <p *ngIf="UserForm.get('code').invalid && (UserForm.get('code').dirty || UserForm.get('code').touched)"
-                                        class="absolute font-light text-red-700 -right-2 -top-2 dark:text-red-500">
-                                        *
-                                    </p>
-                                </div>
-                            </div>
-                            </div>
-                            </div>
+
+
+                <div
+                    class="grid self-center justify-center my-6 space-x-2 text-sm sm:grid-cols-1 md:grid-cols-1 justify-items-center xl:flex xl:p-0">
+
+                    <div class="flex items-center justify-center">
+                        <label for="level">ระดับพนักงาน</label>
+                        <div class="relative inline-flex flex-col">
+                            <input type="text" formControlName="level" required id="level"
+                                class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder-200 ease-linear placeholder:text-[#b4b4b4] dark:placeholder-text-[#d8adad]" />
+                            <p *ngIf="UserForm.get('level').invalid && (UserForm.get('level').dirty || UserForm.get('level').touched)"
+                                class="absolute font-light text-red-700 -right-2 -top-2 dark:text-red-500">
+                                *
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
 
                 <div
                     class="text-[#566a7f] rounded-md mt-5 mb-3 shadow p-6 pb-6 w-full bg-gray-50 dark:text-[#e4e6eb] dark:bg-[#242526]">
                     <div class="grid grid-cols-9 mb-6 gap-y-2">
                         <!-- Row 1 -->
                         <div class="rounded-lg h-12 p-2">
-                            <label for="" class="flex-initial self-center w-28">รหัสพนักงาน</label>
+                            <label for="empId" class="flex-initial self-center w-28">รหัสพนักงาน</label>
                         </div>
                         <div class="col-start-2 col-end-4 rounded-lg h-20">
-                            <input readonly type="text" formControlName="empid" required value="" [minlength]="6" [maxlength]="6" 
-                                id="empid" (keypress)="onInputKeyPressNo($event)"
-
-                                [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('empid').hasError('required') && UserForm.get('empid').touched }"
+                            <input type="text" formControlName="empId" required value="" [minlength]="6" [maxlength]="6"
+                                id="empId" (keypress)="onInputKeyPressNo($event)"
+                                [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('empId').hasError('required') && UserForm.get('empId').touched }"
                                 class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
                             <div
-                                *ngIf="UserForm.get('empid').hasError('required') && UserForm.get('empid').touched|| invalidNoInput">
+                                *ngIf="UserForm.get('empId').hasError('required') && UserForm.get('empId').touched|| invalidNoInput">
                                 <span class="text-red-500 text-sm">กรุณากรอกข้อมูล</span>
                             </div>
                         </div>
 
-                        <!-- <div class="rounded-lg h-12 p-2">
-                            <label for="" class="flex-initial self-center w-28">ระดับ</label>
-                        </div>
-                        <div class="col-start-2 col-end-4 rounded-lg h-20">
-                            <input type="text" [formControl]="UserForm.get('budget.level')" required [minlength]="6" [maxlength]="6" 
-                                id="budget.level" (keypress)="onInputKeyPressNo($event)"
-
-                                [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('budget.level').hasError('required') && UserForm.get('empid').touched }"
-                                class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
-                            <div
-                                *ngIf="UserForm.get('budget.level').hasError('required') && UserForm.get('budget.level').touched|| invalidNoInput">
-                                <span class="text-red-500 text-sm">กรุณากรอกข้อมูล</span>
-                            </div>
-                        </div> -->
-
-                        
 
                         <div class="rounded-lg h-12 p-2">
                             <label for="" class="flex-initial self-center w-28">สถานะ</label>
@@ -136,7 +172,8 @@
                                 <option value="นาง">นาง</option>
                                 <option value="นางสาว">นางสาว</option>
                             </select>
-                            <div *ngIf="UserForm.get('tprefix').hasError('required') && UserForm.get('tprefix').touched">
+                            <div
+                                *ngIf="UserForm.get('tprefix').hasError('required') && UserForm.get('tprefix').touched">
                                 <span class="text-red-500 text-sm">กรุณาเลือกคำนำหน้า</span>
                             </div>
                         </div>
@@ -148,8 +185,7 @@
                             <input type="text" formControlName="tname"
                                 [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('tname').hasError('required') && UserForm.get('tname').touched }"
                                 class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
-                            <div
-                                *ngIf="UserForm.get('tname').hasError('required') && UserForm.get('tname').touched">
+                            <div *ngIf="UserForm.get('tname').hasError('required') && UserForm.get('tname').touched">
                                 <span class="text-red-500 text-sm ">กรุณากรอกข้อมูล</span>
                             </div>
                         </div>
@@ -193,25 +229,28 @@
                         </div>
 
                     </div>
-        
-                    <div class="flex justify-center mt-4" *ngIf="!isEditing">
-                        <button type="submit" [disabled]="UserForm.invalid"
-                          class="text-white p-2 w-24 rounded shadow-md {{ (UserForm.invalid) ? 'cursor-not-allowed bg-gray-400 border-2 border-gray-400' : 'cursor-pointer bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]' }}">
-                          บันทึก
-                        </button>
-                      </div>
 
-                      <div class="flex justify-center mt-4" *ngIf="isEditing">
-                        <button type="button" class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]"
-                        (click)="onUpdateButtonClick()">
-                          อัพเดท
+                    <div class="flex justify-center mt-4" *ngIf="!isEditing">
+                        <button type="" 
+                            class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]"
+                         (click)="onCreateButtonClick()">
+                            บันทึก
                         </button>
-                        <button type="button" class="text-white p-2 w-24 rounded shadow-md bg-gray-400 border-2 border-gray-400 ml-2"
-                          (click)="onCancelUpdateButtonClick()">
-                          ยกเลิก
+                    </div>
+
+                    <div class="flex justify-center mt-4" *ngIf="isEditing">
+                        <button type="button"
+                            class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]"
+                            (click)="onUpdateButtonClick()">
+                            อัพเดท
                         </button>
-                      </div>   
-                           
+                        <button type="button"
+                            class="text-white p-2 w-24 rounded shadow-md bg-gray-400 border-2 border-gray-400 ml-2"
+                            (click)="onCancelUpdateButtonClick()">
+                            ยกเลิก
+                        </button>
+                    </div>
+
                 </div>
             </form>
         </div>
@@ -246,12 +285,12 @@
                         <td>{{data.tposition}}</td>
                         <td>{{data.email}}</td>
                         <td>
-                           
-                    <button (click)="onEditButtonClick(data.userId)"
-                            class="flex items-center justify-center text-[#FFAB00] py-2 rounded w-32 border-2 border-gray-400 mr-1 hover:bg-[#FFAB00] hover:text-white hover:border-[#FFAB00]">
-                      <i class="mt-1 mb-1 mr-2 bx bx-edit"></i><span class="mr-1">ปรับปรุงข้อมูล</span>
-                    </button>
-                   
+
+                            <button (click)="onEditButtonClick(data.userId)"
+                                class="flex items-center justify-center text-[#FFAB00] py-2 rounded w-32 border-2 border-gray-400 mr-1 hover:bg-[#FFAB00] hover:text-white hover:border-[#FFAB00]">
+                                <i class="mt-1 mb-1 mr-2 bx bx-edit"></i><span class="mr-1">ปรับปรุงข้อมูล</span>
+                            </button>
+
                         </td>
                         <td>
                             <button type="submit" (click)="onDeleteButtonClick(data.userId)"
