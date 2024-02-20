@@ -63,9 +63,9 @@ export class WellfareDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getExpenseRemaining(); //get current remaining
 
     if (this.editMode == false && this.expensId == 0) {
+      this.getExpenseRemaining(); //get current remaining
       // console.log('userId in WellfareDialogComponent:', this.userId);
     } else if (this.editMode == true && this.expensId != 0) {
       // console.log('edit mode work');
