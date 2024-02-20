@@ -52,6 +52,7 @@ import { TableModule } from 'primeng/table';
 import { ManageUserPageComponent } from './manage-user-page/manage-user-page.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
+import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { ButtonModule } from 'primeng/button';
     WellfareDialogComponent,
   ],
   imports: [
+    PaginatorModule,
     AutoCompleteModule,
     ButtonModule,
     TableModule,

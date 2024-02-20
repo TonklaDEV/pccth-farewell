@@ -8,6 +8,7 @@ import { Budget, BudgetResponse } from '../pages/budget/budget.component';
   providedIn: 'root'
 })
 export class BudgetService {
+  [x: string]: any;
   private apiUrl = '/budget';
 
   constructor(private http: HttpClient) { }
@@ -25,5 +26,15 @@ export class BudgetService {
     return this.http.get<BudgetResponse>(`${this.apiUrl}/searchBudget`, { params });
   }
 
+  deleteBudget(budgetId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/deleteBudget?budgetId=${budgetId}`);
+  }
 
+  updateBudget(id: number, budget: Budget): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put(url, budget);
+  }
+  
+
+  
 }

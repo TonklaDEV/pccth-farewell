@@ -1,6 +1,6 @@
 <div class="bg-transparent">
     <div
-        class="text-font-header rounded-md shadow p-6 pb-6 w-full bg-white dark:text-font-header-dark dark:bg-content-dark">
+        class="w-full p-6 pb-6 bg-white rounded-md shadow text-font-header dark:text-font-header-dark dark:bg-content-dark">
         <p class="text-2xl">ข้อมูลพนักงาน</p>
         <br>
         <div
@@ -114,6 +114,7 @@
                     class="text-[#566a7f] rounded-md mt-5 mb-3 shadow p-6 pb-6 w-full bg-gray-50 dark:text-[#e4e6eb] dark:bg-[#242526]">
                     <div class="grid grid-cols-9 mb-6 gap-y-2">
                         <!-- Row 1 -->
+<<<<<<< HEAD
                         <div class="rounded-lg h-12 p-2">
                             <label for="empId" class="flex-initial self-center w-28">รหัสพนักงาน</label>
                         </div>
@@ -128,11 +129,44 @@
                             </div>
                         </div>
 
-
-                        <div class="rounded-lg h-12 p-2">
-                            <label for="" class="flex-initial self-center w-28">สถานะ</label>
+=======
+                        <div class="h-12 p-2 rounded-lg">
+                            <label for="" class="self-center flex-initial w-28">รหัสพนักงาน</label>
                         </div>
-                        <div class="col-start-5 col-end-7 rounded-lg h-20">
+                        <div class="h-20 col-start-2 col-end-4 rounded-lg">
+                            <input readonly type="text" formControlName="empid" required value="" [minlength]="6" [maxlength]="6" 
+                                id="empid" (keypress)="onInputKeyPressNo($event)"
+
+                                [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('empid').hasError('required') && UserForm.get('empid').touched }"
+                                class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                            <div
+                                *ngIf="UserForm.get('empid').hasError('required') && UserForm.get('empid').touched|| invalidNoInput">
+                                <span class="text-sm text-red-500">กรุณากรอกข้อมูล</span>
+                            </div>
+                        </div>
+
+                        <!-- <div class="h-12 p-2 rounded-lg">
+                            <label for="" class="self-center flex-initial w-28">ระดับ</label>
+                        </div>
+                        <div class="h-20 col-start-2 col-end-4 rounded-lg">
+                            <input type="text" [formControl]="UserForm.get('budget.level')" required [minlength]="6" [maxlength]="6" 
+                                id="budget.level" (keypress)="onInputKeyPressNo($event)"
+
+                                [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('budget.level').hasError('required') && UserForm.get('empid').touched }"
+                                class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+                            <div
+                                *ngIf="UserForm.get('budget.level').hasError('required') && UserForm.get('budget.level').touched|| invalidNoInput">
+                                <span class="text-sm text-red-500">กรุณากรอกข้อมูล</span>
+                            </div>
+                        </div> -->
+
+                        
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
+
+                        <div class="h-12 p-2 rounded-lg">
+                            <label for="" class="self-center flex-initial w-28">สถานะ</label>
+                        </div>
+                        <div class="h-20 col-start-5 col-end-7 rounded-lg">
                             <select formControlName="remark"
                                 [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('remark').hasError('required') && UserForm.get('remark').touched }"
                                 class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
@@ -142,26 +176,26 @@
                                 <option value="เงื่อนไขพิเศษ">เงื่อนไขพิเศษ</option>
                             </select>
                             <div *ngIf="UserForm.get('remark').hasError('required') && UserForm.get('remark').touched"
-                                class="text-red-500 text-sm">
+                                class="text-sm text-red-500">
                                 กรุณาเลือกสถานะ
                             </div>
                         </div>
 
-                        <div class="rounded-lg h-12 p-2">
-                            <label for="" class="flex-initial self-center w-28">วันที่เริ่มทำงาน</label>
+                        <div class="h-12 p-2 rounded-lg">
+                            <label for="" class="self-center flex-initial w-28">วันที่เริ่มทำงาน</label>
                         </div>
                         <div class="h-20 col-start-8 col-end-10 rounded-lg">
                             <input type="date" formControlName="startDate"
                                 [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('startDate').hasError('required') && UserForm.get('startDate').touched }"
                                 class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
                             <div *ngIf="UserForm.get('startDate').hasError('required') && UserForm.get('startDate').touched"
-                                class="text-red-500 text-sm">
+                                class="text-sm text-red-500">
                                 กรุณาเลือกวันที่เริ่มทำงาน
                             </div>
                         </div>
 
-                        <div class="rounded-lg h-12 p-2">
-                            <label for="" class="flex-initial self-center w-28">คำนำหน้า</label>
+                        <div class="h-12 p-2 rounded-lg">
+                            <label for="" class="self-center flex-initial w-28">คำนำหน้า</label>
                         </div>
                         <div class="h-20 col-start-2 col-end-4 rounded-lg">
                             <select formControlName="tprefix"
@@ -172,58 +206,69 @@
                                 <option value="นาง">นาง</option>
                                 <option value="นางสาว">นางสาว</option>
                             </select>
+<<<<<<< HEAD
                             <div
                                 *ngIf="UserForm.get('tprefix').hasError('required') && UserForm.get('tprefix').touched">
                                 <span class="text-red-500 text-sm">กรุณาเลือกคำนำหน้า</span>
+=======
+                            <div *ngIf="UserForm.get('tprefix').hasError('required') && UserForm.get('tprefix').touched">
+                                <span class="text-sm text-red-500">กรุณาเลือกคำนำหน้า</span>
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
                             </div>
                         </div>
 
-                        <div class="rounded-lg h-12 p-2 ">
-                            <label for="" class="flex-initial self-center w-28">ชื่อ</label>
+                        <div class="h-12 p-2 rounded-lg ">
+                            <label for="" class="self-center flex-initial w-28">ชื่อ</label>
                         </div>
                         <div class="h-20 col-start-5 col-end-7 rounded-lg">
                             <input type="text" formControlName="tname"
                                 [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('tname').hasError('required') && UserForm.get('tname').touched }"
                                 class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+<<<<<<< HEAD
                             <div *ngIf="UserForm.get('tname').hasError('required') && UserForm.get('tname').touched">
                                 <span class="text-red-500 text-sm ">กรุณากรอกข้อมูล</span>
+=======
+                            <div
+                                *ngIf="UserForm.get('tname').hasError('required') && UserForm.get('tname').touched">
+                                <span class="text-sm text-red-500 ">กรุณากรอกข้อมูล</span>
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
                             </div>
                         </div>
 
-                        <div class="rounded-lg h-12 p-2">
-                            <label for="" class="flex-initial self-center w-28">นามสกุล</label>
+                        <div class="h-12 p-2 rounded-lg">
+                            <label for="" class="self-center flex-initial w-28">นามสกุล</label>
                         </div>
                         <div class="h-20 col-start-8 col-end-10 rounded-lg">
                             <input type="text" formControlName="tsurname"
                                 [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('tsurname').hasError('required') && UserForm.get('tsurname').touched }"
                                 class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
                             <div *ngIf="(UserForm.get('tsurname').hasError('required') && UserForm.get('tsurname').touched)"
-                                class="text-red-500 text-sm">
+                                class="text-sm text-red-500">
                                 กรุณากรอกข้อมูล
                             </div>
                         </div>
 
-                        <div class="rounded-lg h-12 p-2">
-                            <label for="" class="flex-initial self-center w-28">ตำแหน่ง</label>
+                        <div class="h-12 p-2 rounded-lg">
+                            <label for="" class="self-center flex-initial w-28">ตำแหน่ง</label>
                         </div>
-                        <div class="col-start-2 col-end-4 rounded-lg h-20">
+                        <div class="h-20 col-start-2 col-end-4 rounded-lg">
                             <input type="text" formControlName="tposition"
                                 [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('tposition').hasError('required') && UserForm.get('tposition').touched }"
                                 class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
                             <div *ngIf="(UserForm.get('tposition').hasError('required') && UserForm.get('tposition').touched)"
-                                class="text-red-500 text-sm">
+                                class="text-sm text-red-500">
                                 กรุณากรอกข้อมูล
                             </div>
                         </div>
 
-                        <div class="rounded-lg h-12 p-2">
-                            <label for="email" class="flex-initial self-center text-sm">Email</label>
+                        <div class="h-12 p-2 rounded-lg">
+                            <label for="email" class="self-center flex-initial text-sm">Email</label>
                         </div>
                         <div class="h-20 col-start-5 col-end-7 rounded-lg">
                             <input type="email" formControlName="email" pattern="^$|[^@\s]+@[^@\s]+\.[^@\s]+"
                                 class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
                             <div *ngIf="UserForm.get('email').hasError('pattern') && UserForm.get('email').touched"
-                                class="text-red-500 text-sm">
+                                class="text-sm text-red-500">
                                 มีข้อผิดพลาดในกรอกข้อมูล <br>(Exp @pccth.com)
                             </div>
                         </div>
@@ -236,6 +281,7 @@
                          (click)="onCreateButtonClick()">
                             บันทึก
                         </button>
+<<<<<<< HEAD
                     </div>
 
                     <div class="flex justify-center mt-4" *ngIf="isEditing">
@@ -243,6 +289,11 @@
                             class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]"
                             (click)="onUpdateButtonClick()">
                             อัพเดท
+=======
+                        <button type="button" class="w-24 p-2 ml-2 text-white bg-gray-400 border-2 border-gray-400 rounded shadow-md"
+                          (click)="onCancelUpdateButtonClick()">
+                          ยกเลิก
+>>>>>>> 33f1f54549b1d000f83765ab8a04488b08115e2f
                         </button>
                         <button type="button"
                             class="text-white p-2 w-24 rounded shadow-md bg-gray-400 border-2 border-gray-400 ml-2"
@@ -301,6 +352,7 @@
                     </tr>
                 </tbody>
             </table>
+            <p-paginator [rows]="tableRows" (onPageChange)="paginate($event)" [totalRecords]="120" [rowsPerPageOptions]="[10,20,30]"></p-paginator>
         </div>
     </div>
 </div>
