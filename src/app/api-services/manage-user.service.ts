@@ -25,6 +25,12 @@ export class ManageUserService {
     return this.http.put(`http://localhost:8080/employee/editEmployee?userid=${userId}`, userData);
   }
 
+  createUser(userData: any): Observable<any> {
+    return this.http.post('http://localhost:8080/employee/create', userData);
+  }
+
+ 
+
   
   
   
