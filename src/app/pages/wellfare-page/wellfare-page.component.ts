@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { WellfareService } from 'src/app/api-services/wellfare.service';
 import { ChangeDetectorRef } from '@angular/core';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-wellfare-page',
   templateUrl: './wellfare-page.component.html',
@@ -9,40 +9,48 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class WellfarePageComponent implements OnInit {
   [x: string]: any;
-  @Output() userIdChanged: EventEmitter<string> = new EventEmitter<string>();
   // expenseFrom: any;
   responseData: any = {};
   displayModal: boolean = false;
   filteredSearchValues: any[] = [];
+  editMode: boolean = false;
+  expenseId: number = 0;
   constructor(
     private wellfareService: WellfareService,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    console.log('UserId in WellfareDialogComponent ngOnInit:', this.userId);
-    this.cdr.detectChanges()
+    // console.log('UserId in WellfareDialogComponent ngOnInit:', this.responseData.length);
+    this.cdr.detectChanges();
   }
 
-  showModalDialog(userId: string): void {
-    if (this.responseData) {
+  showModalDialog(id: any, mode: string): void {
+    if (mode == 'create') {
+      if (this.responseData) {
+        this.displayModal = true;
+        // console.log('User ID:', userId);
+        this.expenseId = 0;
+        this.editMode = false;
+        this.userId = id;
+      }
+    } else if (mode == 'edit') {
       this.displayModal = true;
-      console.log('User ID:', userId);
-      this.userId = userId;
-      this.userIdChanged.emit(userId);
+      this.editMode = true;
+      this.expenseId = id;
     }
   }
 
   searchInput: any;
   searchUsers(): void {
-    this.userId
+    this.userId;
     const searchTerm = this.searchInput;
     this.wellfareService.searchUserByName(searchTerm).subscribe(
       (response) => {
         this.responseData = response.responseData.result;
         const userId = this.responseData[0]?.userId;
+        this.userId = userId;
         if (userId) {
-          this.userIdChanged.emit(userId);
           console.log('User ID from response:', userId);
           this.searchExpensesByUserId(userId);
         } else {
@@ -83,7 +91,7 @@ export class WellfarePageComponent implements OnInit {
   userData: any;
 
   searchExpensesByUserId(userId: number): void {
-    this.userId
+    this.userId;
     this.wellfareService.searchExpensesByUserId(userId).subscribe(
       (response) => {
         this.userData = response.expenses;
@@ -93,13 +101,23 @@ export class WellfarePageComponent implements OnInit {
       }
     );
   }
-  
-  expenseId: any;
+
   deleteById(expenseId: any) {
-    this.wellfareService.deleteExpense(expenseId).subscribe((res: any) => {
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
+    Swal.fire({
+      title: 'ลบข้อมูล',
+      icon: 'warning',
+      text: 'ต้องการลบข้อมูลนี้หรือไม่',
+      confirmButtonText: 'ยืนยัน',
+      showCancelButton: true,
+      cancelButtonText: 'ยกเลิก',
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.wellfareService.deleteExpense(expenseId).subscribe((res: any) => {
+          this.searchUsers();
+        });
+      }
     });
   }
 
@@ -114,4 +132,71 @@ export class WellfarePageComponent implements OnInit {
     );
   }
 
+  createForm: any;
+  getCreateForm(data: any) {
+    this.createForm = data;
+  }
+
+  ConfirmSaveAndEdit() {
+    this.displayModal = false;
+    const text = this.editMode
+      ? 'ต้องแก้ไขการเบิกนี้หรือไม่'
+      : 'ยืนยันการเบิกค่ารักษาพยาบาล';
+    Swal.fire({
+      title: 'ยืนยัน',
+      text: text,
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      confirmButtonText: 'ยืนยัน',
+      icon : 'warning',
+      showCancelButton: true
+    }).then(result => {
+      if(result.isConfirmed){
+        this.saveExpense()
+      }else{
+        this.displayModal = false;
+      }
+    })
+  }
+
+  saveExpense() {
+    console.log(this.createForm);
+    console.log(this.userId);
+    if (this.editMode) {
+      this.wellfareService
+        .updateExpense(this.expenseId, this.createForm)
+        .subscribe((res) => {
+          Swal.fire({
+            title: 'สำเร็จ',
+            icon: 'success',
+            text: res.responseMessage,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            confirmButtonText: 'ยืนยัน',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.searchUsers();
+            }
+          });
+        });
+    } else {
+      this.wellfareService
+        .createExpense(this.userId, this.createForm)
+        .subscribe((res) => {
+          Swal.fire({
+            title: 'สำเร็จ',
+            icon: 'success',
+            text: res.responseMessage,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            confirmButtonText: 'ยืนยัน',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.searchUsers();
+            }
+          });
+        });
+    }
+    this.displayModal = false;
+  }
 }
