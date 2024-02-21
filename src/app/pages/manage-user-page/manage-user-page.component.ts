@@ -36,7 +36,7 @@ export class ManageUserPageComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
 
 
@@ -94,6 +94,7 @@ export class ManageUserPageComponent implements OnInit {
     { name: 'DT', code: '7012' },
     { name: 'HQ', code: '8011' },
     { name: 'AF', code: '9011' },
+    
   ];
   //WiseSoft Dept
   wsDept = [
@@ -134,6 +135,8 @@ export class ManageUserPageComponent implements OnInit {
     this.UserForm.get('deptCode').setValue(this.UserForm.get('dept').value[1])
   
   }
+
+  
 
   onInputKeyPressNo(event: KeyboardEvent) {
     const inputChar = event.key;
@@ -179,14 +182,14 @@ export class ManageUserPageComponent implements OnInit {
         //   console.log('Level from API:', budgetData.level);
         // }
         const selectedDeptName = data.dept[0]; // เลือกตำแหน่งที่ 0 จาก Array นี้
-    this.UserForm.get('dept').setValue(selectedDeptName);
+        this.UserForm.get('dept').setValue(selectedDeptName);
 
         this.UserForm.patchValue(data); // ใช้ patchValue เพื่อกำหนดค่าข้อมูลในฟอร์ม
 
         // แสดงข้อมูลฝ่าย/แผนกใน div
         this.UserForm.get('deptid').setValue(data.dept.deptid);
         this.UserForm.get('level').setValue(data.budget.level);
-        // this.UserForm.get('dept').setValue(data.dept.deptcode);
+        this.UserForm.get('dept').setValue(data.dept.deptcode);
         this.UserForm.get('deptCode').setValue(data.dept.code);
         this.UserForm.get('empId').setValue(data.empid);
 
@@ -199,7 +202,7 @@ export class ManageUserPageComponent implements OnInit {
                 // กำหนดค่า level เดิม
                 this.UserForm.get('budget.level').setValue(previousLevel);
               }
-              
+
             },
             (error: any) => {
               console.error('Error getting previous data:', error);

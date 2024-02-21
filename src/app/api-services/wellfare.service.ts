@@ -71,4 +71,8 @@ export class WellfareService {
     return this.http.put<any>(url, updatedExpenseData, { headers: this.headers });
   }
   
+  getExpenseByid(expenseId : number) {
+    const url = `${this.domain}/expenses/getExpense/${expenseId}`
+    return this.http.get<any>(url, { headers: this.headers })
+  }
 }
