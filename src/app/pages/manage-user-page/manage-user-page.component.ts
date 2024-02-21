@@ -74,21 +74,20 @@ export class ManageUserPageComponent implements OnInit {
 
   ///////pcc-dept
   pccDept = [
-    { name: 'FSI', code: '1011' },
-    { name: 'PBS', code: '2011' },
-    { name: 'MS', code: '3011' },
-    { name: 'SD1', code: '4011' },
-    { name: 'SD2', code: '4012' },
     { name: 'SQA', code: '4013' },
-    { name: 'SE', code: '5011' },
-    { name: 'CS', code: '5012' },
-    { name: 'CE', code: '5013' },
-    { name: 'NS', code: '5014' },
     { name: 'SM', code: '5015' },
-    { name: 'OSS', code: '6011' },
+    { name: 'SE', code: '5011' },
+    { name: 'SD1', code: '4012' },
+    { name: 'SD2', code: '4011' },
     { name: 'PM', code: '7011' },
-    { name: 'DT', code: '7012' },
+    { name: 'NS', code: '5014' },
+    { name: 'MS', code: '3011' },
     { name: 'HQ', code: '8011' },
+    { name: 'FSI', code: '1011' },
+    { name: 'FM', code: '6011' },
+    { name: 'DT', code: '7012' },
+    { name: 'CS',code: '5012' },
+    { name: 'CE', code: '5013' },
     { name: 'AF', code: '9011' },
     
   ];
@@ -129,9 +128,10 @@ export class ManageUserPageComponent implements OnInit {
   }
 
   //gen dept CODE after select dept NAME
-  setDept() { 
-    this.UserForm.get('deptCode').setValue(this.UserForm.get('dept').value[1])
-  
+  setDept() {
+    const deptName = this.UserForm.get('dept').value
+    const deptCode = this.dept.find((item: any) => item.name === deptName)?.code || '';
+    this.UserForm.get('deptCode').setValue(deptCode)
   }
 
   
@@ -153,15 +153,13 @@ export class ManageUserPageComponent implements OnInit {
         this.emps = data.content;
         this.tableTotalRecord = data.totalElements;
         //เพื่อดูตัวแปล
-        // console.log(data.content);
+         console.log(data.content);
       },
       (error: any) => {
         console.error('Error:', error);
       }
     );
   }
-
-
 
   onEditButtonClick(userId: number): void {
     this.isDataSelected = true;
@@ -174,11 +172,6 @@ export class ManageUserPageComponent implements OnInit {
         // ทำการแปลงรูปแบบวันที่จาก API
         data.startDate = new Date(data.startDate).toISOString().split('T')[0];
 
-        // const budgetData = data.budget;
-        // if (budgetData) {
-        //   this.UserForm.get('level').setValue(budgetData.level);
-        //   console.log('Level from API:', budgetData.level);
-        // }
         const selectedDeptName = data.dept[0]; // เลือกตำแหน่งที่ 0 จาก Array นี้
         this.UserForm.get('dept').setValue(selectedDeptName);
 
@@ -201,11 +194,13 @@ export class ManageUserPageComponent implements OnInit {
                 // กำหนดค่า level เดิม
                 this.UserForm.get('budget.level').setValue(previousLevel);
               }
+              
 
             },
             (error: any) => {
               console.error('Error getting previous data:', error);
             }
+            
           );
         }
       },
