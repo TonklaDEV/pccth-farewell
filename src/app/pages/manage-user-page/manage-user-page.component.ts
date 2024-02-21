@@ -94,6 +94,7 @@ export class ManageUserPageComponent implements OnInit {
     { name: 'DT', code: '7012' },
     { name: 'HQ', code: '8011' },
     { name: 'AF', code: '9011' },
+    
   ];
   //WiseSoft Dept
   wsDept = [
@@ -134,6 +135,8 @@ export class ManageUserPageComponent implements OnInit {
     this.UserForm.get('deptCode').setValue(this.UserForm.get('dept').value[1])
 
   }
+
+  
 
   onInputKeyPressNo(event: KeyboardEvent) {
     const inputChar = event.key;
@@ -186,7 +189,7 @@ export class ManageUserPageComponent implements OnInit {
         // แสดงข้อมูลฝ่าย/แผนกใน div
         this.UserForm.get('deptid').setValue(data.dept.deptid);
         this.UserForm.get('level').setValue(data.budget.level);
-        // this.UserForm.get('dept').setValue(data.dept.deptcode);
+        this.UserForm.get('dept').setValue(data.dept.deptcode);
         this.UserForm.get('deptCode').setValue(data.dept.code);
         this.UserForm.get('empId').setValue(data.empid);
 
