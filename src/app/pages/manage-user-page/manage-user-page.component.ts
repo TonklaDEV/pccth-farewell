@@ -42,6 +42,7 @@ export class ManageUserPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.UserForm = this.formBuilder.group({
+      company: [''],
       level: ['', Validators.required],
       deptid: ['', Validators.required],
       deptCode: ['', Validators.required],
@@ -59,11 +60,6 @@ export class ManageUserPageComponent implements OnInit {
     console.log('in manage-user');
     this.loadEmployees();
   }
-
-
-
-
-
 
   onSubmit() {
     if (this.UserForm.valid) {
@@ -116,16 +112,18 @@ export class ManageUserPageComponent implements OnInit {
   selectCompany(company: string) {
     this.company = company
     console.log(this.company);
-    if (company == 'pcc') {
+    if (company == 'pcc' ||  company == 'PCC') {
       this.dept = this.pccDept;
       //First dept pcc select
       this.UserForm.get('dept').setValue('');
       this.UserForm.get('deptCode').setValue('');
-    } else if (company == 'ws') {
+      this.UserForm.get('company').setValue('pcc')
+    } else if (company == 'ws' || company == 'WiseSoft') {
       this.dept = this.wsDept;
       //First dept ws select
       this.UserForm.get('dept').setValue('');
       this.UserForm.get('deptCode').setValue('');
+      this.UserForm.get('company').setValue('ws')
     }
 
   }
@@ -187,6 +185,7 @@ export class ManageUserPageComponent implements OnInit {
         this.UserForm.patchValue(data); // ใช้ patchValue เพื่อกำหนดค่าข้อมูลในฟอร์ม
 
         // แสดงข้อมูลฝ่าย/แผนกใน div
+        this.selectCompany(data.dept.company)
         this.UserForm.get('deptid').setValue(data.dept.deptid);
         this.UserForm.get('level').setValue(data.budget.level);
         this.UserForm.get('dept').setValue(data.dept.deptcode);

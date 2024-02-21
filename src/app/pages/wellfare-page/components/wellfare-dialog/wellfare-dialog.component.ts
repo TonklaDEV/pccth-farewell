@@ -242,7 +242,7 @@ export class WellfareDialogComponent implements OnInit {
     });
   }
 
-  private initEditForm(forms: any) {
+  private async initEditForm(forms: any) {
     const type = forms.ipd != 0 ? 'ipd' : 'opd';
     const options: object = {
       day: '2-digit',
@@ -253,11 +253,12 @@ export class WellfareDialogComponent implements OnInit {
     this.rangeDates = [new Date(forms.startDate), new Date(forms.endDate)];
 
     //set ipd and opd to withdrawn
-    if (type == 'ipd') {
-      this.ipdValue += forms.canWithdraw;
-    } else {
-      this.opdValue += forms.canWithdraw;
-    }
+    await this.getRemainingEditmode(type,forms.canWithdraw)
+    // if (type == 'ipd') {
+    //   this.ipdValue += forms.canWithdraw;
+    // } else {
+    //   this.opdValue += forms.canWithdraw;
+    // }
 
     const dateRange = `${new Date(forms.startDate).toLocaleDateString(
       'en-US',
@@ -274,9 +275,29 @@ export class WellfareDialogComponent implements OnInit {
     this.expenseForm.get('description')?.setValue(forms.description);
     this.expenseForm.get('remark')?.setValue(forms.remark);
     this.expenseForm.get('dateRangeInput')?.setValue(dateRange);
+    
+  }
+
+  async getRemainingEditmode(type : any,cost : any){
+    this.userId;
+    this.wellfareService.getExpenseRemaining(this.userId).subscribe((data) => {
+      const opd = data.responseData.result.opd
+      const ipd = data.responseData.result.ipd
+      this.opdValue = (type == 'opd') ? opd + cost : opd;
+      this.ipdValue = (type == 'ipd') ? ipd + cost : ipd;
+      this.roomValue = data.responseData.result.room;
+    });
   }
 
   emitdata() {
+    this.setZeroChangType();
     this.CreateExpenseForm.emit(this.expenseForm.value);
+  }
+
+  private setZeroChangType(){
+    this.expenseForm.get('medicalExpensesInput')?.setValue(0)
+    this.expenseForm.get('ipd')?.setValue(0)
+    this.expenseForm.get('opd')?.setValue(0)
+    this.expenseForm.get('roomService')?.setValue(0)
   }
 }

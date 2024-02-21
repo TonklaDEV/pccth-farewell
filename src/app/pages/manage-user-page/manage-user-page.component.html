@@ -12,13 +12,13 @@
                         <label for="" class="mr-2">บริษัท</label>
                         <div class="flex items-center justify-start">
                             <div class="flex items-stretch">
-                                <input #pccSelected (change)="selectCompany('pcc')" type="radio"
+                                <input formControlName="company" (change)="selectCompany('pcc')" type="radio"
                                     class="w-4 h-4 self-center peer accent-[#696cff]" name="dept" id="pcc" value="pcc"
                                     checked />
                                 <label for="pcc" class="ml-2 mr-2 peer-checked:text-[#696cff]">PCCTH</label>
                             </div>
                             <div class="flex items-stretch">
-                                <input #wsSelected (change)="selectCompany('ws')" type="radio"
+                                <input formControlName="company" (change)="selectCompany('ws')" type="radio"
                                     class="w-4 h-4 self-center peer accent-[#696cff]" name="dept" id="ws" value="ws" />
                                 <label for="ws" class="ml-2 mr-2 peer-checked:text-[#696cff]">WiseSoft</label>
                             </div>

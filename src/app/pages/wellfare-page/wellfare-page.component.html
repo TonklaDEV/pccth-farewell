@@ -58,11 +58,12 @@
                     </ng-template>
                     <ng-template pTemplate="header">
                         <tr>
-                            <th style="width: 20%">ลำดับที่</th>
-                            <th style="width: 30%">วันที่</th>
+                            <th style="width: 10%">ลำดับที่</th>
+                            <th style="width: 10%">วันที่</th>
                             <th style="width: 30%">รายละเอียด</th>
-                            <th style="width: 20%">IPD</th>
-                            <th style="width: 20%">OPD</th>
+                            <th style="width: 15%">IPD</th>
+                            <th style="width: 15%">OPD</th>
+                            <th style="width: 15%">จำนวนเงินที่เบิก</th>
                             <th style="width: 5%"></th>
                             <th style="width: 5%"></th>
                         </tr>
@@ -73,8 +74,9 @@
                             <td>{{ expense.start_date | date: 'dd/MM/yyyy' }} - {{ expense.end_date | date: 'dd/MM/yyyy'
                                 }}</td>
                             <td>{{ expense.description }}</td>
-                            <td>{{ expense.ipd }}</td>
-                            <td>{{ expense.opd }}</td>
+                            <td>{{ expense.ipd | number: '1.0-0'}}</td>
+                            <td>{{ expense.opd | number: '1.0-0'}}</td>
+                            <td>{{ expense.can_withdraw | number: '1.0-0'}}</td>
                             <td>
                                 <button type="submit" (click)="showModalDialog(expense.id,'edit')"
                                     class="flex items-center justify-center text-[#FFAB00] py-2  rounded w-32 border-2 border-gray-400 hover:bg-[#FFAB00] hover:text-white hover:border-[#FFAB00]">
