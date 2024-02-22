@@ -24,7 +24,7 @@
                     <div class="flex flex-col items-start justify-start col-span-2">
                         <h3 class="mr-2">ประเภทการรักษา</h3>
                         <form [formGroup]="expenseForm">
-                            <mat-radio-group formControlName="types" (change)="emitdata()">
+                            <mat-radio-group formControlName="types" (change)="emitdata()" (change)="setZeroChangType()">
                                 <mat-radio-button [color]="'primary'" class="mr-2" id="opd"
                                     value="opd">OPD</mat-radio-button>
                                 <mat-radio-button [color]="'primary'" class="mr-2" id="ipd"

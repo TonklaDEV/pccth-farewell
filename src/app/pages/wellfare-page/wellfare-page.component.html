@@ -59,11 +59,12 @@
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="width: 10%">ลำดับที่</th>
-                            <th style="width: 10%">วันที่</th>
-                            <th style="width: 30%">รายละเอียด</th>
-                            <th style="width: 15%">IPD</th>
-                            <th style="width: 15%">OPD</th>
-                            <th style="width: 15%">จำนวนเงินที่เบิก</th>
+                            <th style="width: 12%">วันที่</th>
+                            <th style="width: 18%">รายละเอียด</th>
+                            <th style="width: 10%">IPD</th>
+                            <th style="width: 10%">OPD</th>
+                            <th style="width: 15%">ค่าห้อง/อาหาร</th>
+                            <th style="width: 20%">จำนวนเงินที่เบิก</th>
                             <th style="width: 5%"></th>
                             <th style="width: 5%"></th>
                         </tr>
@@ -76,6 +77,7 @@
                             <td>{{ expense.description }}</td>
                             <td>{{ expense.ipd | number: '1.0-0'}}</td>
                             <td>{{ expense.opd | number: '1.0-0'}}</td>
+                            <td>{{ expense.room_service | number: '1.0-0'}}</td>
                             <td>{{ expense.can_withdraw | number: '1.0-0'}}</td>
                             <td>
                                 <button type="submit" (click)="showModalDialog(expense.id,'edit')"

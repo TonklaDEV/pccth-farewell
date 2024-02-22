@@ -43,6 +43,7 @@ export class WellfarePageComponent implements OnInit {
 
   searchInput: any;
   searchUsers(): void {
+    console.log("responseData",this.responseData);
     this.userId;
     const searchTerm = this.searchInput;
     this.wellfareService.searchUserByName(searchTerm).subscribe(
