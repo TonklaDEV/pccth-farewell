@@ -35,63 +35,11 @@ const routes: Routes = new Array<Route>(
     children: new Array<Route>(
       {
         path: '',
-        component: HomePageComponent,
-      },
-      {
-        path: 'news',
-        component: NewsPageComponent,
-      },
-      {
-        path: 'calender',
-        component: CalenderPageComponent,
-      },
-      {
-        path: 'dashboard',
-        component: DashboardPageComponent,
-      },
-      {
-        path: 'ftr-of1',
-        component: FtrOf1PageComponent,
-      },
-      {
-        path: 'ftr-oj1',
-        component: FtrOj1PageComponent,
-      },
-      {
-        path: 'ftr-sv1',
-        component: FtrSv1PageComponent,
-      },
-      {
-        path: 'approve',
-        component: ApprovePageComponent,
-      },
-      {
-        path: 'manage-course',
-        component: ManageCoursePageComponent,
+        component: WellfarePageComponent,
       },
       {
         path: 'manage-user',
         component: ManageUserPageComponent,
-      },
-      {
-        path: 'job-day-view',
-        component: JobDayViewPageComponent,
-      },
-      {
-        path: 'management-news',
-        component: ManagementNewsPageComponent,
-      },
-      {
-        path: 'management-dashboard',
-        component: ManagementDashboardPageComponent,
-      },
-      {
-        path: 'management-role',
-        component: ManagementRolePageComponent,
-      },
-      {
-        path: 'news-detail',
-        component: NewsDetailPageComponent,
       },
       {
         path: 'wellfare',

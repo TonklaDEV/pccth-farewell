@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 
 import { NgZone } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { id } from 'date-fns/locale';
 
 export interface Budget {
   id?: number;
@@ -129,15 +130,6 @@ export class BudgetComponent implements OnInit {
     event.target.value = value;
   }
 
-  editingMode = false;
-
-  editBudget(budget: Budget) {
-    this.editingMode = true;
-    this.budgetData.level = budget.level;
-    this.budgetData.opd = budget.opd;
-    this.budgetData.ipd = budget.ipd;
-    this.budgetData.room = budget.room;
-  }
 
   deleteBudget(budget: Budget) {
     Swal.fire({
@@ -172,6 +164,8 @@ export class BudgetComponent implements OnInit {
     }
   }
 
+  editingMode = false;
+
   openEditModal(budget: Budget): void {
     this.editingMode = true;
     this.budgetData = { ...budget };
@@ -184,12 +178,19 @@ export class BudgetComponent implements OnInit {
     this.budgetData = { id: 0, level: '', opd: '', ipd: '', room: '' };
   }
 
-  updateBudget(): void {
-    if (this.budgetData.id && this.budgetData) {
-      this.UserForm = this.fb.group({
-        empId: [''],
-      });
+  editBudget(budget: Budget) {
+    this.budgetData.id = budget.id; 
+    this.editingMode = true;
+    this.budgetData.level = budget.level;
+    this.budgetData.opd = budget.opd;
+    this.budgetData.ipd = budget.ipd;
+    this.budgetData.room = budget.room;
+    console.log(budget.id);
+    
+  }
 
+  updateBudget(): void {
+    if (this.budgetData.id && this.budgetData.level) {
       this.servicebudget.updateBudget(this.budgetData.id, this.budgetData).subscribe(
         (response: any) => {
           console.log('งบประมาณถูกอัปเดตเรียบร้อย:', response);
@@ -207,38 +208,6 @@ export class BudgetComponent implements OnInit {
     }
   }
 
-  onEditButtonClick() {
-    if (this.UserForm && this.updatedData && this.isValidBudgetData(this.updatedData)) {
-      this.UserForm.setValue({
-        empId: this.updatedData.empId,
-      });
-    } else {
-      console.error("ข้อมูลงบประมาณไม่ถูกต้องสำหรับการอัปเดต.");
-    }
-  }
-
-  isValidBudgetData(data: any): boolean {
-    return !!data.empId;
-  }
-
-  updateBudgetData(): void {
-    const budgetIdToUpdate = 5;
-    const updatedBudgetData: Budget = {
-      level: 'newLevel',
-      opd: 'newOPD',
-      ipd: 'newIPD',
-      room: 'newRoom',
-    };
-
-    this.servicebudget.updateBudget(budgetIdToUpdate, updatedBudgetData).subscribe(
-      (response: any) => {
-        console.log('งบประมาณถูกอัปเดตเรียบร้อย:', response);
-      },
-      (error: any) => {
-        console.error('เกิดข้อผิดพลาดในการอัปเดตงบประมาณ:', error);
-      }
-    );
-  }
 
 }
 //

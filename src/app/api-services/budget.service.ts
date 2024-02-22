@@ -30,11 +30,16 @@ export class BudgetService {
     return this.http.delete<any>(`${this.apiUrl}/deleteBudget?budgetId=${budgetId}`);
   }
 
-  updateBudget(id: number, budget: Budget): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.put(url, budget);
-  }
-  
+  updateBudget(budgetId: number, updatedBudget: Budget): Observable<any> {
+    const url = `${this.apiUrl}/editBudget`;
+    const params = new HttpParams()
+      .set('budgetId', budgetId.toString())
+      .set('level', updatedBudget.level)
+      .set('opd', updatedBudget.opd.toString())
+      .set('ipd', updatedBudget.ipd.toString())
+      .set('room', updatedBudget.room.toString());
 
-  
+    return this.http.put<any>(url, null, { params });
+  }
+
 }
