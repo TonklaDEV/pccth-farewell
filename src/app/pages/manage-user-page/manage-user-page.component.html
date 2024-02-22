@@ -161,7 +161,7 @@
                         </div>
 
                         <div class="h-12 p-2 rounded-lg">
-                            <label for="tprefix" class="self-center flex-initial w-28">คำนำหน้า</label>
+                            <label for="" class="self-center flex-initial w-28">คำนำหน้า</label>
                         </div>
                         <div class="h-20 col-start-2 col-end-4 rounded-lg">
                             <select formControlName="tprefix"
@@ -170,7 +170,7 @@
                                 <option value="" disabled selected>เลือกคำนำหน้า</option>
                                 <option value="นาย">นาย</option>
                                 <option value="นาง">นาง</option>
-                                <option value="นางสาว">นางสาว</option>
+                                <option value="น.ส.">น.ส.</option>
                             </select>
                             <div
                                 *ngIf="UserForm.get('tprefix').hasError('required') && UserForm.get('tprefix').touched">
@@ -179,7 +179,7 @@
                         </div>
 
                         <div class="h-12 p-2 rounded-lg ">
-                            <label for="" class="self-center flex-initial w-28">ชื่อ</label>
+                            <label for="tname" class="self-center flex-initial w-28">ชื่อ</label>
                         </div>
                         <div class="h-20 col-start-5 col-end-7 rounded-lg">
                             <input type="text" formControlName="tname"
@@ -316,6 +316,7 @@
                     </tr>
                 </tbody>
             </table>
+            
             <p-paginator [rows]="tableRows" (onPageChange)="paginate($event)" [totalRecords]="120" [rowsPerPageOptions]="[5,15,30]"></p-paginator>
         </div>
     </div>
