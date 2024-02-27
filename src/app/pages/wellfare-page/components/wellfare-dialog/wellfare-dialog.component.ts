@@ -271,7 +271,7 @@ export class WellfareDialogComponent implements OnInit {
     this.expenseForm.get('ipd')?.setValue(this.ipdValue); //current + old to
     this.expenseForm.get('opd')?.setValue(this.ipdValue);
     this.expenseForm.get('medicalExpensesInput')?.setValue(forms[type]);
-    this.expenseForm.get('roomService')?.setValue(forms.roomServic);
+    this.expenseForm.get('roomService')?.setValue(forms.roomService);
     this.expenseForm.get('description')?.setValue(forms.description);
     this.expenseForm.get('remark')?.setValue(forms.remark);
     this.expenseForm.get('dateRangeInput')?.setValue(dateRange);
@@ -290,11 +290,10 @@ export class WellfareDialogComponent implements OnInit {
   }
 
   emitdata() {
-    this.setZeroChangType();
     this.CreateExpenseForm.emit(this.expenseForm.value);
   }
 
-  private setZeroChangType(){
+   setZeroChangType(){
     this.expenseForm.get('medicalExpensesInput')?.setValue(0)
     this.expenseForm.get('ipd')?.setValue(0)
     this.expenseForm.get('opd')?.setValue(0)
