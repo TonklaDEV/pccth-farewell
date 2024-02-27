@@ -29,9 +29,12 @@ export class ManageUserService {
     return this.http.post('http://localhost:8080/employee/create', userData);
   }
 
- 
+  searchUserByEmpId(empid: any): Observable<any> {
+    return this.http.get(`http://localhost:8080/employee/seacrhUser/byEmpid?empid=${empid}`);
+  }
+  
 
   
-  
+
   
 }

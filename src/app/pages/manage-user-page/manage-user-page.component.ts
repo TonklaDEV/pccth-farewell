@@ -31,6 +31,7 @@ export class ManageUserPageComponent implements OnInit {
   tableRows = 5;
   tablePages = 0;
   tableTotalRecord = 0;
+  searchEmpId: any;
   constructor(
     private Mservices: ManageUserService,
     private formBuilder: FormBuilder,
@@ -59,6 +60,8 @@ export class ManageUserPageComponent implements OnInit {
 
     console.log('in manage-user');
     this.loadEmployees();
+
+
   }
 
   onSubmit() {
@@ -86,10 +89,10 @@ export class ManageUserPageComponent implements OnInit {
     { name: 'FSI', code: '1011' },
     { name: 'FM', code: '6011' },
     { name: 'DT', code: '7012' },
-    { name: 'CS',code: '5012' },
+    { name: 'CS', code: '5012' },
     { name: 'CE', code: '5013' },
     { name: 'AF', code: '9011' },
-    
+
   ];
   //WiseSoft Dept
   wsDept = [
@@ -111,7 +114,7 @@ export class ManageUserPageComponent implements OnInit {
   selectCompany(company: string) {
     this.company = company
     console.log(this.company);
-    if (company == 'pcc' ||  company == 'PCC') {
+    if (company == 'pcc' || company == 'PCC') {
       this.dept = this.pccDept;
       //First dept pcc select
       this.UserForm.get('dept').setValue('');
@@ -134,7 +137,7 @@ export class ManageUserPageComponent implements OnInit {
     this.UserForm.get('deptCode').setValue(deptCode)
   }
 
-  
+
 
   onInputKeyPressNo(event: KeyboardEvent) {
     const inputChar = event.key;
@@ -153,7 +156,7 @@ export class ManageUserPageComponent implements OnInit {
         this.emps = data.content;
         this.tableTotalRecord = data.totalElements;
         //เพื่อดูตัวแปล
-         console.log(data.content);
+        console.log(data.content);
       },
       (error: any) => {
         console.error('Error:', error);
@@ -194,13 +197,13 @@ export class ManageUserPageComponent implements OnInit {
                 // กำหนดค่า level เดิม
                 this.UserForm.get('budget.level').setValue(previousLevel);
               }
-              
+
 
             },
             (error: any) => {
               console.error('Error getting previous data:', error);
             }
-            
+
           );
         }
       },
@@ -218,25 +221,45 @@ export class ManageUserPageComponent implements OnInit {
 
       // ตรวจสอบว่ามีค่าใน deptCode และ budget.level
 
+      // แสดง SweetAlert2 สำหรับยืนยันการแก้ไข
+      Swal.fire({
+        title: 'คุณต้องการที่จะแก้ไขหรือไม่?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'ตกลง',
+        cancelButtonText: 'ยกเลิก',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // ดำเนินการอัปเดตข้อมูล
+          this.Mservices.updateUser(this.userIdToUpdate, userData).subscribe(
+            (response: any) => {
+              console.log('อัปเดตข้อมูลสำเร็จ', response);
+              Swal.fire('แก้ไขเรียบร้อย!', 'ข้อมูลถูกแก้ไขเรียบร้อยแล้ว!', 'success');
+              // ทำบางอย่างหลังจากอัปเดตสำเร็จ (เช่น รีเฟรชหน้าหรือปรับปรุงข้อมูล)
+              this.UserForm.reset();
+              this.loadEmployees();
 
-      // ดำเนินการอัปเดตข้อมูล
-      this.Mservices.updateUser(this.userIdToUpdate, userData).subscribe(
-        response => {
-          console.log('อัปเดตข้อมูลสำเร็จ', response);
-          // ทำบางอย่างหลังจากอัปเดตสำเร็จ (เช่น รีเฟรชหน้าหรือปรับปรุงข้อมูล)
-        },
-        error => {
-          console.error('เกิดข้อผิดพลาดในการอัปเดตข้อมูล', error);
+            },
+
+            (error: any) => {
+              console.error('เกิดข้อผิดพลาดในการอัปเดตข้อมูล', error);
+              Swal.fire('ข้อผิดพลาด!', 'เกิดข้อผิดพลาดในการอัปเดตข้อมูล!', 'error');
+            }
+
+          );
+
+        } else {
+          console.log('การแก้ไขถูกยกเลิก');
+          this.UserForm.reset();
         }
-      );
-
+      });
 
     } else {
       console.error('Invalid userId: undefined');
     }
-    // window.location.reload();
+    this.isDataSelected = false;
+    this.isEditing = false;
   }
-
 
 
   onCreateButtonClick(): void {
@@ -245,10 +268,14 @@ export class ManageUserPageComponent implements OnInit {
     this.Mservices.createUser(userData).subscribe(
       response => {
         console.log('User created successfully', response);
+        Swal.fire('เพิ่มผู้ใช้', 'ผู้ใช้ถูกเพิ่มเรียบร้อยแล้ว!', 'success');
+        // ทำอย่างอื่นตามต้องการหลังจากลบข้อมูลเรียบร้อย
+
         // ทำบางอย่างหลังจากสร้างข้อมูลสำเร็จ
       },
       error => {
         console.error('Error creating user', error);
+        Swal.fire('กรุณากรอกข้อมูล', 'กรุณากรอกข้อมูลผู้ใช้งาน', 'warning');
 
         // // ตรวจสอบ Validation Errors จาก API
         // if (error.error && error.error.details && error.error.details.length > 0) {
@@ -258,14 +285,16 @@ export class ManageUserPageComponent implements OnInit {
         // ทำอย่างอื่นตามต้องการหากเกิดข้อผิดพลาด
       }
     );
+    this.UserForm.reset();
+    this.loadEmployees();
   }
-
 
   onCancelUpdateButtonClick() {
     // ทำการยกเลิกการเลือกข้อมูล
     // ...
 
     // เปลี่ยนค่า isDataSelected เป็น false เพื่อซ่อนปุ่ม
+    this.UserForm.reset();
     this.isDataSelected = false;
     this.isEditing = false;
   }
@@ -286,13 +315,16 @@ export class ManageUserPageComponent implements OnInit {
               console.log('User deleted successfully:', response);
               Swal.fire('ลบแล้ว!', 'ผู้ใช้ถูกลบเรียบร้อยแล้ว!', 'success');
               // ทำอย่างอื่นตามต้องการหลังจากลบข้อมูลเรียบร้อย
+              this.loadEmployees();
             },
             (error: any) => {
               console.error('เกิดข้อผิดพลาดในการลบผู้ใช้:', error);
               Swal.fire('ข้อผิดพลาด!', 'เกิดข้อผิดพลาดในการลบผู้ใช้!', 'error');
               // ทำอย่างอื่นตามต้องการหากเกิดข้อผิดพลาด
+              
             }
           );
+
         } else {
           console.log('การลบผู้ใช้ถูกยกเลิก');
         }
@@ -302,10 +334,30 @@ export class ManageUserPageComponent implements OnInit {
     }
   }
 
-  paginate(event : any) {
+  paginate(event: any) {
     this.tableRows = event.rows
     this.tablePages = event.page
     this.loadEmployees()
+  }
+
+  searchUsers(empid: any): void {
+    console.log('Search empid:', empid);
+    const data: any = [];
+    // ตรวจสอบว่า searchEmpId ไม่เป็น undefined หรือ null
+    if (this.searchEmpId !== undefined && this.searchEmpId !== null) {
+      this.Mservices.searchUserByEmpId(empid).subscribe(
+        (data: any) => {
+          console.log('Data from API:', data);
+          this.emps = data.responseData.result;
+          console.log(this.emps);
+        },
+        (error: any) => {
+          console.error('เกิดข้อผิดพลาดในการค้นหา:', error);
+        }
+      );
     }
+  }
+  
+
 
 }

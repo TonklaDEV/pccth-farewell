@@ -1,6 +1,6 @@
 <div class="bg-transparent">
     <div
-        class="w-full p-6 pb-6 bg-white rounded-md shadow text-font-header dark:text-font-header-dark dark:bg-content-dark">
+        class="w-full p-6 pb-6 bg-white rounded-md shadow text-font-header dark:text-font-header-dark dark:bg-content-dark ">
         <p class="text-2xl">ข้อมูลพนักงาน</p>
         <br>
         <div
@@ -161,7 +161,7 @@
                         </div>
 
                         <div class="h-12 p-2 rounded-lg">
-                            <label for="tprefix" class="self-center flex-initial w-28">คำนำหน้า</label>
+                            <label for="" class="self-center flex-initial w-28">คำนำหน้า</label>
                         </div>
                         <div class="h-20 col-start-2 col-end-4 rounded-lg">
                             <select formControlName="tprefix"
@@ -179,7 +179,7 @@
                         </div>
 
                         <div class="h-12 p-2 rounded-lg ">
-                            <label for="" class="self-center flex-initial w-28">ชื่อ</label>
+                            <label for="tname" class="self-center flex-initial w-28">ชื่อ</label>
                         </div>
                         <div class="h-20 col-start-5 col-end-7 rounded-lg">
                             <input type="text" formControlName="tname"
@@ -224,7 +224,7 @@
                                 class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
                             <div *ngIf="UserForm.get('email').hasError('pattern') && UserForm.get('email').touched"
                                 class="text-sm text-red-500">
-                                มีข้อผิดพลาดในกรอกข้อมูล <br>(Exp @pccth.com) 
+                                กรุณาใช้เมลตามตัวอย่าง <br>(Exp @pccth.com , Exp @wisesoft.co.th) 
                             </div>
                         </div>
 
@@ -247,7 +247,7 @@
 
                     <div class="flex justify-center mt-4" *ngIf="!isEditing">
                         <button type="" 
-                            class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]"
+                            class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#3f42d3]  hover:text-white border-2 border-[#696cf8]"
                          (click)="onCreateButtonClick()">
                             บันทึก
                         </button>
@@ -255,7 +255,7 @@
 
                     <div class="flex justify-center mt-4" *ngIf="isEditing">
                         <button type="button"
-                            class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]"
+                            class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#3f42d3] hover:text-white border-2 border-[#696cf8]"
                             (click)="onUpdateButtonClick()">
                             อัพเดท
                         </button>
@@ -268,9 +268,27 @@
 
                 </div>
             </form>
-        </div>
-        <div class="w-full overflow-x-auto shadow rounded-b-md">
-            <table class="text-sm border-b-2 dark:border-[#3a3b3c]">
+            <!-- <div class="flex flex-col justify-between w-full col-span-1">
+                
+            </div> -->
+
+
+            <div class="text-[#566a7f]  rounded-md mt-5 mb-3 shadow p-6 pb-6 w-full bg-gray-50  dark:text-[#e4e6eb] dark:bg-[#242526]">
+            <div class="w-full overflow-x-auto  rounded-b-md">
+                <div class="card justify-start text-start text-[#566a7f] rounded-md  p-2 w-full dark:text-[#e4e6eb] dark:bg-[#242526] flex-grow">
+                  <div style="float: right;" class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark" >
+                    <i style="float: right;" class="bx bx-search text-gray-500 text-4xl ml-3 "></i>
+                    <input style="float: right;" class="flex-1 p-2 border border-gray-300 rounded-md   shadow dark:text-font-header-dark dark:bg-content-dark  " 
+                        placeholder="ค้นหารหัสรหัสพนักงาน.."
+                        [(ngModel)]="searchEmpId"
+                        (ngModelChange)="searchUsers(searchEmpId)"> 
+               
+                  </div>
+                </div>
+              </div>
+              
+
+            <table *ngIf="emps && emps.length > 0" class="text-sm border-b-2 dark:border-[#3a3b3c]">
                 <colgroup>
                     <col style="width: 20%" />
                     <col style="width: 20%" />
@@ -292,13 +310,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let data of emps"
+                    <tr  *ngFor="let data of emps; "
                         class="odd:bg-white dark:odd:bg-[#3a3b3c] dark:even:bg-black even:bg-slate-100 text-center h-20 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">
+                         <!-- ตรวจสอบว่ามีข้อมูลทุกรอบที่วนลูป -->
                         <td>{{data.empid}}</td>
                         <td>{{data.tname}}</td>
                         <td>{{data.tsurname}}</td>
                         <td>{{data.tposition}}</td>
                         <td>{{data.email}}</td>
+                        <td></td>
+                        <td></td>
+
                         <td>
 
                             <button (click)="onEditButtonClick(data.userId)"
@@ -316,7 +338,9 @@
                     </tr>
                 </tbody>
             </table>
+            
             <p-paginator [rows]="tableRows" (onPageChange)="paginate($event)" [totalRecords]="120" [rowsPerPageOptions]="[5,15,30]"></p-paginator>
         </div>
     </div>
+</div>
 </div>
