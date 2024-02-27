@@ -315,12 +315,13 @@ export class ManageUserPageComponent implements OnInit {
               console.log('User deleted successfully:', response);
               Swal.fire('ลบแล้ว!', 'ผู้ใช้ถูกลบเรียบร้อยแล้ว!', 'success');
               // ทำอย่างอื่นตามต้องการหลังจากลบข้อมูลเรียบร้อย
+              this.loadEmployees();
             },
             (error: any) => {
               console.error('เกิดข้อผิดพลาดในการลบผู้ใช้:', error);
               Swal.fire('ข้อผิดพลาด!', 'เกิดข้อผิดพลาดในการลบผู้ใช้!', 'error');
               // ทำอย่างอื่นตามต้องการหากเกิดข้อผิดพลาด
-              this.loadEmployees();
+              
             }
           );
 
