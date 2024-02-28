@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { WellfareDetailsService } from 'src/app/api-services/wellfare-details.service';
 import { Table } from 'primeng/table';
 import { LazyLoadEvent } from 'primeng/api';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+
 export interface Expenses {
   empid: number;
   empname: string;
@@ -32,12 +34,17 @@ export interface ExpenseInfo {
   roomSerive: number;
   withDraw: number;
 }
+
 @Component({
   selector: 'app-wellfare-detail-page',
   templateUrl: './wellfare-detail-page.component.html',
   styleUrls: ['./wellfare-detail-page.component.scss'],
 })
 export class WellfareDetailPageComponent implements OnInit {
+  selectedYear: number = new Date().getFullYear();
+  selectedMonth: number = new Date().getMonth() + 1;
+  years: number[] = [];
+  months: { value: number; name: string }[] = [];
   dataSource: Expenses[] = [];
   opdAllBudget: number = 0;
   loading!: boolean;
@@ -67,16 +74,47 @@ export class WellfareDetailPageComponent implements OnInit {
   filteredExpenses!: any[];
   currentRows = 0;
   currentFirst = 0;
+  expenseForm: FormGroup = this.fb.group({
+    types: [''],
+    years: new FormControl(this.selectedYear),
+    months: new FormControl(this.selectedMonth),
+  });
+
   constructor(
     public dialog: MatDialog,
-    public wellfareDetailService: WellfareDetailsService
-  ) {}
+    public wellfareDetailService: WellfareDetailsService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
     this.expenseSelect = true;
-    // this.loadExpenseData();
+    this.populateYears();
+    this.populateMonths();
   }
+
+  private populateYears(): void {
+    const currentYear = new Date().getFullYear();
+    for (let i = 0; i < 10; i++) {
+      this.years.push(currentYear - i);
+    }
+  }
+
+  private populateMonths(): void {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+
+    this.months = [];
+
+    for (let i = 1; i <= 12; i++) {
+      if (currentYear === new Date(2000, i - 1, 1).getFullYear() || i <= currentMonth) {
+        this.months.push({ value: i, name: new Date(2000, i - 1, 1).toLocaleString('en-US', { month: 'long' }) });
+      } else if (currentYear !== new Date(2000, i - 1, 1).getFullYear()) {
+        this.months.push({ value: i, name: new Date(2000, i - 1, 1).toLocaleString('en-US', { month: 'long' }) });
+      }
+    }
+  }
+
   clear(table: Table) {
     this.selectedSearchValue = '';
     this.selectedType = '';
@@ -198,7 +236,7 @@ export class WellfareDetailPageComponent implements OnInit {
     let query = event.query;
     let type = this.selectedType;
     console.log(type);
-    
+
     if (type == 'name') {
       this.wellfareDetailService.getFilterName(query).subscribe(
         (res: any) => {
@@ -225,4 +263,16 @@ export class WellfareDetailPageComponent implements OnInit {
       );
     }
   }
+
+  displayModal: boolean = false;
+  showModalDialog() {
+    this.displayModal = true;
+  }
+
+  print(){
+    console.log(this.expenseForm);
+    
+  }
+
+
 }

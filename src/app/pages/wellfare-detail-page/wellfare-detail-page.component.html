@@ -19,8 +19,15 @@
           <div class="ml-2">
             <button (click)="fetchSearchData()" type="button"
               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-              <i class="pi pi-search"></i>
+              <i class="mr-2 pi pi-search"></i>
               ค้นหา
+            </button>
+          </div>
+          <div class="mr-2 ml-2">
+            <button (click)="showModalDialog()" type="button"
+              class="text-white bg-blue-700 hover:bg-blue-800 mr-2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <i class="mr-2 pi pi-print"></i>
+              พิมพ์
             </button>
           </div>
         </div>
@@ -98,3 +105,41 @@
     </div>
   </div>
 </div>
+
+<!-- dialog -->
+<p-dialog header="ฟอร์มข้อมูลรายงาน" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}"
+  [draggable]="false" [resizable]="false">
+  <div class="col-span-1 text-start">
+    <form [formGroup]="expenseForm">
+      <div
+        class="grid grid-cols-2 gap-2 justify-start text-start text-[#566a7f] rounded-md shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526] align-start">
+        <div class="flex flex-col items-start justify-start col-span-2">
+          <h3 class="mr-2">ประเภทการรักษา</h3>
+          <mat-radio-group formControlName="types">
+            <mat-radio-button [color]="'primary'" class="mr-2" id="opd" value="opd">OPD</mat-radio-button>
+            <mat-radio-button [color]="'primary'" class="mr-2" id="ipd" value="ipd">IPD</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="flex flex-col items-start justify-start col-span-2">
+          <label for="years">ปี</label>
+          <select formControlName="years" id="years"
+            class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col items-start justify-start col-span-2 mt-4">
+          <label for="months">เดือน</label>
+          <select formControlName="months" id="months"
+            class="appearance-none rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-full dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
+            <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-file-word" (click)="displayModal = false; print()" label="พิมพ์"
+      styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>

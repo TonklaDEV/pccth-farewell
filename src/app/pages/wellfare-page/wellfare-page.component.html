@@ -1,13 +1,13 @@
 <div class="bg-transparent">
     <div class="flex flex-col px-5 py-5 my-8 bg-content rounded-xl shadow-card dark:bg-content-dark dark:shadow-none">
-        <div class="inline-block min-w-full py-2 sm:px-6 ">
+        <div class="inline-block min-w-full py-2 sm:px-6">
             <div class="overflow-hidden">
                 <!-- Title of page -->
                 <p class="text-4xl font-semibold text-slate-500 dark:text-white">ค่ารักษาพยาบาล</p>
             </div>
         </div>
         <form class="grid justify-start grid-cols-2 gap-4 my-4 xl:my-7 xl:flex">
-            <div class="flex flex-col justify-between w-full col-span-1">
+            <div class="flex flex-col justify-between w-full my-4 xl:my-7 xl:flex">
                 <div
                     class="card justify-start text-start text-[#566a7f] rounded-md shadow p-6 w-full bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526] flex-grow">
                     <p class="font-semibold">ค้นหาชื่อ</p>
@@ -16,12 +16,11 @@
                         placeholder="กรอกชื่อพนักงานที่ต้องการค้นหา"
                         (completeMethod)="filterValue($event)"></p-autoComplete>
                     <button (click)="searchUsers()"
-                        class="bg-[#696cf8] text-white font-bold py-2.5 px-4 my-5 rounded cursor-pointer drop-shadow dark:bg-[#8385ff] xl:w-44 xl:ml-1 xl:mr-2">
-                        ค้นหา</button>
+                        class="bg-[#696cf8] text-white font-bold py-2.5 px-4 my-5 rounded cursor-pointer drop-shadow dark:bg-[#8385ff] xl:w-44 xl:ml-1 xl:mr-2">ค้นหา</button>
                 </div>
             </div>
             <div class="w-full h-full col-span-1">
-                <div class="flex-grow h-full" *ngIf="responseData?.length == undefined">
+                <div class="flex flex-col justify-between w-full my-4 xl:my-7 xl:flex" *ngIf="responseData?.length == undefined">
                     <div
                         class="card h-40 flex flex-grow bg-gray-100 dark:text-[#e4e6eb] dark:bg-[#242526] justify-center items-center text-[#566a7f] rounded-md shadow p-6 w-full">
                         <p class="text-xl font-semibold">กรุณาค้นหาชื่อพนักงานที่ต้องการเพื่อดำเนินการต่อ</p>
@@ -110,7 +109,8 @@
             (userIdChanged)="handleUserIdChanged($event)" (closeDialog)="closeModal()"
             (CreateExpenseForm)="getCreateForm($event)"></app-wellfare-dialog>
         <ng-template pTemplate="footer">
-            <p-button icon="pi pi-check" (onClick)="ConfirmSaveAndEdit()" label="Ok" styleClass="p-button-text"></p-button>
+            <p-button icon="pi pi-save" (onClick)="ConfirmSaveAndEdit()" label="บันทึก"
+                styleClass="p-button-text"></p-button>
         </ng-template>
     </p-dialog>
 </div>
