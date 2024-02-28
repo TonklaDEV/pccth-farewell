@@ -146,7 +146,7 @@ export class WellfareDetailPageComponent implements OnInit {
         const itemLength = res.totalElements;
         const formatted: any[] = res.content.map((item: any) => {
           return {
-            emplevel: item.employee.budget.level,
+            emplevel: (item?.employee?.budget?.level) ? item?.employee?.budget?.level : "ไม่มีข้อมูล",
             empname:
               item.employee.tprefix +
               ' ' +
@@ -197,7 +197,7 @@ export class WellfareDetailPageComponent implements OnInit {
             options
           ),
           empName: `${emp.tprefix} ${emp.tname} ${emp.tsurname}`,
-          level: emp.budget.level,
+          level: (emp?.budget?.level) ? emp.budget.level : "ไม่มีข้อมูล",
           tposition: emp.tposition,
           company: emp.dept.company,
           divisionid: emp.dept.divisionid,

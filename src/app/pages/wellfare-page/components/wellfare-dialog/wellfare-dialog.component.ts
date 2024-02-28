@@ -63,13 +63,20 @@ export class WellfareDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.toTopPage()
     if (this.editMode == false && this.expensId == 0) {
       this.getExpenseRemaining(); //get current remaining
       // console.log('userId in WellfareDialogComponent:', this.userId);
     } else if (this.editMode == true && this.expensId != 0) {
       // console.log('edit mode work');
       this.getExpenseById(this.expensId);
+    }
+  }
+
+  toTopPage() {
+    const element = document.getElementById('top-page');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
@@ -253,7 +260,7 @@ export class WellfareDialogComponent implements OnInit {
     this.rangeDates = [new Date(forms.startDate), new Date(forms.endDate)];
 
     //set ipd and opd to withdrawn
-    await this.getRemainingEditmode(type,forms.canWithdraw)
+    await this.getRemainingEditmode(type, forms.canWithdraw);
     // if (type == 'ipd') {
     //   this.ipdValue += forms.canWithdraw;
     // } else {
@@ -275,16 +282,15 @@ export class WellfareDialogComponent implements OnInit {
     this.expenseForm.get('description')?.setValue(forms.description);
     this.expenseForm.get('remark')?.setValue(forms.remark);
     this.expenseForm.get('dateRangeInput')?.setValue(dateRange);
-    
   }
 
-  async getRemainingEditmode(type : any,cost : any){
+  async getRemainingEditmode(type: any, cost: any) {
     this.userId;
     this.wellfareService.getExpenseRemaining(this.userId).subscribe((data) => {
-      const opd = data.responseData.result.opd
-      const ipd = data.responseData.result.ipd
-      this.opdValue = (type == 'opd') ? opd + cost : opd;
-      this.ipdValue = (type == 'ipd') ? ipd + cost : ipd;
+      const opd = data.responseData.result.opd;
+      const ipd = data.responseData.result.ipd;
+      this.opdValue = type == 'opd' ? opd + cost : opd;
+      this.ipdValue = type == 'ipd' ? ipd + cost : ipd;
       this.roomValue = data.responseData.result.room;
     });
   }
@@ -293,10 +299,10 @@ export class WellfareDialogComponent implements OnInit {
     this.CreateExpenseForm.emit(this.expenseForm.value);
   }
 
-   setZeroChangType(){
-    this.expenseForm.get('medicalExpensesInput')?.setValue(0)
-    this.expenseForm.get('ipd')?.setValue(0)
-    this.expenseForm.get('opd')?.setValue(0)
-    this.expenseForm.get('roomService')?.setValue(0)
+  setZeroChangType() {
+    this.expenseForm.get('medicalExpensesInput')?.setValue(0);
+    this.expenseForm.get('ipd')?.setValue(0);
+    this.expenseForm.get('opd')?.setValue(0);
+    this.expenseForm.get('roomService')?.setValue(0);
   }
 }

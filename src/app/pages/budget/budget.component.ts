@@ -32,6 +32,17 @@ export class BudgetComponent implements OnInit {
   updatedData: any;
 
   addBudget(): void {
+    // Validate ว่า room, opd, และ ipd ไม่เป็นค่าว่าง
+    if (!this.budgetData.room || !this.budgetData.opd || !this.budgetData.ipd) {
+      // ใช้ SweetAlert เพื่อแสดงข้อความแจ้งเตือน
+      Swal.fire({
+        icon: 'error',
+        title: 'กรุณากรอกข้อมูล',
+        text: 'กรุณากรอกข้อมูลให้ครบทุกช่อง',
+      });
+      return; // ออกจากฟังก์ชันหลังจากแสดง SweetAlert
+    }
+
     this.servicebudget.createBudget(this.budgetData).subscribe(
       (response) => {
         console.log('งบประมาณถูกสร้างเรียบร้อย:', response);
@@ -70,8 +81,9 @@ export class BudgetComponent implements OnInit {
     this.servicebudget.getBudgets().subscribe(
       (response: BudgetResponse) => {
         this.budgets = response.responseData.result;
-        this.budgets.sort((a, b) => Number(a.ipd) - Number(b.ipd));
-        console.log(this.budgets);
+        this.budgets.sort((a, b) => {
+          return a.level.localeCompare(b.level, 'en', { numeric: true });
+        });
       },
       (error) => {
         console.error('เกิดข้อผิดพลาดในการโหลดงบประมาณ:', error);

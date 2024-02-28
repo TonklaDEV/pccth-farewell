@@ -36,7 +36,7 @@
                             <p>Department: {{ data.dept.deptid }}</p>
                             <p>{{ data.tposition }}</p>
                             <p>Email: {{ data.email }}</p>
-                            <p>ระดับพนักงาน (LEVEL): {{ data.budget.level }}</p>
+                            <p>ระดับพนักงาน (LEVEL): {{ (data?.budget?.level) ? data.budget.level : "ไม่มีข้อมูล"}}</p>
                             <p>หมายเหตุ: {{ data.remark }}</p>
                             <button (click)="showModalDialog(data.userId,'create')"
                                 class="bg-[#696cf8] text-white font-bold py-2.5 px-4 my-5 rounded cursor-pointer drop-shadow dark:bg-[#8385ff] xl:h-1/2 xl:w-44 xl:ml-1 xl:mr-2">เบิกค่ารักษาพยาบาล</button>

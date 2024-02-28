@@ -1,0 +1,23 @@
+input:focus {
+    border-color: blue; /* เปลี่ยนเป็นสีน้ำเงินเมื่อ input ถูก focus */
+    outline: none; /* ลบ outline ที่อาจปรากฏโดย default ในบางเบราว์เซอร์ */
+    
+  }
+  
+  #ipd:focus {
+    border-color: blue; /* เปลี่ยนเป็นสีน้ำเงินเมื่อ input ที่มี id เป็น ipd ถูก focus */
+    outline: none; /* ลบ outline ที่อาจปรากฏโดย default ในบางเบราว์เซอร์ */
+  }
+  .hide-loader .ui-autocomplete-loader {
+    display: none !important;
+}
+@keyframes glowAnimation {
+    0% { box-shadow: 0 0 10px rgba(18, 8, 219, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(204, 49, 90, 0.8); }
+    100% { box-shadow: 0 0 10px rgba(191, 72, 98, 0.5); }
+  }
+  
+  .glow {
+    animation: glowAnimation 2s infinite; /* 2 วินาทีที่ทำซ้ำ */
+  }
+  
