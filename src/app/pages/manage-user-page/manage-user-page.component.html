@@ -61,7 +61,7 @@
                         <div class="flex items-center justify-center">
                             <label for="dept">ฝ่าย/แผนก</label>
                             <div class="relative inline-flex flex-col">
-                                <select (change)="setDept()" required formControlName="dept"  id="dept" 
+                                <select (change)="setDept()" required formControlName="dept" id="dept"
                                     class="appearance-none mx-3 rounded-md border outline-none py-2.5 px-2 xl:px-3 xl:mx-1 w-60 dark:border-[#3a3b3c] dark:bg-[#3a3b3c] focus:ring-1 focus:ring-[#696cff] focus:placeholder:pl-2 placeholder-200 ease-linear placeholder:text-[#b4b4b4] dark:placeholder-text-[#b4b4b4]">
                                     <option value="" disabled>เลือกแผนก</option>
                                     <option *ngFor="let dept of dept" [ngValue]="dept.name">
@@ -224,7 +224,7 @@
                                 class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
                             <div *ngIf="UserForm.get('email').hasError('pattern') && UserForm.get('email').touched"
                                 class="text-sm text-red-500">
-                                กรุณาใช้เมลตามตัวอย่าง <br>(Exp @pccth.com , Exp @wisesoft.co.th) 
+                                กรุณาใช้เมลตามตัวอย่าง <br>(Exp @pccth.com , Exp @wisesoft.co.th)
                             </div>
                         </div>
 
@@ -232,8 +232,8 @@
                             <label for="level" class="self-center flex-initial w-28">ระดับพนักงาน</label>
                         </div>
                         <div class="h-20 col-start-8 col-end-10 rounded-lg">
-                            <input type="text" formControlName="level" 
-                                [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('level').hasError('required') && UserForm.get('level').touched }" 
+                            <input type="text" formControlName="level"
+                                [ngClass]="{ 'border-red-500 dark:border-red-500': UserForm.get('level').hasError('required') && UserForm.get('level').touched }"
                                 class="appearance-none rounded-md border outline-none my-5 py-2 px-3 w-full xl:w-11/12 xl:my-0 xl:mx-1 dark:border-border-dark dark:bg-[#3a3b3c] focus:ring-1 focus:ring-font-link focus:placeholder:pl-2 placeholder:transition-all placeholder:duration-200 placeholder:ease-linear placeholder:text-[#b4b4b4] dark:placeholder:text-[#b4b4b4]">
                             <div *ngIf="(UserForm.get('level').hasError('required') && UserForm.get('level').touched)"
                                 class="text-sm text-red-500">
@@ -241,14 +241,14 @@
                             </div>
                         </div>
 
-                        
+
 
                     </div>
 
                     <div class="flex justify-center mt-4" *ngIf="!isEditing">
-                        <button type="" 
+                        <button type=""
                             class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#3f42d3]  hover:text-white border-2 border-[#696cf8]"
-                         (click)="onCreateButtonClick()">
+                            (click)="onCreateButtonClick()">
                             บันทึก
                         </button>
                     </div>
@@ -273,74 +273,78 @@
             </div> -->
 
 
-            <div class="text-[#566a7f]  rounded-md mt-5 mb-3 shadow p-6 pb-6 w-full bg-gray-50  dark:text-[#e4e6eb] dark:bg-[#242526]">
-            <div class="w-full overflow-x-auto  rounded-b-md">
-                <div class="card justify-start text-start text-[#566a7f] rounded-md  p-2 w-full dark:text-[#e4e6eb] dark:bg-[#242526] flex-grow">
-                  <div style="float: right;" class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark" >
-                    <i style="float: right;" class="bx bx-search text-gray-500 text-4xl ml-3 "></i>
-                    <input style="float: right;" class="flex-1 p-2 border border-gray-300 rounded-md   shadow dark:text-font-header-dark dark:bg-content-dark  " 
-                        placeholder="ค้นหารหัสรหัสพนักงาน.."
-                        [(ngModel)]="searchEmpId"
-                        (ngModelChange)="searchUsers(searchEmpId)"> 
-               
-                  </div>
+            <div
+                class="text-[#566a7f]  rounded-md mt-5 mb-3 shadow p-6 pb-6 w-full bg-gray-50  dark:text-[#e4e6eb] dark:bg-[#242526]">
+                <div class="w-full overflow-x-auto  rounded-b-md">
+                    <div
+                        class="card justify-start text-start text-[#566a7f] rounded-md  p-2 w-full dark:text-[#e4e6eb] dark:bg-[#242526] flex-grow">
+                        <div style="float: right;"
+                            class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark">
+                            <i style="float: right;" class="bx bx-search text-gray-500 text-4xl ml-3 "></i>
+                            <input style="float: right;"
+                                class="flex-1 p-2 border border-gray-300 rounded-md   shadow dark:text-font-header-dark dark:bg-content-dark  "
+                                placeholder="ค้นหารหัสรหัสพนักงาน.." [(ngModel)]="searchEmpId"
+                                (ngModelChange)="searchUsers(searchEmpId)">
+
+                        </div>
+                    </div>
                 </div>
-              </div>
-              
 
-            <table *ngIf="emps && emps.length > 0" class="text-sm border-b-2 dark:border-[#3a3b3c]">
-                <colgroup>
-                    <col style="width: 20%" />
-                    <col style="width: 20%" />
-                    <col style="width: 20%" />
-                    <col style="width: 20%" />
-                    <col style="width: 30%" />
-                    <col style="width: 30%" />
-                    <col style="width: 30%" />
-                </colgroup>
-                <thead class="text-sm border-b-2 dark:border-[#3a3b3c]">
-                    <tr class="h-12 text-center uppercase">
-                        <th scope="col">รหัสพนักงาน</th>
-                        <th scope="col">ชื่อ</th>
-                        <th scope="col">นามสกุล</th>
-                        <th scope="col">ตำแหน่ง</th>
-                        <th scope="col">Email</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr  *ngFor="let data of emps; "
-                        class="odd:bg-white dark:odd:bg-[#3a3b3c] dark:even:bg-black even:bg-slate-100 text-center h-20 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">
-                         <!-- ตรวจสอบว่ามีข้อมูลทุกรอบที่วนลูป -->
-                        <td>{{data.empid}}</td>
-                        <td>{{data.tname}}</td>
-                        <td>{{data.tsurname}}</td>
-                        <td>{{data.tposition}}</td>
-                        <td>{{data.email}}</td>
-                        <td></td>
-                        <td></td>
 
-                        <td>
+                <table *ngIf="emps && emps.length > 0" class="text-sm border-b-2 dark:border-[#3a3b3c]">
+                    <colgroup>
+                        <col style="width: 20%" />
+                        <col style="width: 20%" />
+                        <col style="width: 20%" />
+                        <col style="width: 20%" />
+                        <col style="width: 30%" />
+                        <col style="width: 30%" />
+                        <col style="width: 30%" />
+                    </colgroup>
+                    <thead class="text-sm border-b-2 dark:border-[#3a3b3c]">
+                        <tr class="h-12 text-center uppercase">
+                            <th scope="col">รหัสพนักงาน</th>
+                            <th scope="col">ชื่อ</th>
+                            <th scope="col">นามสกุล</th>
+                            <th scope="col">ตำแหน่ง</th>
+                            <th scope="col">Email</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of emps; "
+                            class="odd:bg-white dark:odd:bg-[#3a3b3c] dark:even:bg-black even:bg-slate-100 text-center h-20 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700">
+                            <!-- ตรวจสอบว่ามีข้อมูลทุกรอบที่วนลูป -->
+                            <td>{{data.empid}}</td>
+                            <td>{{data.tname}}</td>
+                            <td>{{data.tsurname}}</td>
+                            <td>{{data.tposition}}</td>
+                            <td>{{data.email}}</td>
+                            <td></td>
+                            <td></td>
 
-                            <button (click)="onEditButtonClick(data.userId)"
-                                class="flex items-center justify-center text-[#FFAB00] py-2 rounded w-32 border-2 border-gray-400 mr-1 hover:bg-[#FFAB00] hover:text-white hover:border-[#FFAB00]">
-                                <i class="mt-1 mb-1 mr-2 bx bx-edit"></i><span class="mr-1">ปรับปรุงข้อมูล</span>
-                            </button>
+                            <td>
 
-                        </td>
-                        <td>
-                            <button type="submit" (click)="onDeleteButtonClick(data.userId)"
-                                class="flex items-center justify-center w-24 py-2 mr-1 text-red-700 border-2 border-gray-400 rounded hover:bg-red-700 hover:text-white hover:border-red-700">
-                                <i class="mt-1 mb-1 mr-1 bx bx-trash"></i>ลบข้อมูล
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <p-paginator [rows]="tableRows" (onPageChange)="paginate($event)" [totalRecords]="120" [rowsPerPageOptions]="[5,15,30]"></p-paginator>
+                                <button (click)="onEditButtonClick(data.userId)"
+                                    class="flex items-center justify-center text-[#FFAB00] py-2 rounded w-32 border-2 border-gray-400 mr-1 hover:bg-[#FFAB00] hover:text-white hover:border-[#FFAB00]">
+                                    <i class="mt-1 mb-1 mr-2 bx bx-edit"></i><span class="mr-1">ปรับปรุงข้อมูล</span>
+                                </button>
+
+                            </td>
+                            <td>
+                                <button type="submit" (click)="onDeleteButtonClick(data.userId)"
+                                    class="flex items-center justify-center w-24 py-2 mr-1 text-red-700 border-2 border-gray-400 rounded hover:bg-red-700 hover:text-white hover:border-red-700">
+                                    <i class="mt-1 mb-1 mr-1 bx bx-trash"></i>ลบข้อมูล
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p-paginator [rows]="tableRows" (onPageChange)="paginate($event)" [totalRecords]="120"
+                    [rowsPerPageOptions]="[5,15,30]"></p-paginator>
+            </div>
         </div>
     </div>
-</div>
 </div>

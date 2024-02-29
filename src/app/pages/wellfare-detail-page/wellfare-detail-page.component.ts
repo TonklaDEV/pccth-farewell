@@ -74,7 +74,7 @@ export class WellfareDetailPageComponent implements OnInit {
   filteredExpenses!: any[];
   currentRows = 0;
   currentFirst = 0;
-  expenseForm: FormGroup = this.fb.group({
+  reportPrintForm: FormGroup = this.fb.group({
     types: [''],
     years: new FormControl(this.selectedYear),
     months: new FormControl(this.selectedMonth),
@@ -270,7 +270,7 @@ export class WellfareDetailPageComponent implements OnInit {
   }
 
   print(){
-    console.log(this.expenseForm);
+    console.log(this.reportPrintForm );
     
   }
 
