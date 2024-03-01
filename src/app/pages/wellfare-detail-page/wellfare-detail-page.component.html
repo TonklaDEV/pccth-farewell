@@ -23,7 +23,7 @@
               ค้นหา
             </button>
           </div>
-          <div class="mr-2 ml-2">
+          <div class="ml-2 mr-2">
             <button (click)="showModalDialog()" type="button"
               class="text-white bg-blue-700 hover:bg-blue-800 mr-2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               <i class="mr-2 pi pi-print"></i>
@@ -139,7 +139,11 @@
     </form>
   </div>
   <ng-template pTemplate="footer">
-    <p-button icon="pi pi-file-word" (click)="displayModal = false; print()" label="พิมพ์"
-      styleClass="p-button-text"></p-button>
+    <button (click)="displayModal = false; pdfview()"
+      class="inline-flex items-center px-4 py-2 font-bold text-gray-800 bg-gray-300 rounded hover:bg-gray-400">
+      <i class='mr-1 bx bx-file-find'></i>
+      <span class="fontfam">ดูรายงาน</span>
+    </button>
   </ng-template>
 </p-dialog>
+<app-pdf-modal [reportValue]="reportValue" [display]="displayPDFModal" *ngIf="displayPDFModal"></app-pdf-modal>

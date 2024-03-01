@@ -98,4 +98,9 @@ export class WellfareDetailsService {
   getFilerEmpid(term: string): Observable<any>{
     return this.http.get<any>(`${this.domain}/employee/seacrhUser/byEmpid?empid=${term}`)
   }
+
+  getExpenseHistoryReportBase64(month: number, year: number, type: string): Observable<any> {
+    const url = `${this.domain}/report/expenseHistoryReportBase64?month=${month}&year=${year}&type=${type}`;
+    return this.http.get<any>(url);
+  }
 }

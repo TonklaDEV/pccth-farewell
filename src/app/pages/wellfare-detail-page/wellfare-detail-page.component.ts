@@ -35,6 +35,12 @@ export interface ExpenseInfo {
   withDraw: number;
 }
 
+export interface reportPrintForm {
+  type: string;
+  month: number;
+  year: number;
+}
+
 @Component({
   selector: 'app-wellfare-detail-page',
   templateUrl: './wellfare-detail-page.component.html',
@@ -79,12 +85,19 @@ export class WellfareDetailPageComponent implements OnInit {
     years: new FormControl(this.selectedYear),
     months: new FormControl(this.selectedMonth),
   });
+  reportValue: reportPrintForm = {
+    type: '',
+    month: 0,
+    year: 0,
+  };
+  base64!: string;
+  displayPDFModal: boolean = false;
 
   constructor(
     public dialog: MatDialog,
     public wellfareDetailService: WellfareDetailsService,
     private fb: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -107,10 +120,23 @@ export class WellfareDetailPageComponent implements OnInit {
     this.months = [];
 
     for (let i = 1; i <= 12; i++) {
-      if (currentYear === new Date(2000, i - 1, 1).getFullYear() || i <= currentMonth) {
-        this.months.push({ value: i, name: new Date(2000, i - 1, 1).toLocaleString('en-US', { month: 'long' }) });
+      if (
+        currentYear === new Date(2000, i - 1, 1).getFullYear() ||
+        i <= currentMonth
+      ) {
+        this.months.push({
+          value: i,
+          name: new Date(2000, i - 1, 1).toLocaleString('th-TH', {
+            month: 'long',
+          }),
+        });
       } else if (currentYear !== new Date(2000, i - 1, 1).getFullYear()) {
-        this.months.push({ value: i, name: new Date(2000, i - 1, 1).toLocaleString('en-US', { month: 'long' }) });
+        this.months.push({
+          value: i,
+          name: new Date(2000, i - 1, 1).toLocaleString('th-TH', {
+            month: 'long',
+          }),
+        });
       }
     }
   }
@@ -146,7 +172,9 @@ export class WellfareDetailPageComponent implements OnInit {
         const itemLength = res.totalElements;
         const formatted: any[] = res.content.map((item: any) => {
           return {
-            emplevel: (item?.employee?.budget?.level) ? item?.employee?.budget?.level : "ไม่มีข้อมูล",
+            emplevel: item?.employee?.budget?.level
+              ? item?.employee?.budget?.level
+              : 'ไม่มีข้อมูล',
             empname:
               item.employee.tprefix +
               ' ' +
@@ -197,7 +225,7 @@ export class WellfareDetailPageComponent implements OnInit {
             options
           ),
           empName: `${emp.tprefix} ${emp.tname} ${emp.tsurname}`,
-          level: (emp?.budget?.level) ? emp.budget.level : "ไม่มีข้อมูล",
+          level: emp?.budget?.level ? emp.budget.level : 'ไม่มีข้อมูล',
           tposition: emp.tposition,
           company: emp.dept.company,
           divisionid: emp.dept.divisionid,
@@ -269,10 +297,16 @@ export class WellfareDetailPageComponent implements OnInit {
     this.displayModal = true;
   }
 
-  print(){
-    console.log(this.reportPrintForm );
-    
+  pdfview() {
+    // console.log(this.reportPrintForm.value);
+    this.displayPDFModal = true;
+    const type: string = this.reportPrintForm.get('types')?.value;
+    const month: number = this.reportPrintForm.get('months')?.value;
+    const year: number = this.reportPrintForm.get('years')?.value;
+    this.reportValue = {
+      month: month,
+      type: type,
+      year: year,
+    };
   }
-
-
 }
