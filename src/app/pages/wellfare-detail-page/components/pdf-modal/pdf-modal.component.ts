@@ -30,4 +30,24 @@ export class PdfModalComponent implements OnInit {
     const pdfUrl = `data:application/pdf;base64,${base64Pdf}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(pdfUrl);
   }
+
+  downloadFile() {
+    this.pdfSerive.downloadFile(this.reportValue.month,this.reportValue.year,this.reportValue.type).subscribe(
+      (data) => {
+        const blob = new Blob([data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'expense_report.pdf'; // Set the desired PDF file name
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error downloading PDF:', error);
+      }
+    );
+  }
+
 }

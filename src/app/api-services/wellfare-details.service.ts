@@ -65,6 +65,8 @@ export class WellfareDetailsService {
     this.domain = environment.domain;
   }
 
+  private baseUrl = 'http://localhost:8080/report/expenseHistoryReport';
+
   getAllExpenseInUsed(lazyEvent: LazyLoadEvent): Observable<any> {
     return this.http.get<any>(`${this.domain}/expenses/getAllExpenseInUsed`, {
       params: { lazyEvent: JSON.stringify(lazyEvent) },
@@ -103,4 +105,17 @@ export class WellfareDetailsService {
     const url = `${this.domain}/report/expenseHistoryReportBase64?month=${month}&year=${year}&type=${type}`;
     return this.http.get<any>(url);
   }
+
+  downloadFile(month: number, year: number, type: string): Observable<Blob> {
+    const url = `${this.baseUrl}?month=${month}&year=${year}&type=${type}`;
+    const headers = new HttpHeaders({
+      Accept: 'application/pdf', // Set the expected content type to PDF
+    });
+
+    return this.http.get(url, {
+      headers: headers,
+      responseType: 'blob',
+    });
+  }
+
 }

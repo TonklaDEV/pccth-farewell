@@ -97,7 +97,7 @@ export class WellfareDetailPageComponent implements OnInit {
     public dialog: MatDialog,
     public wellfareDetailService: WellfareDetailsService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -298,7 +298,7 @@ export class WellfareDetailPageComponent implements OnInit {
   }
 
   pdfview() {
-    // console.log(this.reportPrintForm.value);
+    console.log(this.reportPrintForm.value);
     this.displayPDFModal = true;
     const type: string = this.reportPrintForm.get('types')?.value;
     const month: number = this.reportPrintForm.get('months')?.value;
