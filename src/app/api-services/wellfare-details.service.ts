@@ -97,7 +97,7 @@ export class WellfareDetailsService {
     );
   }
 
-  getFilerEmpid(term: string): Observable<any>{
+  getFilerEmpid(term: string): Observable<any> {
     return this.http.get<any>(`${this.domain}/employee/seacrhUser/byEmpid?empid=${term}`)
   }
 
@@ -109,7 +109,7 @@ export class WellfareDetailsService {
   downloadFile(month: number, year: number, type: string): Observable<Blob> {
     const url = `${this.baseUrl}?month=${month}&year=${year}&type=${type}`;
     const headers = new HttpHeaders({
-      Accept: 'application/pdf', // Set the expected content type to PDF
+      Accept: 'application/pdf',
     });
 
     return this.http.get(url, {

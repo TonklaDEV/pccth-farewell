@@ -32,13 +32,22 @@ export class PdfModalComponent implements OnInit {
   }
 
   downloadFile() {
-    this.pdfSerive.downloadFile(this.reportValue.month,this.reportValue.year,this.reportValue.type).subscribe(
+    this.pdfSerive.downloadFile(this.reportValue.month, this.reportValue.year, this.reportValue.type).subscribe(
       (data) => {
         const blob = new Blob([data], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
+  
+        const monthNames = [
+          'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+          'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+        ];
+        const month = monthNames[this.reportValue.month - 1];
+        const year = this.reportValue.year;
+        const fileName = `รายงานการเบิกค่ารักษาพยาบาลประจำเดือน ${month} ${year}.pdf`;
+  
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'expense_report.pdf'; // Set the desired PDF file name
+        a.download = fileName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -49,5 +58,6 @@ export class PdfModalComponent implements OnInit {
       }
     );
   }
+  
 
 }
