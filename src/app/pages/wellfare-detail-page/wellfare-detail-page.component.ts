@@ -47,6 +47,7 @@ export interface reportPrintForm {
   styleUrls: ['./wellfare-detail-page.component.scss'],
 })
 export class WellfareDetailPageComponent implements OnInit {
+
   selectedYear: number = new Date().getFullYear();
   selectedMonth: number = new Date().getMonth() + 1;
   years: number[] = [];
@@ -81,16 +82,16 @@ export class WellfareDetailPageComponent implements OnInit {
   currentRows = 0;
   currentFirst = 0;
   reportPrintForm: FormGroup = this.fb.group({
-    types: [''],
-    years: new FormControl(this.selectedYear),
-    months: new FormControl(this.selectedMonth),
+    type: [''],
+    year: new FormControl(this.selectedYear),
+    month: new FormControl(this.selectedMonth),
   });
   reportValue: reportPrintForm = {
     type: '',
     month: 0,
     year: 0,
   };
-  base64!: string;
+  base64: string = "";
   displayPDFModal: boolean = false;
 
   constructor(
@@ -299,14 +300,14 @@ export class WellfareDetailPageComponent implements OnInit {
 
   pdfview() {
     console.log(this.reportPrintForm.value);
-    this.displayPDFModal = true;
-    const type: string = this.reportPrintForm.get('types')?.value;
-    const month: number = this.reportPrintForm.get('months')?.value;
-    const year: number = this.reportPrintForm.get('years')?.value;
-    this.reportValue = {
-      month: month,
-      type: type,
-      year: year,
-    };
+    const type: string = this.reportPrintForm.get('type')?.value;
+    const month: number = this.reportPrintForm.get('month')?.value;
+    const year: number = this.reportPrintForm.get('year')?.value;
+    this.displayPDFModal = false;
+    this.wellfareDetailService.getExpenseHistoryReportBase64(month, year, type).subscribe((res) => {
+      this.displayPDFModal = true;
+      this.reportValue = this.reportPrintForm.value
+      this.base64 = res.responseData.result
+    })
   }
 }
