@@ -27,32 +27,38 @@ export class PdfModalComponent implements OnInit {
   }
 
   downloadFile() {
-    this.pdfSerive.downloadFile(this.reportValue.month, this.reportValue.year, this.reportValue.type).subscribe(
-      (data) => {
-        const blob = new Blob([data], { type: 'application/pdf' });
-        const url = window.URL.createObjectURL(blob);
+    this.pdfSerive.downloadFile(this.reportValue.month, this.reportValue.year, this.reportValue.type, this.reportValue.reportType)
+      .subscribe(
+        (data) => {
+          const blob = new Blob([data], { type: 'application/pdf' });
+          const url = window.URL.createObjectURL(blob);
   
-        const monthNames = [
-          'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
-          'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
-        ];
-        const month = monthNames[this.reportValue.month - 1];
-        const year = this.reportValue.year;
-        const fileName = `รายงานการเบิกค่ารักษาพยาบาลประจำเดือน ${month} ${year}.pdf`;
+          const monthNames = [
+            'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+            'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+          ];
   
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      },
-      (error) => {
-        console.error('Error downloading PDF:', error);
-      }
-    );
+          let month = '';
+          if (this.reportValue.month && this.reportValue.month >= 1 && this.reportValue.month <= 12) {
+            month = monthNames[this.reportValue.month - 1];
+          }
+  
+          const year = this.reportValue.year;
+          const fileName = `รายงานการเบิกค่ารักษาพยาบาลประจำ${month ? 'เดือน' : ''} ${month} ${year ? 'ปี': ''}${year}.pdf`;
+  
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = fileName;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        },
+        (error) => {
+          console.error('Error downloading PDF:', error);
+        }
+      );
   }
   
-
+  
 }

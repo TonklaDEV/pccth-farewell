@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { WellfareService } from 'src/app/api-services/wellfare.service';
 import { ChangeDetectorRef } from '@angular/core';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-wellfare-page',
   templateUrl: './wellfare-page.component.html',
@@ -10,19 +11,33 @@ import Swal from 'sweetalert2';
 export class WellfarePageComponent implements OnInit {
   [x: string]: any;
   // expenseFrom: any;
+  userId: any;
   responseData: any = {};
   displayModal: boolean = false;
   filteredSearchValues: any[] = [];
   editMode: boolean = false;
   expenseId: number = 0;
+  selectedYear: number | null = null;
+  selectedMonth: number | null = null;
+  years: number[] = [];
+  months: { value: number; name: string }[] = [];
+  reportPrintForm: FormGroup = this.fb.group({
+    uid: [],
+    type: [''],
+    reportType: '',
+    year: new FormControl(this.selectedYear),
+    month: new FormControl(this.selectedMonth),
+  });
   constructor(
     private wellfareService: WellfareService,
-    private cdr: ChangeDetectorRef
-  ) {}
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
-    // console.log('UserId in WellfareDialogComponent ngOnInit:', this.responseData.length);
     this.cdr.detectChanges();
+    this.populateYears();
+    this.populateMonths();
   }
 
   showModalDialog(id: any, mode: string): void {
@@ -43,7 +58,7 @@ export class WellfarePageComponent implements OnInit {
 
   searchInput: any;
   searchUsers(): void {
-    console.log("responseData",this.responseData);
+    console.log("responseData", this.responseData);
     this.userId;
     const searchTerm = this.searchInput;
     this.wellfareService.searchUserByName(searchTerm).subscribe(
@@ -65,7 +80,7 @@ export class WellfarePageComponent implements OnInit {
   }
 
   isHovered: boolean = false;
-  userId: any;
+
   handleUserIdChanged(userId: any): void {
     console.log('UserId changed in WellfarePageComponent:', userId);
     this.userId = userId;
@@ -90,7 +105,7 @@ export class WellfarePageComponent implements OnInit {
     );
   }
   userData: any;
-
+  searchButtonClicked: boolean = false;
   searchExpensesByUserId(userId: number): void {
     this.userId;
     this.wellfareService.searchExpensesByUserId(userId).subscribe(
@@ -101,6 +116,7 @@ export class WellfarePageComponent implements OnInit {
         console.error('Error getting user data:', error);
       }
     );
+    this.searchButtonClicked = true;
   }
 
   deleteById(expenseId: any) {
@@ -149,12 +165,12 @@ export class WellfarePageComponent implements OnInit {
       allowEscapeKey: false,
       allowOutsideClick: false,
       confirmButtonText: 'ยืนยัน',
-      icon : 'warning',
+      icon: 'warning',
       showCancelButton: true
     }).then(result => {
-      if(result.isConfirmed){
+      if (result.isConfirmed) {
         this.saveExpense()
-      }else{
+      } else {
         this.displayModal = false;
       }
     })
@@ -200,4 +216,111 @@ export class WellfarePageComponent implements OnInit {
     }
     this.displayModal = false;
   }
+
+  onSearchInputChange(): void {
+    this['isSearchInputFilled'] = this.searchInput.trim().length > 0;
+  }
+
+  printModal: boolean = false;
+  isSearchInputFilled: boolean = false;
+
+  showModalPrintDialog(): void {
+    console.log("userIdPrint", this.userId);
+    this.reportPrintForm.get('type')!.setValue('');
+    this.reportPrintForm.get('month')!.setValue('');
+    this.reportPrintForm.get('year')!.setValue('');
+    this.reportPrintForm.get('reportType')!.setValue('');
+    if (this.searchButtonClicked) {
+      this.printModal = true;
+
+    } else {
+    }
+  }
+
+  private populateYears(): void {
+    const currentYear = new Date().getFullYear();
+    for (let i = 0; i < 10; i++) {
+      this.years.push(currentYear - i);
+    }
+  }
+
+  private populateMonths(): void {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+
+    this.months = [];
+
+    for (let i = 1; i <= 12; i++) {
+      if (
+        currentYear === new Date(2000, i - 1, 1).getFullYear() ||
+        i <= currentMonth
+      ) {
+        this.months.push({
+          value: i,
+          name: new Date(2000, i - 1, 1).toLocaleString('th-TH', {
+            month: 'long',
+          }),
+        });
+      } else if (currentYear !== new Date(2000, i - 1, 1).getFullYear()) {
+        this.months.push({
+          value: i,
+          name: new Date(2000, i - 1, 1).toLocaleString('th-TH', {
+            month: 'long',
+          }),
+        });
+      }
+    }
+
+    // Set initial values to null for the selectedYear and selectedMonth
+    this.selectedYear = null;
+    this.selectedMonth = null;
+  }
+
+  pdfview(): void {
+    this.reportPrintForm.get('uid')!.setValue(this.userId);
+
+    this.wellfareService.getExpenseHistoryReportByEmployeeBase64(
+      this.reportPrintForm.get('month')!.value,
+      this.reportPrintForm.get('year')!.value,
+      this.reportPrintForm.get('type')!.value,
+      this.reportPrintForm.get('reportType')!.value,
+      this.reportPrintForm.get('uid')!.value
+    ).subscribe(
+      (response) => {
+        if (response && response.responseData && response.responseData.result) {
+          this.openPdfPreview(response.responseData.result);
+          
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  openPdfPreview(base64Data: string): void {
+    const blob = this.base64toBlob(base64Data, 'application/pdf');
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }
+
+  base64toBlob(base64Data: string, contentType: string): Blob {
+    const byteCharacters = atob(base64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+      const slice = byteCharacters.slice(offset, offset + 512);
+      const byteNumbers = new Array(slice.length);
+
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    return new Blob(byteArrays, { type: contentType });
+  }
+
 }

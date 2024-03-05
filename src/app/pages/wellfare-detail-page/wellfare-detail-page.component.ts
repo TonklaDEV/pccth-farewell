@@ -39,6 +39,7 @@ export interface reportPrintForm {
   type: string;
   month: number;
   year: number;
+  reportType: string;
 }
 
 @Component({
@@ -47,9 +48,8 @@ export interface reportPrintForm {
   styleUrls: ['./wellfare-detail-page.component.scss'],
 })
 export class WellfareDetailPageComponent implements OnInit {
-
-  selectedYear: number = new Date().getFullYear();
-  selectedMonth: number = new Date().getMonth() + 1;
+  selectedYear: number | null = null;
+  selectedMonth: number | null = null;
   years: number[] = [];
   months: { value: number; name: string }[] = [];
   dataSource: Expenses[] = [];
@@ -83,6 +83,7 @@ export class WellfareDetailPageComponent implements OnInit {
   currentFirst = 0;
   reportPrintForm: FormGroup = this.fb.group({
     type: [''],
+    reportType: '',
     year: new FormControl(this.selectedYear),
     month: new FormControl(this.selectedMonth),
   });
@@ -90,6 +91,7 @@ export class WellfareDetailPageComponent implements OnInit {
     type: '',
     month: 0,
     year: 0,
+    reportType: '',
   };
   base64: string = "";
   displayPDFModal: boolean = false;
@@ -140,6 +142,10 @@ export class WellfareDetailPageComponent implements OnInit {
         });
       }
     }
+
+    // Set initial values to null for the selectedYear and selectedMonth
+    this.selectedYear = null;
+    this.selectedMonth = null;
   }
 
   clear(table: Table) {
@@ -296,6 +302,10 @@ export class WellfareDetailPageComponent implements OnInit {
   displayModal: boolean = false;
   showModalDialog() {
     this.displayModal = true;
+    this.reportPrintForm.get('type')!.setValue('');
+    this.reportPrintForm.get('month')!.setValue('');
+    this.reportPrintForm.get('year')!.setValue('');
+    this.reportPrintForm.get('reportType')!.setValue('');
   }
 
   pdfview() {
@@ -303,8 +313,9 @@ export class WellfareDetailPageComponent implements OnInit {
     const type: string = this.reportPrintForm.get('type')?.value;
     const month: number = this.reportPrintForm.get('month')?.value;
     const year: number = this.reportPrintForm.get('year')?.value;
+    const reportType: string = this.reportPrintForm.get('reportType')?.value;
     this.displayPDFModal = false;
-    this.wellfareDetailService.getExpenseHistoryReportBase64(month, year, type).subscribe((res) => {
+    this.wellfareDetailService.getExpenseHistoryReportBase64(month, year, type, reportType).subscribe((res) => {
       this.displayPDFModal = true;
       this.reportValue = this.reportPrintForm.value
       this.base64 = res.responseData.result

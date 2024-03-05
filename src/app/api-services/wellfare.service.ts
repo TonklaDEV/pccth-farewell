@@ -75,4 +75,10 @@ export class WellfareService {
     const url = `${this.domain}/expenses/getExpense/${expenseId}`
     return this.http.get<any>(url, { headers: this.headers })
   }
+
+  getExpenseHistoryReportByEmployeeBase64(month: number, year: number, type: string, reportType: string, uid: number): Observable<any> {
+    const url = `http://localhost:8080/report/expenseHistoryReportByEmployeeBase64?month=${month}&year=${year}&type=${type}&reportType=${reportType}&uid=${uid}`;
+    return this.http.get<any>(url);
+  }
+
 }

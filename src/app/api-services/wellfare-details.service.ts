@@ -101,13 +101,13 @@ export class WellfareDetailsService {
     return this.http.get<any>(`${this.domain}/employee/seacrhUser/byEmpid?empid=${term}`)
   }
 
-  getExpenseHistoryReportBase64(month: number, year: number, type: string): Observable<any> {
-    const url = `${this.domain}/report/expenseHistoryReportBase64?month=${month}&year=${year}&type=${type}`;
+  getExpenseHistoryReportBase64(month: number, year: number, type: string, reportType: string): Observable<any> {
+    const url = `${this.domain}/report/expenseHistoryReportBase64?month=${month}&year=${year}&type=${type}&reportType=${reportType}`;
     return this.http.get<any>(url);
   }
 
-  downloadFile(month: number, year: number, type: string): Observable<Blob> {
-    const url = `${this.baseUrl}?month=${month}&year=${year}&type=${type}`;
+  downloadFile(month: number, year: number, type: string, reportType: string): Observable<Blob> {
+    const url = `${this.baseUrl}?month=${month}&year=${year}&type=${type}&reportType=${reportType}`;
     const headers = new HttpHeaders({
       Accept: 'application/pdf',
     });
