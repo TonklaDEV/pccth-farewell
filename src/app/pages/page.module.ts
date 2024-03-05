@@ -53,6 +53,7 @@ import { ManageUserPageComponent } from './manage-user-page/manage-user-page.com
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
+import { PdfModalComponent } from './wellfare-detail-page/components/pdf-modal/pdf-modal.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { PaginatorModule } from 'primeng/paginator';
     WellfareDetailPageComponent,
     BudgetComponent,
     WellfareDialogComponent,
+    PdfModalComponent,
   ],
   imports: [
     PaginatorModule,

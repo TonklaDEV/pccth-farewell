@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { WellfareDetailsService } from 'src/app/api-services/wellfare-details.service';
 import { Table } from 'primeng/table';
 import { LazyLoadEvent } from 'primeng/api';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+
 export interface Expenses {
   empid: number;
   empname: string;
@@ -32,12 +34,24 @@ export interface ExpenseInfo {
   roomSerive: number;
   withDraw: number;
 }
+
+export interface reportPrintForm {
+  type: string;
+  month: number;
+  year: number;
+  reportType: string;
+}
+
 @Component({
   selector: 'app-wellfare-detail-page',
   templateUrl: './wellfare-detail-page.component.html',
   styleUrls: ['./wellfare-detail-page.component.scss'],
 })
 export class WellfareDetailPageComponent implements OnInit {
+  selectedYear: number | null = null;
+  selectedMonth: number | null = null;
+  years: number[] = [];
+  months: { value: number; name: string }[] = [];
   dataSource: Expenses[] = [];
   opdAllBudget: number = 0;
   loading!: boolean;
@@ -67,16 +81,73 @@ export class WellfareDetailPageComponent implements OnInit {
   filteredExpenses!: any[];
   currentRows = 0;
   currentFirst = 0;
+  reportPrintForm: FormGroup = this.fb.group({
+    type: [''],
+    reportType: '',
+    year: new FormControl(this.selectedYear),
+    month: new FormControl(this.selectedMonth),
+  });
+  reportValue: reportPrintForm = {
+    type: '',
+    month: 0,
+    year: 0,
+    reportType: '',
+  };
+  base64: string = "";
+  displayPDFModal: boolean = false;
+
   constructor(
     public dialog: MatDialog,
-    public wellfareDetailService: WellfareDetailsService
-  ) {}
+    public wellfareDetailService: WellfareDetailsService,
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
     this.expenseSelect = true;
-    // this.loadExpenseData();
+    this.populateYears();
+    this.populateMonths();
   }
+
+  private populateYears(): void {
+    const currentYear = new Date().getFullYear();
+    for (let i = 0; i < 10; i++) {
+      this.years.push(currentYear - i);
+    }
+  }
+
+  private populateMonths(): void {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+
+    this.months = [];
+
+    for (let i = 1; i <= 12; i++) {
+      if (
+        currentYear === new Date(2000, i - 1, 1).getFullYear() ||
+        i <= currentMonth
+      ) {
+        this.months.push({
+          value: i,
+          name: new Date(2000, i - 1, 1).toLocaleString('th-TH', {
+            month: 'long',
+          }),
+        });
+      } else if (currentYear !== new Date(2000, i - 1, 1).getFullYear()) {
+        this.months.push({
+          value: i,
+          name: new Date(2000, i - 1, 1).toLocaleString('th-TH', {
+            month: 'long',
+          }),
+        });
+      }
+    }
+
+    // Set initial values to null for the selectedYear and selectedMonth
+    this.selectedYear = null;
+    this.selectedMonth = null;
+  }
+
   clear(table: Table) {
     this.selectedSearchValue = '';
     this.selectedType = '';
@@ -108,7 +179,9 @@ export class WellfareDetailPageComponent implements OnInit {
         const itemLength = res.totalElements;
         const formatted: any[] = res.content.map((item: any) => {
           return {
-            emplevel: item.employee.budget.level,
+            emplevel: item?.employee?.budget?.level
+              ? item?.employee?.budget?.level
+              : 'ไม่มีข้อมูล',
             empname:
               item.employee.tprefix +
               ' ' +
@@ -159,7 +232,7 @@ export class WellfareDetailPageComponent implements OnInit {
             options
           ),
           empName: `${emp.tprefix} ${emp.tname} ${emp.tsurname}`,
-          level: emp.budget.level,
+          level: emp?.budget?.level ? emp.budget.level : 'ไม่มีข้อมูล',
           tposition: emp.tposition,
           company: emp.dept.company,
           divisionid: emp.dept.divisionid,
@@ -198,7 +271,7 @@ export class WellfareDetailPageComponent implements OnInit {
     let query = event.query;
     let type = this.selectedType;
     console.log(type);
-    
+
     if (type == 'name') {
       this.wellfareDetailService.getFilterName(query).subscribe(
         (res: any) => {
@@ -224,5 +297,28 @@ export class WellfareDetailPageComponent implements OnInit {
         }
       );
     }
+  }
+
+  displayModal: boolean = false;
+  showModalDialog() {
+    this.displayModal = true;
+    this.reportPrintForm.get('type')!.setValue('');
+    this.reportPrintForm.get('month')!.setValue('');
+    this.reportPrintForm.get('year')!.setValue('');
+    this.reportPrintForm.get('reportType')!.setValue('');
+  }
+
+  pdfview() {
+    console.log(this.reportPrintForm.value);
+    const type: string = this.reportPrintForm.get('type')?.value;
+    const month: number = this.reportPrintForm.get('month')?.value;
+    const year: number = this.reportPrintForm.get('year')?.value;
+    const reportType: string = this.reportPrintForm.get('reportType')?.value;
+    this.displayPDFModal = false;
+    this.wellfareDetailService.getExpenseHistoryReportBase64(month, year, type, reportType).subscribe((res) => {
+      this.displayPDFModal = true;
+      this.reportValue = this.reportPrintForm.value
+      this.base64 = res.responseData.result
+    })
   }
 }

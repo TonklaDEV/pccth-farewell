@@ -40,9 +40,9 @@ export class BudgetComponent implements OnInit {
         title: 'กรุณากรอกข้อมูล',
         text: 'กรุณากรอกข้อมูลให้ครบทุกช่อง',
       });
-      return;  // ออกจากฟังก์ชันหลังจากแสดง SweetAlert
+      return; // ออกจากฟังก์ชันหลังจากแสดง SweetAlert
     }
-  
+
     this.servicebudget.createBudget(this.budgetData).subscribe(
       (response) => {
         console.log('งบประมาณถูกสร้างเรียบร้อย:', response);
@@ -53,7 +53,6 @@ export class BudgetComponent implements OnInit {
     );
     window.location.reload();
   }
-  
 
   showAddModal = false;
   showEditModal = false;
@@ -82,8 +81,9 @@ export class BudgetComponent implements OnInit {
     this.servicebudget.getBudgets().subscribe(
       (response: BudgetResponse) => {
         this.budgets = response.responseData.result;
-        this.budgets.sort((a, b) => Number(a.ipd) - Number(b.ipd));
-        console.log(this.budgets);
+        this.budgets.sort((a, b) => {
+          return a.level.localeCompare(b.level, 'en', { numeric: true });
+        });
       },
       (error) => {
         console.error('เกิดข้อผิดพลาดในการโหลดงบประมาณ:', error);
