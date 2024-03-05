@@ -247,7 +247,7 @@
 
                     <div class="flex justify-center mt-4" *ngIf="!isEditing">
                         <button type="" 
-                            class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#3f42d3]  hover:text-white border-2 border-[#696cf8]"
+                            class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]"
                          (click)="onCreateButtonClick()">
                             บันทึก
                         </button>
@@ -255,7 +255,7 @@
 
                     <div class="flex justify-center mt-4" *ngIf="isEditing">
                         <button type="button"
-                            class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#3f42d3] hover:text-white border-2 border-[#696cf8]"
+                            class="text-white p-2 w-24 rounded shadow-md bg-[#696cf8] hover:bg-[#696cf8] hover:text-white border-2 border-[#696cf8]"
                             (click)="onUpdateButtonClick()">
                             อัพเดท
                         </button>
@@ -278,7 +278,7 @@
                 <div class="card justify-start text-start text-[#566a7f] rounded-md  p-2 w-full dark:text-[#e4e6eb] dark:bg-[#242526] flex-grow">
                   <div style="float: right;" class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark" >
                     <i style="float: right;" class="bx bx-search text-gray-500 text-4xl ml-3 "></i>
-                    <input style="float: right;" class="flex-1 p-2 border border-gray-300 rounded-md   shadow dark:text-font-header-dark dark:bg-content-dark  " 
+                    <input style="float: right;" class="flex-1 p-2 border border-gray-300 rounded-md shadow dark:text-font-header-dark dark:bg-content-dark " 
                         placeholder="ค้นหารหัสรหัสพนักงาน.."
                         [(ngModel)]="searchEmpId"
                         (ngModelChange)="searchUsers(searchEmpId)"> 
