@@ -43,6 +43,11 @@ export class WellfareService {
     return this.http.get<any>(url, { headers: this.headers });
   }
 
+  getExpenseRemainingByYear(uid : string , year: Number) : Observable<any> {
+    const url = `${this.domain}/expenses/getExpenseRemaining/${uid}/${year}`
+    return this.http.get<any>(url, { headers: this.headers });
+  }
+
   getFilterName(term: string): Observable<any> {
     return this.http.get<any>(
       `${this.domain}/employee/seacrhUser/byNames?searchTerm=${term}`

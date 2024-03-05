@@ -258,9 +258,9 @@ export class WellfareDialogComponent implements OnInit {
     };
     //set date to calendar
     this.rangeDates = [new Date(forms.startDate), new Date(forms.endDate)];
-
+    const year : String = forms.dateOfAdmission.split("-")[0];
     //set ipd and opd to withdrawn
-    await this.getRemainingEditmode(type, forms.canWithdraw);
+    await this.getRemainingEditmode(type, forms.canWithdraw,Number(year));
     // if (type == 'ipd') {
     //   this.ipdValue += forms.canWithdraw;
     // } else {
@@ -282,11 +282,12 @@ export class WellfareDialogComponent implements OnInit {
     this.expenseForm.get('description')?.setValue(forms.description);
     this.expenseForm.get('remark')?.setValue(forms.remark);
     this.expenseForm.get('dateRangeInput')?.setValue(dateRange);
+    this.expenseForm.get('adMission')?.setValue(forms.dateOfAdmission)
   }
 
-  async getRemainingEditmode(type: any, cost: any) {
+  async getRemainingEditmode(type: any, cost: any, year : number) {
     this.userId;
-    this.wellfareService.getExpenseRemaining(this.userId).subscribe((data) => {
+    this.wellfareService.getExpenseRemainingByYear(this.userId,year).subscribe((data) => {
       const opd = data.responseData.result.opd;
       const ipd = data.responseData.result.ipd;
       this.opdValue = type == 'opd' ? opd + cost : opd;
