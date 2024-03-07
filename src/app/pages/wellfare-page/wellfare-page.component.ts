@@ -69,7 +69,7 @@ export class WellfarePageComponent implements OnInit {
   
         if (userId) {
           console.log('User ID from response:', userId);
-  
+          this.userId = userId
           // Assuming you have a specific year to search for expenses
           
           this.searchExpensesByUserId(userId, this.yearSearch);
@@ -312,7 +312,7 @@ export class WellfarePageComponent implements OnInit {
       this.reportPrintForm.get('year')!.value,
       this.reportPrintForm.get('type')!.value,
       this.reportPrintForm.get('reportType')!.value,
-      this.reportPrintForm.get('uid')!.value
+      this.userId
     ).subscribe(
       (response) => {
         if (response && response.responseData && response.responseData.result) {
