@@ -59,16 +59,19 @@ export class WellfarePageComponent implements OnInit {
   searchInput: any;
   searchUsers(): void {
     console.log("responseData", this.responseData);
-    this.userId;
-    const searchTerm = this.searchInput;
+    const searchTerm: string = this.searchInput;
+    
     this.wellfareService.searchUserByName(searchTerm).subscribe(
       (response) => {
         this.responseData = response.responseData.result;
         const userId = this.responseData[0]?.userId;
-        this.userId = userId;
+  
         if (userId) {
           console.log('User ID from response:', userId);
-          this.searchExpensesByUserId(userId);
+  
+          // Assuming you have a specific year to search for expenses
+          const specificYear: number = 2024; // Replace with your logic
+          this.searchExpensesByUserId(userId, specificYear);
         } else {
           console.error('User ID is undefined.');
         }
@@ -106,17 +109,17 @@ export class WellfarePageComponent implements OnInit {
   }
   userData: any;
   searchButtonClicked: boolean = false;
-  searchExpensesByUserId(userId: number): void {
-    this.userId;
-    this.wellfareService.searchExpensesByUserId(userId).subscribe(
+  
+  searchExpensesByUserId(userId: number, year: number): void {
+    this.wellfareService.searchExpensesByUserId(userId, year).subscribe(
       (response) => {
         this.userData = response.expenses;
+        this.searchButtonClicked = true;
       },
       (error) => {
         console.error('Error getting user data:', error);
       }
     );
-    this.searchButtonClicked = true;
   }
 
   deleteById(expenseId: any) {

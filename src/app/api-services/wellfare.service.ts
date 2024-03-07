@@ -53,11 +53,11 @@ export class WellfareService {
       `${this.domain}/employee/seacrhUser/byNames?searchTerm=${term}`
     );
   }
-  searchExpensesByUserId(userId: number): Observable<any> {
-    const url = `http://localhost:8080/expenses/searchExpenses/${userId}`;
+  searchExpensesByUserId(userId: number, year: number): Observable<any> {
+    const url = `http://localhost:8080/expenses/searchExpenses/${userId}?year=${year}`;
     return this.http.get<any>(url, { headers: this.headers }).pipe(
       tap((response) => {
-        console.log('API Response searchExpensesByUserId:', response); // Log the entire response
+        console.log('API Response searchExpensesByUserId:', response);
       })
     );
   }

@@ -56,6 +56,17 @@
         </form>
         <div *ngIf="responseData?.length > 0">
             <div class="mx-2 my-4">
+                <div class="mx-2 my-4">
+                    <label for="searchInput" class="mr-2 font-semibold" style="font-size: 16px;">ค้นหาปี</label>
+                    <p-autoComplete id="searchInput" class="dark:text-white dark:bg-[#3a3b3c]" [(ngModel)]="searchInput"
+                        [showEmptyMessage]="true" [suggestions]="filteredSearchValues"
+                        placeholder="ค้นหาปี"
+                        (completeMethod)="filterValue($event)"></p-autoComplete>
+                    <button (click)="searchUsers()"
+                        class="bg-[#696cf8] text-white font-bold py-2.5 px-4 my-3 md:my-5 rounded cursor-pointer drop-shadow dark:bg-[#8385ff] xl:w-44 xl:ml-1 xl:mr-2">
+                        ค้นหา
+                    </button>
+                </div>
                 <p-table #dt1 [value]="userData" dataKey="id" [paginator]="true" [rows]="5"
                     [showCurrentPageReport]="true"
                     currentPageReportTemplate="แสดง {first} ถึง {last} ของ {totalRecords} ข้อมูล"
