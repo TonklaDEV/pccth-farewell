@@ -54,6 +54,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { PdfModalComponent } from './wellfare-detail-page/components/pdf-modal/pdf-modal.component';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { PdfModalComponent } from './wellfare-detail-page/components/pdf-modal/p
     PdfModalComponent,
   ],
   imports: [
+    InputNumberModule,
     PaginatorModule,
     AutoCompleteModule,
     ButtonModule,
@@ -115,4 +117,4 @@ import { PdfModalComponent } from './wellfare-detail-page/components/pdf-modal/p
   ],
   providers: [FtrOf1Service],
 })
-export class PageModule {}
+export class PageModule { }

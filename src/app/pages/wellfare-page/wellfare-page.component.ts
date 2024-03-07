@@ -21,6 +21,7 @@ export class WellfarePageComponent implements OnInit {
   selectedMonth: number | null = null;
   years: number[] = [];
   months: { value: number; name: string }[] = [];
+  yearSearch : Number = new Date().getFullYear()
   reportPrintForm: FormGroup = this.fb.group({
     uid: [],
     type: [''],
@@ -70,8 +71,32 @@ export class WellfarePageComponent implements OnInit {
           console.log('User ID from response:', userId);
   
           // Assuming you have a specific year to search for expenses
-          const specificYear: number = 2024; // Replace with your logic
-          this.searchExpensesByUserId(userId, specificYear);
+          
+          this.searchExpensesByUserId(userId, this.yearSearch);
+        } else {
+          console.error('User ID is undefined.');
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  showAll() {
+    const searchTerm: string = this.searchInput;
+    
+    this.wellfareService.searchUserByName(searchTerm).subscribe(
+      (response) => {
+        this.responseData = response.responseData.result;
+        const userId = this.responseData[0]?.userId;
+  
+        if (userId) {
+          console.log('User ID from response:', userId);
+  
+          // Assuming you have a specific year to search for expenses
+          
+          this.searchExpensesByUserId(userId, 0);
         } else {
           console.error('User ID is undefined.');
         }
@@ -110,7 +135,7 @@ export class WellfarePageComponent implements OnInit {
   userData: any;
   searchButtonClicked: boolean = false;
   
-  searchExpensesByUserId(userId: number, year: number): void {
+  searchExpensesByUserId(userId: number, year: Number): void {
     this.wellfareService.searchExpensesByUserId(userId, year).subscribe(
       (response) => {
         this.userData = response.expenses;

@@ -53,7 +53,7 @@ export class WellfareService {
       `${this.domain}/employee/seacrhUser/byNames?searchTerm=${term}`
     );
   }
-  searchExpensesByUserId(userId: number, year: number): Observable<any> {
+  searchExpensesByUserId(userId: number, year: Number): Observable<any> {
     const url = `http://localhost:8080/expenses/searchExpenses/${userId}?year=${year}`;
     return this.http.get<any>(url, { headers: this.headers }).pipe(
       tap((response) => {
