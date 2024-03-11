@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from 'src/app/api-services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sign-in-page',
@@ -28,8 +29,8 @@ export class SignInPageComponent implements OnInit {
       password: ['', Validators.required],
     });
     this.signupForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
@@ -40,8 +41,35 @@ export class SignInPageComponent implements OnInit {
     return this.signinForm.valid;
   }
 
-  signupBtn(){
-    
+  signupBtn() {
+    this.authService.registerUser(this.signupForm.value).subscribe(
+      (res) => {
+        Swal.fire({
+          title: "สำเร็จ",
+          text: "ลงทะเบียนสำเร็จ",
+          icon: "success",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          confirmButtonText: "ยืนยัน",
+          showCancelButton: false
+        }).then(result => {
+          if (result.isConfirmed) {
+            this.showLogin = true
+          }
+        })
+      },
+      (err) => {
+        Swal.fire({
+          title: "ล้มเหลว",
+          text: "ลงทะเบียนไม่สำเร็จ",
+          icon: "error",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          confirmButtonText: "ยืนยัน",
+          showCancelButton: false
+        })
+      }
+    )
   }
 
   loginBtn(): void {
@@ -67,8 +95,15 @@ export class SignInPageComponent implements OnInit {
       (error) => {
         // ดำเนินการเมื่อการเข้าสู่ระบบไม่สำเร็จ
         // เช่น แสดงข้อความข้อผิดพลาด
-        console.error(error); // รายละเอียดข้อผิดพลาด
-        this.errorMessage = 'เข้าสู่ระบบไม่สำเร็จ'; // กำหนดข้อความข้อผิดพลาด
+        Swal.fire({
+          title: "ล้มเหลว",
+          text: "โปรดตรวจสอบ email และ password อีกครั้ง",
+          icon: "error",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          confirmButtonText: "ยืนยัน",
+          showCancelButton: false
+        })
       }
     );
   }

@@ -2,13 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient, private jwtService: JwtHelperService) {}
+  domain : String = ''
+  constructor(private http: HttpClient, private jwtService: JwtHelperService) {
+    this.domain = environment.domain
+  }
 
   baseUrl = 'http://localhost:8080'; // URL ของ API Service
 
@@ -35,9 +39,16 @@ export class AuthService {
     );
   }
   
-  private apiUrl = 'http://localhost:8080/api/v1/auth/register';
   registerUser(userData: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, userData);
+    const url = `${this.domain}/api/v1/auth/register`
+    const body = {
+      email: userData.email,
+      password: userData.password,
+      firstname: userData.firstname,
+      lastname: userData.lastname,
+      role: "ADMIN"
+    };
+    return this.http.post<any>(url, body);
   }
 
   logout(): Observable<any> {
