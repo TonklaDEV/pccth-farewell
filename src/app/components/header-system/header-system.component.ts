@@ -15,9 +15,8 @@ export class HeaderSystemComponent {
   user: any = {
     firstname: '',
     lastname: '',
-    role: [{ authority: '' }],
-    email : '',
-    telephone : ''
+    role: '',
+    sub : ''
   };
   protected themeMode: boolean = false;
   protected showProfile: boolean = false;
@@ -58,8 +57,8 @@ export class HeaderSystemComponent {
     const accessToken = localStorage.getItem('access_token');
     if (accessToken !== null) {
       const decodedToken = this.jwtService.decodeToken(accessToken);
-      // this.user = JSON.stringify(decodedToken);
-      // this.user = decodedToken;
+      this.user = JSON.stringify(decodedToken);
+      this.user = decodedToken;
       // console.log(this.user);
     }
   }

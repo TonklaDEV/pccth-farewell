@@ -32,16 +32,16 @@ export class NavigationAsideComponent implements OnInit {
     if (accessToken) {
       // Decode the JWT token
       const decodedToken = this.jwtService.decodeToken(accessToken);
-      const userRoles = decodedToken.role.map(
-        (role: { authority: any }) => role.authority
-      );
+      // const userRoles = decodedToken.role.map(
+      //   (role: { authority: any }) => role.authority
+      // );
 
-      // Check user roles
-      this.isAdmin = userRoles.includes('ROLE_Admin');
-      this.isApprover = userRoles.includes('ROLE_Approver');
-      this.isVicePresident = userRoles.includes('ROLE_VicePresident');
-      this.isPersonnel = userRoles.includes('ROLE_Personnel');
-      this.isUser = userRoles.includes('ROLE_User');
+      // // Check user roles
+      // this.isAdmin = userRoles.includes('ROLE_Admin');
+      // this.isApprover = userRoles.includes('ROLE_Approver');
+      // this.isVicePresident = userRoles.includes('ROLE_VicePresident');
+      // this.isPersonnel = userRoles.includes('ROLE_Personnel');
+      // this.isUser = userRoles.includes('ROLE_User');
     }
   }
 

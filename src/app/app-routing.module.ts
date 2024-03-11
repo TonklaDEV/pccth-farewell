@@ -24,13 +24,13 @@ import { WellfarePageComponent } from './pages/wellfare-page/wellfare-page.compo
 import { BudgetComponent } from './pages/budget/budget.component';
 import { WellfareDetailPageComponent } from './pages/wellfare-detail-page/wellfare-detail-page.component';
 const routes: Routes = new Array<Route>(
-  // {
-  //   path: 'sign-in',
-  //   component: SignInPageComponent,
-  // },
+  {
+    path: 'sign-in',
+    component: SignInPageComponent,
+  },
   {
     path: 'pccth',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     component: SystemLayoutComponent,
     children: new Array<Route>(
       {
@@ -54,10 +54,6 @@ const routes: Routes = new Array<Route>(
         component: WellfareDetailPageComponent,
       },
       {
-        path: 'sign-in-page',
-        component: SignInPageComponent,
-      },
-      {
         // Redirects all paths that are not matching to the 'sign-in' route/path
         path: '**',
         redirectTo: '',
@@ -68,7 +64,7 @@ const routes: Routes = new Array<Route>(
   {
     // Redirects all paths that are not matching to the 'sign-in' route/path
     path: '**',
-    redirectTo: 'pccth',
+    redirectTo: 'sign-in',
     pathMatch: 'full',
   }
   // {

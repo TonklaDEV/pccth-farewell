@@ -16,7 +16,6 @@ export class SignInPageComponent implements OnInit {
   signinForm: any;
   errorMessage: string = ''; // ใช้เพื่อแสดงข้อความข้อผิดพลาด
   showLogin = true; // Initial state
-
   toggleForm() {
     this.showLogin = !this.showLogin;
   }
@@ -50,16 +49,17 @@ export class SignInPageComponent implements OnInit {
       (response) => {
         // ดำเนินการตามความต้องการเมื่อการเข้าสู่ระบบสำเร็จ
         // เช่น บันทึก token หรือไปยังหน้าหลัก
-        console.log(response); // รายละเอียดการตอบสนองจาก API
+        // console.log(response); // รายละเอียดการตอบสนองจาก API
 
         // สามารถบันทึก token ไว้ใน localStorage หรือ sessionStorage ได้
-        localStorage.setItem('access_token', response.accessToken);
+        localStorage.setItem('access_token', response.access_token);
+        localStorage.setItem('refesh_token', response.refesh_token);
 
         // ดึงข้อมูล role จาก JWT
-        const decodedToken = this.jwtService.decodeToken(response.accessToken);
-        const userRoles = decodedToken.role.map((role: { authority: any; }) => role.authority) || [];
+        const decodedToken = this.jwtService.decodeToken(response.access_token);
+        const userRoles = decodedToken.role;
 
-        console.log('User Roles: ', userRoles);
+        // console.log('User Roles: ', userRoles);
 
         // นำผู้ใช้ไปยังหน้า '/pccth'
         this.router.navigate(['/pccth']);

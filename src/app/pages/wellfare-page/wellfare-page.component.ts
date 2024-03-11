@@ -35,7 +35,7 @@ export class WellfarePageComponent implements OnInit {
     private fb: FormBuilder
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.cdr.detectChanges();
     this.populateYears();
     this.populateMonths();

@@ -30,7 +30,7 @@ export class AuthService {
       'password': password
     }
   
-    return this.http.post(`${this.baseUrl}/auth/login`, body 
+    return this.http.post(`${this.baseUrl}/api/v1/auth/authenticate`, body 
     //{ headers }
     );
   }
@@ -40,5 +40,8 @@ export class AuthService {
     return this.http.post<any>(this.apiUrl, userData);
   }
 
+  logout(): Observable<any> {
+    return this.http.post<any>('http://localhost:8080/api/v1/auth/logout', {});
+  }
 
 }

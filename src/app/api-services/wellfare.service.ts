@@ -16,6 +16,7 @@ export class WellfareService {
 
   constructor(private http: HttpClient) {
     this.domain = environment.domain;
+ 
   }
 
   // searchUserByName(searchTerm: string): Observable<any> {
@@ -23,11 +24,10 @@ export class WellfareService {
   //   return this.http.get<any>(url, { headers: this.headers });
   // }
 
-  searchUserByName(searchTerm: string): Observable<any> {
-    const url = `http://localhost:8080/employee/seacrhUser/byNames?searchTerm=${encodeURIComponent(searchTerm)}`;
-    return this.http.get<any>(url, { headers: this.headers }).pipe(
+  searchUserByName(searchTerm: string): Observable<any> {  
+    const url = `${this.domain}/employee/seacrhUser/byNames?searchTerm=${encodeURIComponent(searchTerm)}`;
+    return this.http.get(url, { headers : this.headers }).pipe(
       tap((response) => {
-        console.log('API Response:', response);
       })
     );
   }
@@ -59,7 +59,6 @@ export class WellfareService {
     const url = `http://localhost:8080/expenses/searchExpenses/${userId}?year=${year}`;
     return this.http.get<any>(url, { headers: this.headers }).pipe(
       tap((response) => {
-        console.log('API Response searchExpensesByUserId:', response);
       })
     );
   }

@@ -55,6 +55,8 @@ import { ButtonModule } from 'primeng/button';
 import { PaginatorModule } from 'primeng/paginator';
 import { PdfModalComponent } from './wellfare-detail-page/components/pdf-modal/pdf-modal.component';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptorService } from '../api-services/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -115,6 +117,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
       useFactory: adapterFactory,
     }),
   ],
-  providers: [FtrOf1Service],
+  providers: [{provide : HTTP_INTERCEPTORS,useClass:TokenInterceptorService,multi:true},FtrOf1Service],
 })
 export class PageModule { }
