@@ -67,7 +67,7 @@ export class WellfareDetailsService {
     this.domain = environment.domain;
   }
 
-  private baseUrl = 'http://localhost:8080/report/expenseHistoryReport';
+  // private baseUrl = 'http://localhost:8080/report/expenseHistoryReport';
 
   getAllExpenseInUsed(lazyEvent: LazyLoadEvent): Observable<any> {
     return this.http.get<any>(`${this.domain}/expenses/getAllExpenseInUsed`, {
@@ -112,7 +112,7 @@ export class WellfareDetailsService {
   }
 
   downloadFile(month: number, year: number, type: string, reportType: string): Observable<Blob> {
-    const url = `${this.baseUrl}?month=${month}&year=${year}&type=${type}&reportType=${reportType}`;
+    const url = `${this.domain}?month=${month}&year=${year}&type=${type}&reportType=${reportType}`;
     const headers = new HttpHeaders({
       Accept: 'application/pdf',
     });

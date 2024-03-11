@@ -32,14 +32,14 @@ export class WellfareService {
     );
   }
 
-  private apiUrl = 'http://localhost:8080/expenses/create';
+  // private apiUrl = 'http://localhost:8080/expenses/create';
   createExpense(userId: string, expenseData: any): Observable<any> {
-    const url = `${this.apiUrl}?userId=${encodeURIComponent(userId)}`;
+    const url = `${this.domain}?userId=${encodeURIComponent(userId)}`;
     return this.http.post<any>(url, expenseData, { headers: this.headers });
   }
 
   getExpenseRemaining(userId: string): Observable<any> {
-    const url = `http://localhost:8080/expenses/getExpenseRemaining?userId=${encodeURIComponent(
+    const url = `${this.domain}/expenses/getExpenseRemaining?userId=${encodeURIComponent(
       userId
     )}`;
     return this.http.get<any>(url, { headers: this.headers });
@@ -56,7 +56,7 @@ export class WellfareService {
     );
   }
   searchExpensesByUserId(userId: number, year: Number): Observable<any> {
-    const url = `http://localhost:8080/expenses/searchExpenses/${userId}?year=${year}`;
+    const url = `${this.domain}/expenses/searchExpenses/${userId}?year=${year}`;
     return this.http.get<any>(url, { headers: this.headers }).pipe(
       tap((response) => {
       })
@@ -68,12 +68,12 @@ export class WellfareService {
   // }
 
   deleteExpense(expenseId: number): Observable<any> {
-    const url = `http://localhost:8080/expenses/deleteExpenses/${expenseId}`;
+    const url = `${this.domain}/expenses/deleteExpenses/${expenseId}`;
     return this.http.delete<any>(url, { headers: this.headers });
   }
 
   updateExpense(expenseId: number, updatedExpenseData: any): Observable<any> {
-    const url = `http://localhost:8080/expenses/update/${expenseId}`;
+    const url = `${this.domain}/expenses/update/${expenseId}`;
     return this.http.put<any>(url, updatedExpenseData, { headers: this.headers });
   }
   
@@ -83,7 +83,7 @@ export class WellfareService {
   }
 
   getExpenseHistoryReportByEmployeeBase64(month: number, year: number, type: string, reportType: string, uid: number): Observable<any> {
-    const url = `http://localhost:8080/report/expenseHistoryReportByEmployeeBase64?month=${month}&year=${year}&type=${type}&reportType=${reportType}&uid=${uid}`;
+    const url = `${this.domain}/report/expenseHistoryReportByEmployeeBase64?month=${month}&year=${year}&type=${type}&reportType=${reportType}&uid=${uid}`;
     return this.http.get<any>(url, { headers: this.headers });
   }
 

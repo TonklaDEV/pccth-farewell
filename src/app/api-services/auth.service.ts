@@ -14,8 +14,6 @@ export class AuthService {
     this.domain = environment.domain
   }
 
-  baseUrl = 'http://localhost:8080'; // URL ของ API Service
-
   checkRole(){
     const accessToken = localStorage.getItem('access_token');
     if (accessToken) {
@@ -34,7 +32,7 @@ export class AuthService {
       'password': password
     }
   
-    return this.http.post(`${this.baseUrl}/api/v1/auth/authenticate`, body 
+    return this.http.post(`${this.domain}/api/v1/auth/authenticate`, body 
     //{ headers }
     );
   }

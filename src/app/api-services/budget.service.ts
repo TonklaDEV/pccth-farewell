@@ -23,21 +23,21 @@ export class BudgetService {
   }
 
   getBudgets(): Observable<BudgetResponse> {
-    return this.http.get<BudgetResponse>(`${this.apiUrl}/getBudget`, { headers: this.headers });
+    return this.http.get<BudgetResponse>(`${this.domain}/budget/getBudget`, { headers: this.headers });
   }
 
   createBudget(newBudget: Budget): Observable<BudgetResponse> {
-    return this.http.post<BudgetResponse>(`${this.apiUrl}/create`, newBudget , { headers: this.headers });
+    return this.http.post<BudgetResponse>(`${this.domain}/budget/create`, newBudget , { headers: this.headers });
   }
 
   searchBudget(level: string): Observable<BudgetResponse> {
     const params = new HttpParams().set('level', level);
-    return this.http.get<BudgetResponse>(`${this.apiUrl}/searchBudget`, { params, headers: this.headers });
+    return this.http.get<BudgetResponse>(`${this.domain}/budget/searchBudget`, { params, headers: this.headers });
   }
 
   deleteBudget(budgetId: number): Observable<any> {
     return this.http.delete<any>(
-      `${this.apiUrl}/deleteBudget?budgetId=${budgetId}`, { headers: this.headers }
+      `${this.domain}/budget/deleteBudget?budgetId=${budgetId}`, { headers: this.headers }
     );
   }
 
