@@ -7,8 +7,10 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class WellfareService {
-  private headers = new HttpHeaders({
+  token = localStorage.getItem('access_token');
+  headers = new HttpHeaders({
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${this.token}`
   });
   domain: any;
 
@@ -83,7 +85,7 @@ export class WellfareService {
 
   getExpenseHistoryReportByEmployeeBase64(month: number, year: number, type: string, reportType: string, uid: number): Observable<any> {
     const url = `http://localhost:8080/report/expenseHistoryReportByEmployeeBase64?month=${month}&year=${year}&type=${type}&reportType=${reportType}&uid=${uid}`;
-    return this.http.get<any>(url);
+    return this.http.get<any>(url, { headers: this.headers });
   }
 
 }

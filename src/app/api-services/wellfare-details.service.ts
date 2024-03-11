@@ -57,8 +57,10 @@ export interface ResponseMessage {
   providedIn: 'root',
 })
 export class WellfareDetailsService {
-  private headers = new HttpHeaders({
+  token = localStorage.getItem('access_token');
+  headers = new HttpHeaders({
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${this.token}`
   });
   private domain: String | undefined;
   constructor(private http: HttpClient) {
@@ -70,40 +72,43 @@ export class WellfareDetailsService {
   getAllExpenseInUsed(lazyEvent: LazyLoadEvent): Observable<any> {
     return this.http.get<any>(`${this.domain}/expenses/getAllExpenseInUsed`, {
       params: { lazyEvent: JSON.stringify(lazyEvent) },
+      headers: this.headers
     });
   }
 
   getExpense(page: number, size: number, filterObj: any) {
-    if (filterObj.type != '') {
+    if (filterObj.type !== '') {
       return this.http.get<any>(
-        `${this.domain}/expenses/getExpenseByPage/filter?page=${page}&size=${size}&searchType=${filterObj.type}&searchValue=${filterObj.value}`
+        `${this.domain}/expenses/getExpenseByPage/filter?page=${page}&size=${size}&searchType=${filterObj.type}&searchValue=${filterObj.value}`,
+        { headers: this.headers }
       );
     } else {
       return this.http.get<any>(
-        `${this.domain}/expenses/getExpenseByPage?page=${page}&size=${size}&sort=id,desc`
+        `${this.domain}/expenses/getExpenseByPage?page=${page}&size=${size}&sort=id,desc`,
+        { headers: this.headers }
       );
     }
   }
 
   getExpenseInfo(id: number): Observable<ResponseMessage> {
     return this.http.get<ResponseMessage>(
-      `${this.domain}/expenses/info?id=${id}`
+      `${this.domain}/expenses/info?id=${id}`, { headers: this.headers }
     );
   }
 
   getFilterName(term: string): Observable<any> {
     return this.http.get<any>(
-      `${this.domain}/employee/seacrhUser/byNames?searchTerm=${term}`
+      `${this.domain}/employee/seacrhUser/byNames?searchTerm=${term}`, { headers: this.headers }
     );
   }
 
   getFilerEmpid(term: string): Observable<any> {
-    return this.http.get<any>(`${this.domain}/employee/seacrhUser/byEmpid?empid=${term}`)
+    return this.http.get<any>(`${this.domain}/employee/seacrhUser/byEmpid?empid=${term}`, { headers: this.headers })
   }
 
   getExpenseHistoryReportBase64(month: number, year: number, type: string, reportType: string): Observable<any> {
     const url = `${this.domain}/report/expenseHistoryReportBase64?month=${month}&year=${year}&type=${type}&reportType=${reportType}`;
-    return this.http.get<any>(url);
+    return this.http.get<any>(url, { headers: this.headers });
   }
 
   downloadFile(month: number, year: number, type: string, reportType: string): Observable<Blob> {
