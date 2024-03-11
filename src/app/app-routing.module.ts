@@ -54,6 +54,10 @@ const routes: Routes = new Array<Route>(
         component: WellfareDetailPageComponent,
       },
       {
+        path: 'sign-in-page',
+        component: SignInPageComponent,
+      },
+      {
         // Redirects all paths that are not matching to the 'sign-in' route/path
         path: '**',
         redirectTo: '',
