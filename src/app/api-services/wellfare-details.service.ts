@@ -112,13 +112,14 @@ export class WellfareDetailsService {
   }
 
   downloadFile(month: number, year: number, type: string, reportType: string): Observable<Blob> {
-    const url = `${this.domain}/expenseHistoryReport?month=${month}&year=${year}&type=${type}&reportType=${reportType}`;
+    const url = `${this.domain}/report/expenseHistoryReport?month=${month}&year=${year}&type=${type}&reportType=${reportType}`;
     const headers = new HttpHeaders({
       Accept: 'application/pdf',
+      // Authorization : `Bearer ${this.token}`
     });
 
     return this.http.get(url, {
-      headers: headers,
+      headers : headers,
       responseType: 'blob',
     });
   }
