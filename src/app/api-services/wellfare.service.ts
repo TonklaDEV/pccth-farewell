@@ -34,7 +34,7 @@ export class WellfareService {
 
   // private apiUrl = 'http://localhost:8080/expenses/create';
   createExpense(userId: string, expenseData: any): Observable<any> {
-    const url = `${this.domain}?userId=${encodeURIComponent(userId)}`;
+    const url = `${this.domain}/expenses/create?userId=${encodeURIComponent(userId)}`;
     return this.http.post<any>(url, expenseData, { headers: this.headers });
   }
 
